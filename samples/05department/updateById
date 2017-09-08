@@ -1,0 +1,9 @@
+##刘强
+##修改部门
+http://localhost:8080/dcms/api/v1/department/updateById
+{
+  token:"e2318174cd4a7101d178f2ec4cdcc9ec",
+  did:"f0c8ee53-d204-45c1-a4c2-620104bee685",
+  name:"部门1",
+  description:"老大被改"
+}  

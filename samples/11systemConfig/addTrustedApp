@@ -1,0 +1,8 @@
+##刘强
+##添加可信应用程序
+http://localhost:8080/dcms/api/v1/systemConfig/addTrustedApp
+{
+  	token:"40040c8cc05fa34b0c474c11563e57fd",
+	processName:"eclipse.exe",
+	osType:"win8"
+}

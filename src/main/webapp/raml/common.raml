@@ -1,0 +1,47 @@
+#%RAML 1.0 Library
+types:
+  CommonRequest:
+    properties:
+      token: string
+
+  CommonResponse:
+    properties:
+      code:
+        description: 错误码
+        type: integer
+      msg:
+        description: 错误提示
+        type: string
+
+  PageRequest:
+    type: CommonRequest
+    properties:
+      pageNumber:
+        description: 页号
+        type: integer
+        default: 0
+      pageSize:
+        description: 行数
+        type: integer
+        default: 9
+
+  PageResponse:
+    type: CommonResponse
+    properties:
+      totalPages:
+        description: 总页数
+        type: integer
+      totalElements:
+        description: 总行数
+        type: integer
+
+  MiddlewareRequest:
+    properties:
+      mwMac:
+        description: 调用者MAC真实地址 包含冒号
+        required: false
+        type: string
+      mwPasswd:
+        description: 调用接口安全密码
+        required: false
+        type: string

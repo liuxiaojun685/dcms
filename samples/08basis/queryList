@@ -1,0 +1,7 @@
+##牛犀
+##查询定密依据列表
+http://localhost:8080/dcms/api/v1/Basis/QueryList
+{"token":"e7520eeae780340aa260ea253d9593a6",
+"pageNumber":"1",
+"pageSize":"2"
+}

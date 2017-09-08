@@ -1,0 +1,12 @@
+##刘强
+##添加终端
+http://localhost:8080/dcms/api/v1/client/add
+{
+  "token":"23a44266c60a3acd6345c0d663f0a32d",
+  "ip":"192.168.0.11",
+  "mac":"40-F0-2F-76-6D-81",
+  "osType":"win8",
+  "versionType":"2",
+  "versionName":"v1.0",
+  "versionCode":"1"
+}

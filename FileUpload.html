@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script src="js/jquery.min.js" type="text/javascript"></script>  
+<script type="text/javascript" src="js/jquery-form.js"></script>  
+<script type="text/javascript">  
+    function subimtBtn() {  
+        var form = $("form[name=fileForm]");  
+        var options  = {    
+            url:'/dcms/addClientPatch',    
+            type:'post',    
+            success:function(data)    
+            {    
+            	alert(data)
+                var jsondata = eval("("+data+")"); 
+                
+            }    
+        };    
+        form.ajaxSubmit(options);  
+        //$("#fileForm").submit();  
+    }  
+</script>
+<body>
+
+<form name="fileForm" method="post" enctype="multipart/form-data">
+操作系统:<input type="text" name="fid">
+版本类型：<input type="text" name="fileName">
+文件密级：<input type="text" name="fileLevel">
+<input type="text" name="fileCreateUid">
+<input type="file" name="file">
+<input type="button" onclick="subimtBtn()" value="确定">
+</form>
+</body>
+</html>

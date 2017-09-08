@@ -1,0 +1,6 @@
+cidToUnicode	Adobe-GB1	E:\workspace\dcms\src\main\webapp\lib\lef\pdf\\simplified\Adobe-GB1.cidToUnicode
+unicodeMap	ISO-2022-CN	E:\workspace\dcms\src\main\webapp\lib\lef\pdf\\simplified\ISO-2022-CN.unicodeMap
+unicodeMap	EUC-CN		E:\workspace\dcms\src\main\webapp\lib\lef\pdf\\simplified\EUC-CN.unicodeMap
+unicodeMap	GBK			E:\workspace\dcms\src\main\webapp\lib\lef\pdf\\simplified\GBK.unicodeMap
+cMapDir		Adobe-GB1	E:\workspace\dcms\src\main\webapp\lib\lef\pdf\\simplified\CMap
+toUnicodeDir				E:\workspace\dcms\src\main\webapp\lib\lef\pdf\\simplified\CMap

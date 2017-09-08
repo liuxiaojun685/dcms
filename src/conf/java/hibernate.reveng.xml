@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="dcms_db" match-name="Admin"/>
+  <table-filter match-catalog="dcms_db" match-name="AdminLog"/>
+  <table-filter match-catalog="dcms_db" match-name="BackupHistory"/>
+  <table-filter match-catalog="dcms_db" match-name="Client"/>
+  <table-filter match-catalog="dcms_db" match-name="ClientLevelAccessPolicy"/>
+  <table-filter match-catalog="dcms_db" match-name="ClientLog"/>
+  <table-filter match-catalog="dcms_db" match-name="ClientPatch"/>
+  <table-filter match-catalog="dcms_db" match-name="ClientRequestLog"/>
+  <table-filter match-catalog="dcms_db" match-name="ClientUninstallPasswd"/>
+  <table-filter match-catalog="dcms_db" match-name="Component"/>
+  <table-filter match-catalog="dcms_db" match-name="Department"/>
+  <table-filter match-catalog="dcms_db" match-name="File"/>
+  <table-filter match-catalog="dcms_db" match-name="FileAccessScope"/>
+  <table-filter match-catalog="dcms_db" match-name="FileAnalysis"/>
+  <table-filter match-catalog="dcms_db" match-name="FileDRM"/>
+  <table-filter match-catalog="dcms_db" match-name="FileLevelAccessPolicy"/>
+  <table-filter match-catalog="dcms_db" match-name="FileLevelChangeHistory"/>
+  <table-filter match-catalog="dcms_db" match-name="FileLevelDecideBasis"/>
+  <table-filter match-catalog="dcms_db" match-name="FileLevelDecidePolicy"/>
+  <table-filter match-catalog="dcms_db" match-name="FileLevelDecideUnit"/>
+  <table-filter match-catalog="dcms_db" match-name="FileLevelValidPeriod"/>
+  <table-filter match-catalog="dcms_db" match-name="Group"/>
+  <table-filter match-catalog="dcms_db" match-name="License"/>
+  <table-filter match-catalog="dcms_db" match-name="MarkKey"/>
+  <table-filter match-catalog="dcms_db" match-name="MarkKeyHistory"/>
+  <table-filter match-catalog="dcms_db" match-name="Middleware"/>
+  <table-filter match-catalog="dcms_db" match-name="MiddlewareACL"/>
+  <table-filter match-catalog="dcms_db" match-name="RiskLevelPolicy"/>
+  <table-filter match-catalog="dcms_db" match-name="Role"/>
+  <table-filter match-catalog="dcms_db" match-name="RoleScope"/>
+  <table-filter match-catalog="dcms_db" match-name="StatisticsFile"/>
+  <table-filter match-catalog="dcms_db" match-name="StorageLocation"/>
+  <table-filter match-catalog="dcms_db" match-name="SystemConfig"/>
+  <table-filter match-catalog="dcms_db" match-name="Token"/>
+  <table-filter match-catalog="dcms_db" match-name="TrustedApplication"/>
+  <table-filter match-catalog="dcms_db" match-name="User"/>
+  <table-filter match-catalog="dcms_db" match-name="UserMessage"/>
+  <table-filter match-catalog="dcms_db" match-name="UserMessageHistory"/>
+  <table-filter match-catalog="dcms_db" match-name="UserToDepartment"/>
+  <table-filter match-catalog="dcms_db" match-name="UserToGroup"/>
+  <table-filter match-catalog="dcms_db" match-name="Workflow"/>
+  <table-filter match-catalog="dcms_db" match-name="WorkflowPolicy"/>
+  <table-filter match-catalog="dcms_db" match-name="WorkflowPolicyStep"/>
+  <table-filter match-catalog="dcms_db" match-name="WorkflowTrack"/>
+</hibernate-reverse-engineering>

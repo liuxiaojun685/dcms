@@ -1,0 +1,6 @@
+##刘强
+##用户登出
+http://localhost:8080/dcms/api/v1/user/logout
+{
+  "token":"",
+}

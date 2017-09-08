@@ -1,0 +1,9 @@
+##刘强
+##17.4 添加审核代理人
+http://localhost:8080/dcms/api/v1/workFlow/addAgent
+{
+	token:"",
+	roleId:1,
+	approveAgentUid:"",
+	agentInvalidTime:""
+}

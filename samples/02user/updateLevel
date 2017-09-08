@@ -1,0 +1,8 @@
+##刘强
+##修改用户密级
+http://localhost:8080/dcms/api/v1/user/updateLevel
+{
+  "token":"7927009d88bb877b568434ba0d92730d",
+  "uid":"",
+  "level":1
+}

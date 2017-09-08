@@ -1,0 +1,197 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  user: user.raml
+  group: group.raml
+types:
+  DepartmentSimpleInfo:
+    properties:
+      did:
+        description: 部门ID
+        type: string
+      name:
+        description: 部门名称
+        type: string
+
+  DepartmentInfo:
+    type: DepartmentSimpleInfo
+    properties:
+      description:
+        description: 部门描述
+        type: string
+      parentName:
+        description: 父部门名称
+        type: string
+
+  DepartmentNode:
+    type: DepartmentSimpleInfo
+    properties:
+      childDepartmentList:
+        description: 子部门数组
+        type: DepartmentNode[]
+      childGroupList:
+        description: 子组名数组
+        required: false
+        type: GroupNode[]
+      childUserList:
+        description: 子用户姓名数组
+        required: false
+        type: user.UserSimpleInfo[]
+
+  GroupNode:
+    type: group.GroupSimpleInfo
+    properties:
+      childUserList:
+        description: 子用户姓名数组
+        required: false
+        type: user.UserSimpleInfo[]
+
+############################################################
+# /department/add
+############################################################
+  Department_AddRequest:
+    type: common.CommonRequest
+    properties:
+      name:
+        description: 部门名称
+        type: string
+      description:
+        description: 部门描述
+        type: string
+      parentDid:
+        description: “”或者“did-root”表示从属根部门
+        type: string
+
+  Department_AddResponse:
+    type: common.CommonResponse
+    properties:
+      did:
+        description: 部门ID
+        type: string
+
+############################################################
+# /department/updateById
+############################################################
+  Department_UpdateByIdRequest:
+    type: common.CommonRequest
+    properties:
+      did:
+        description: 部门ID
+        type: string
+      name:
+        description: 部门名称
+        required: false
+        type: string
+      description:
+        description: 部门描述
+        required: false
+        type: string
+      parentDid:
+        description: “”或者“did-root”表示从属根部门
+        required: false
+        type: string
+
+  Department_UpdateByIdResponse:
+    type: common.CommonResponse
+    properties:
+      did:
+        description: 部门ID
+        type: string
+
+############################################################
+# /department/deleteById
+############################################################
+  Department_DeleteByIdRequest:
+    type: common.CommonRequest
+    properties:
+      did:
+        description: 部门ID
+        type: string
+
+  Department_DeleteByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /department/queryTree
+############################################################
+  Department_QueryTreeRequest:
+    type: common.CommonRequest
+    properties:
+      hasUser:
+        description: 包含用户节点 1包含 0不包含
+        type: integer
+      hasGroup:
+        description: 包含组节点 1包含 0不包含
+        type: integer
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密，筛选有访问该密级文件权限的用户
+        required: false
+        type: integer
+
+  Department_QueryTreeResponse:
+    type: [ common.CommonResponse , DepartmentNode ]
+
+############################################################
+# /department/addUser
+############################################################
+  Department_AddUserRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+      did:
+        description: 部门ID “did-root”代表根部门，“”代表未分配部门
+        type: string
+
+  Department_AddUserResponse:
+    type: common.CommonResponse
+
+############################################################
+# /department/deleteUser
+############################################################
+  Department_DeleteUserRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+      did:
+        description: 部门ID
+        type: string
+
+  Department_DeleteUserResponse:
+    type: common.CommonResponse
+
+############################################################
+# /department/queryList
+############################################################
+  Department_QueryListRequest:
+    type: common.PageRequest
+    properties:
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+
+  Department_QueryListResponse:
+    type: common.PageResponse
+    properties:
+      departmentList: DepartmentInfo[]
+
+############################################################
+# /department/queryById
+############################################################
+  Department_QueryByIdRequest:
+    type: common.CommonRequest
+    properties:
+      did:
+        description: 部门ID
+        type: string
+
+  Department_QueryByIdResponse:
+    type: [ common.CommonResponse , DepartmentInfo ]

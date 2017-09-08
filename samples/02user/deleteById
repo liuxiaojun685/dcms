@@ -1,0 +1,10 @@
+/**
+ * 删除用户
+ * 
+ * @author 牛犀 email:niuxi@bestsec.cn
+ * @time 2016年12月24日下午12:29:09 
+ */
+ 地址：http://localhost:8080/dcms/api/v1/user/deleteById
+ 参数：
+ {"token":"",
+  "uid":""}

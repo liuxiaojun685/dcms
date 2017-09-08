@@ -1,0 +1,113 @@
+
+/* CSS Document */
+
+
+
+.i_iop {
+    width:270px;
+    height:14px;
+    line-height:14px;
+    padding:9px 0px;
+    text-indent:8px;
+    background:#f9f9f9;
+    color:#7a7a7a;
+    font-size:14px;
+    border:1px solid #cfcfcf;
+    outline:none;
+
+
+
+}
+.i_inp {
+    line-height:32px;
+    text-indent:8px;
+    background:#ffffff;
+    color:#7a7a7a;
+    font-size:14px;
+    border:1px solid #cfcfcf;
+    position:absolute;
+    /*top:-5px;*/
+    /*left:60px;*/
+    outline:none;
+}
+
+.i_inpmajor {
+    width:500px;
+    height:auto;
+
+    line-height:32px;
+    text-indent:8px;
+    background:#FFFFFF;
+    color:#7a7a7a;
+    font-size:14px;
+    border:1px solid #cfcfcf;
+    position:absolute;
+    top: 2px;
+    left: 2px;
+    outline:none;
+}
+
+.i_inpBasis {
+    line-height:32px;
+    text-indent:8px;
+    background:#FFFFFF;
+    color:#7a7a7a;
+    font-size:14px;
+    border:1px solid #cfcfcf;
+    position:absolute;
+    top:-5px;
+    /*left:60px;*/
+    outline:none;
+}
+.i_zt {
+    color:#7a7a7a;
+    font-size:14px;
+    font-weight:bold;
+    outline:none;
+}
+.did{ display:none;  }
+
+/*.rowname{
+    *//*background:#B9B9FF;*//*
+  *//*  font-size: 16px;*//*
+    font-weight:bold;
+    color: #000000;
+    width: 100px;
+    height: 25px;
+}
+.rowsname{
+    *//*background: #F0F0F0;*//*
+    font-weight:bold;
+    width: 300px;
+    height: 25px;
+}*/
+/*.rowname{
+    background: #4f71b9;
+    font-size: 16px;
+    font-weight:bold;
+    color: #ffffff;
+}
+.rowsname{
+    background: ghostwhite;
+    font-weight:bold;
+}*/
+
+.input-control {
+    width: 25%;
+    padding: 0px 12px;
+    height:25px;
+    font-size: 12px;
+    line-height: 1.428571429;
+    color: #555555;
+    vertical-align: middle;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+  
+

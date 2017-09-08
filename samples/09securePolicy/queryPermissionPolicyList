@@ -1,0 +1,10 @@
+##刘强
+##查询定密策略
+http://localhost:8080/dcms/api/v1/securePolicy/queryPermissionPolicyList
+token必传
+{
+  token:"2759d548d6669585e2bdca35cf9e4893",
+  fileState:1,
+  fileLevel:1,
+  roleType:1
+}

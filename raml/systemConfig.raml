@@ -1,0 +1,967 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  securePolicy: securePolicy.raml
+types:
+  LocationInfo:
+    properties:
+      domainName:
+        description: 域名
+        required: false
+        type: string
+      ip:
+        description: IP
+        required: false
+        type: string
+      port:
+        description: 端口
+        required: false
+        type: string
+      path:
+        description: 路径
+        required: false
+        type: string
+      protocol:
+        description: 协议
+        required: false
+        type: string
+      account:
+        description: 账号
+        required: false
+        type: string
+      passwd:
+        description: 密码
+        required: false
+        type: string
+
+  ResourceThreshold:
+    properties:
+      cpuFree:
+        description: cpu使用率0-100 数组 上升到其中某值时触发
+        required: false
+        type: number[]
+      memFree:
+        description: 内存空闲率0-100 数组 下降到其中某值时触发
+        required: false
+        type: number[]
+      hdFree:
+        description: 硬盘空闲率0-100 数组 下降到其中某值时触发
+        required: false
+        type: number[]
+
+  StorageThreshold:
+    properties:
+      free:
+        description: 存储容量空闲率0-100 数组 下降到其中某值时触发
+        required: false
+        type: number[]
+
+  mailConfigInfo:
+    properties:
+      mailSenderAccount:
+        description: 邮件告警发件人邮箱
+        required: false
+        type: string
+      mailSenderPasswd:
+        description: 邮件告警发件人密码
+        required: false
+        type: string
+      mailSenderSmtpAddr:
+        description: 邮件告警SMTP服务器地址
+        required: false
+        type: string
+      mailSenderSmtpPort:
+        description: 邮件告警SMTP服务器端口号
+        required: false
+        type: string
+      mailSenderSSLEnable:
+        description: 邮件告警SMTP是否启用SSL
+        required: false
+        type: integer
+      mailRecvResourceAccount:
+        description: 系统资源告警收件地址 ;号分割
+        required: false
+        type: string
+      mailRecvResourceThreshold:
+        description: 系统资源告警阈值
+        required: false
+        type: ResourceThreshold
+      mailRecvLogStorageAddr:
+        description: 日志存储容量告警收件地址 ;号分割
+        required: false
+        type: string
+      mailRecvLogStorageThreshold:
+        description: 日志存储容量告警阈值
+        required: false
+        type: StorageThreshold
+      mailRecvFileStorageAddr:
+        description: 文件存储容量告警收件地址 ;号分割
+        required: false
+        type: string
+      mailRecvFileStorageThreshold:
+        description: 文件存储容量告警阈值
+        required: false
+        type: StorageThreshold
+
+  LocalAuthConfigInfo:
+    properties:
+      localAuthEnable:
+        description: 本地认证是否启用 1是 0否
+        required: false
+        type: integer
+      localAuthPasswdMin:
+        description: 本地认证密码最小长度
+        required: false
+        type: integer
+      localAuthPasswdMax:
+        description: 本地认证密码最大长度
+        required: false
+        type: integer
+      localAuthPasswdContainsNumber:
+        description: 密码复杂度(数字) 1必须包含 0可不包含
+        required: false
+        type: integer
+      localAuthPasswdContainsLetter:
+        description: 密码复杂度(字母大小写) 1必须包含 0可不包含
+        required: false
+        type: integer
+      localAuthPasswdContainsSpecial:
+        description: 密码复杂度(特殊字符) 1必须包含 0可不包含
+        required: false
+        type: integer
+      localAuthPasswdLockThreshold:
+        description: 密码连续错误次数阈值
+        required: false
+        type: integer
+      localAuthPasswdLockTime:
+        description: 密码错误锁定时间设置 毫秒
+        required: false
+        type: number
+        format: long
+      localAuthPasswdForceChange:
+        description: 是否强制定期修改密码 1是 0否
+        required: false
+        type: integer
+      localAuthPasswdPeriod:
+        description: 定期修改密码时间设置 毫秒
+        required: false
+        type: number
+        format: long
+      localAuthUnlockByAdmin:
+        description: 是否必须管理员解锁 1是 0否
+        required: false
+        type: integer
+      localAuthInitPasswd:
+        description: 新用户初始密码
+        required: false
+        type: string
+      localAuthInitPasswdForceChange:
+        description: 是否强制修改初始密码
+        required: false
+        type: integer
+
+  AdAuthConfigInfo:
+    properties:
+      adAuthEnable:
+        description: AD认证是否启用 1是 0否
+        required: false
+        type: integer
+      adAuthLocation:
+        description: 认证服务器位置
+        required: false
+        type: LocationInfo
+      adAuthDn:
+        description: 连接账号全DN
+        required: false
+        type: string
+      adAuthAutoSync:
+        description: 是否启用AD自动同步 1是 0否
+        required: false
+        type: integer
+      adAuthSyncRoot:
+        description: 同步根DN
+        required: false
+        type: string
+
+  TimerConfigInfo:
+    properties:
+      timerMailAlarmStartTime:
+        description: 邮件告警定时配置起始时间
+        required: false
+        type: number
+        format: long
+      timerMailAlarmPeriod:
+        description: 邮件告警定时配置周期 毫秒
+        required: false
+        type: number
+        format: long
+      timerBackupStartTime:
+        description: 数据库备份定时配置起始时间
+        required: false
+        type: number
+        format: long
+      timerBackupPeriod:
+        description: 数据库备份定时配置周期 毫秒
+        required: false
+        type: number
+        format: long
+      timerClientLogStartTime:
+        description: 日志归档定时配置起始时间
+        required: false
+        type: number
+        format: long
+      timerClientLogPeriod:
+        description: 日志归档定时配置周期 毫秒
+        required: false
+        type: number
+        format: long
+      timerAdSyncStartTime:
+        description: AD同步定时配置起始时间
+        required: false
+        type: number
+        format: long
+      timerAdSyncPeriod:
+        description: AD同步定时配置周期 毫秒
+        required: false
+        type: number
+        format: long
+      timerAutoDecodeStartTime:
+        description: 文件自动解密定时配置起始时间
+        required: false
+        type: number
+        format: long
+      timerAutoDecodePeriod:
+        description: 文件自动解密定时配置周期 毫秒
+        required: false
+        type: number
+        format: long
+      timerFileStatisticStartTime:
+        description: 密级文件统计定时配置起始时间
+        required: false
+        type: number
+        format: long
+      timerFileStatisticPeriod:
+        description: 密级文件统计定时配置周期 毫秒
+        required: false
+        type: number
+        format: long
+      timerCancelApproverStartTime:
+        description: 取消审批代理人权限定时配置起始时间
+        required: false
+        type: number
+        format: long
+      timerCancelApproverPeriod:
+        description: 取消审批代理人权限定时配置周期 毫秒
+        required: false
+        type: number
+        format: long
+
+
+  WatermarkConfigInfo:
+    properties:
+      type:
+        description: 1 打印，2屏幕
+        required: true
+        type: integer
+      left:
+        description: 左页边距。[0,+)
+        required: true
+        type: integer
+      top:
+        description: 上页边距
+        required: true
+        type: integer
+      right:
+        description: 右页边距
+        required: true
+        type: integer
+      bottom:
+        description: 下页边距
+        required: true
+        type: integer
+      fontSize:
+        description: 字体大小
+        required: true
+        type: integer
+      colorA:
+        description: 水印颜色-A通道
+        required: true
+        type: integer
+      colorRGB:
+        description: 水印颜色-RGB
+        required: true
+        type: string
+      fontEscapement:
+        description: 倾斜度
+        required: true
+        type: integer
+      markLocal:
+        description: 水印位置。0浮于内容上方，1衬于内容下方
+        required: true
+        type: integer
+      markRows:
+        description: 水印行数
+        required: true
+        type: integer
+      markCols:
+        description: 水印列数
+        required: true
+        type: integer
+      compNameType:
+        description: 计算机名的显示方式。0不选，1页眉，2页脚，4左侧，8右侧，16跟随水印
+        required: true
+        type: integer
+      userNameType:
+        description: 用户名的显示方式
+        required: true
+        type: integer
+      hostAddrType:
+        description: ip地址的显示方式
+        required: true
+        type: integer          
+      fontName:
+        description: 字体
+        required: true
+        type: string
+      text:
+        description: 水印内容
+        required: true
+        type: string
+      markTop:
+        description: 页眉。0左对齐，1居中，2右对齐，3不显示
+        required: false
+        type: integer
+      markLeft:
+        description: 页左。0上对齐，1居中，2下对齐，3不显示
+        required: false
+        type: integer
+      markRight:
+        description: 页右。0上对齐，1居中，2下对齐，3不显示
+        required: false
+        type: integer
+      markBottom:
+        description: 页脚。0左对齐，1居中，2右对齐，3不显示
+        required: false
+        type: integer
+      printTimeType:
+        description: 打印时间的显示方式。0不选，1页眉，2页脚，4左侧，8右侧，16跟随水印
+        required: false
+        type: integer
+      showWatermark:
+        description: 配置显示屏幕水印密级
+        required: false
+        type: Desensity[]
+
+  TrustedAppInfo:
+    properties:
+      trustedAppId:
+        description: 可信应用程序ID
+        type: integer
+      processName:
+        description: 应用程序名称或进程名
+        type: string
+      description:
+        description: 可信应用程序描述
+        type: string
+      extensionName:
+        description: 可信应用程序扩展名
+        type: string
+
+  Desensity:
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      isDesensity:
+        description: 是否脱敏/显示 0否 1是
+        type: integer
+############################################################
+# /systemConfig/queryEnvironment
+############################################################
+  SystemConfig_QueryEnvironmentRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryEnvironmentResponse:
+    type: common.CommonResponse
+    properties:
+      osType:
+        description: 操作系统
+        type: string
+      platformVersion:
+        description: 平台服务版本
+        type: string
+      datebase:
+        description: 数据库
+        type: string
+      cpuFree:
+        description: cpu使用率0-100
+        type: string
+      cpuInfo:
+        description: cpu信息，型号，频率
+        type: string
+      memFree:
+        description: 内存剩余字节
+        type: string
+      memTotal:
+        description: 内存总字节
+        type: string
+      hdFree:
+        description: 硬盘剩余字节
+        type: string
+      hdTotal:
+        description: 硬盘总字节
+        type: string
+      logFree:
+        description: 日志存储剩余字节
+        type: string
+      logTotal:
+        description: 日志存储总字节
+        type: string
+      fileFree:
+        description: 文件存储剩余字节
+        type: string
+      fileTotal:
+        description: 文件存储总字节
+        type: string
+
+############################################################
+# /systemConfig/queryWatermarkConfig
+############################################################
+  SystemConfig_QueryWatermarkConfigRequest:
+    type: common.CommonRequest
+    properties:
+      type:
+        description: 1 打印，2屏幕
+        required: true
+        type: integer
+  SystemConfig_QueryWatermarkConfigResponse:
+    type: [common.CommonResponse , WatermarkConfigInfo ]
+
+############################################################
+# /systemConfig/updateWatermarkConfig
+############################################################
+  SystemConfig_UpdateWatermarkConfigRequest:
+    type: [ common.CommonRequest , WatermarkConfigInfo ]
+
+  SystemConfig_UpdateWatermarkConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/systemLevel
+############################################################
+  SystemConfig_SystemLevelRequest:
+    type: common.CommonRequest
+    properties:
+      level:
+        description: 系统可处理的最高密级文件用户终端。2秘密 3机密 4绝密
+        required: false
+        type: integer
+
+  SystemConfig_SystemLevelResponse:
+    type: common.CommonResponse
+    properties:
+      level:
+        description: 系统可处理的最高密级文件用户终端。2秘密 3机密 4绝密
+        type: integer
+
+############################################################
+# /systemConfig/updateFileLocation
+############################################################
+  SystemConfig_UpdateFileLocationRequest:
+    type: common.CommonRequest
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      fileLocation:
+        description:
+        type: LocationInfo
+
+  SystemConfig_UpdateFileLocationResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryFileLocation
+############################################################
+  SystemConfig_QueryFileLocationRequest:
+    type: common.CommonRequest
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+
+  SystemConfig_QueryFileLocationResponse:
+    type: [ common.CommonResponse , LocationInfo ]
+
+############################################################
+# /systemConfig/updateLogLocation
+############################################################
+  SystemConfig_UpdateLogLocationRequest:
+    type: common.CommonRequest
+    properties:
+      logLocation:
+        description:
+        type: LocationInfo
+
+  SystemConfig_UpdateLogLocationResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryLogLocation
+############################################################
+  SystemConfig_QueryLogLocationRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryLogLocationResponse:
+    type: [ common.CommonResponse , LocationInfo ]
+
+############################################################
+# /systemConfig/updateMailConfig
+############################################################
+  SystemConfig_UpdateMailConfigRequest:
+    type: [ common.CommonRequest , mailConfigInfo ]
+
+  SystemConfig_UpdateMailConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryMailConfig
+############################################################
+  SystemConfig_QueryMailConfigRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryMailConfigResponse:
+    type: [ common.CommonResponse , mailConfigInfo ]
+
+############################################################
+# /systemConfig/updateLocalAuthConfig
+############################################################
+  SystemConfig_UpdateLocalAuthConfigRequest:
+    type: [ common.CommonRequest , LocalAuthConfigInfo ]
+
+  SystemConfig_UpdateLocalAuthConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryLocalAuthConfig
+############################################################
+  SystemConfig_QueryLocalAuthConfigRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryLocalAuthConfigResponse:
+    type: [ common.CommonResponse , LocalAuthConfigInfo ]
+
+############################################################
+# /systemConfig/updateAdAuthConfig
+############################################################
+  SystemConfig_UpdateAdAuthConfigRequest:
+    type: [ common.CommonRequest , AdAuthConfigInfo ]
+
+  SystemConfig_UpdateAdAuthConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryAdAuthConfig
+############################################################
+  SystemConfig_QueryAdAuthConfigRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryAdAuthConfigResponse:
+    type: [ common.CommonResponse , AdAuthConfigInfo ]
+
+############################################################
+# /systemConfig/updateTimerConfig
+############################################################
+  SystemConfig_UpdateTimerConfigRequest:
+    type: [ common.CommonRequest , TimerConfigInfo ]
+
+  SystemConfig_UpdateTimerConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryTimerConfig
+############################################################
+  SystemConfig_QueryTimerConfigRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryTimerConfigResponse:
+    type: [ common.CommonResponse , TimerConfigInfo ]
+
+############################################################
+# /systemConfig/connectTest
+############################################################
+  SystemConfig_ConnectTestRequest:
+    type: common.CommonRequest
+    properties:
+      type:
+        description: 1公开文件上传 2内部文件上传 3秘密文件上传 4机密文件上传 5绝密文件上传 6备份 7日志上传 8系统资源告警 9日志存储告警 10文件存储告警 11AD连接 12补丁上传 13配置定密责任人 14配置文件签发人 15配置流程策略
+        type: integer
+
+  SystemConfig_ConnectTestResponse:
+    type: common.CommonResponse
+    properties:
+      resultList:
+        description: 检测结果
+        type: string[]
+
+############################################################
+# /systemConfig/addTrustedApp
+############################################################
+  SystemConfig_AddTrustedAppRequest:
+    type: common.CommonRequest
+    properties:
+      processName:
+        description: 应用程序名称或进程名
+        type: string
+      description:
+        description: 可信应用程序描述
+        type: string
+      extensionName:
+        description: 可信应用程序扩展名
+        type: string
+
+  SystemConfig_AddTrustedAppResponse:
+    type: common.CommonResponse
+    properties:
+      trustedAppId:
+        description: 可信应用程序ID
+        type: integer
+
+############################################################
+# /systemConfig/updateTrustedApp
+############################################################
+  SystemConfig_UpdateTrustedAppRequest:
+    type: common.CommonRequest
+    properties:
+      trustedAppId:
+        description: 可信应用程序ID
+        required: true
+        type: integer
+      processName:
+        description: 应用程序名称或进程名
+        type: string
+      description:
+        description: 可信应用程序描述
+        type: string
+      extensionName:
+        description: 可信应用程序扩展名
+        type: string
+
+  SystemConfig_UpdateTrustedAppResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/deleteTrustedAppById
+############################################################
+  SystemConfig_DeleteTrustedAppByIdRequest:
+    type: common.CommonRequest
+    properties:
+      trustedAppId:
+        description: 可信应用程序ID
+        type: integer
+
+  SystemConfig_DeleteTrustedAppByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryTrustedAppList
+############################################################
+  SystemConfig_QueryTrustedAppListRequest:
+    type: common.PageRequest
+
+  SystemConfig_QueryTrustedAppListResponse:
+    type: common.PageResponse
+    properties:
+      trustedAppList:
+        description: 可信应用程序列表
+        type: TrustedAppInfo[]
+
+############################################################
+# /systemConfig/queryLocationList
+############################################################
+  SystemConfig_QueryLocationListRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryLocationListResponse:
+    type: common.CommonResponse
+    properties:
+      fileLocation0:
+        description: 公开文件存储位置
+        type: LocationInfo
+      fileLocation1:
+        description: 内部文件存储位置
+        type: LocationInfo
+      fileLocation2:
+        description: 秘密文件存储位置
+        type: LocationInfo
+      fileLocation3:
+        description: 机密文件存储位置
+        type: LocationInfo
+      fileLocation4:
+        description: 绝密文件存储位置
+        type: LocationInfo
+      logLocation:
+        description: 日志文件存储位置
+        type: LocationInfo
+      patchLocation:
+        description: 补丁文件存储位置
+        type: LocationInfo
+      backupLocation:
+        description: 备份文件存储位置
+        type: LocationInfo
+
+############################################################
+# /systemConfig/updateLocation
+############################################################
+  SystemConfig_UpdateLocationRequest:
+    type: common.CommonRequest
+    properties:
+      fileLocation0:
+        description: 公开文件存储位置
+        required: false
+        type: LocationInfo
+      fileLocation1:
+        description: 内部文件存储位置
+        required: false
+        type: LocationInfo
+      fileLocation2:
+        description: 秘密文件存储位置
+        required: false
+        type: LocationInfo
+      fileLocation3:
+        description: 机密文件存储位置
+        required: false
+        type: LocationInfo
+      fileLocation4:
+        description: 绝密文件存储位置
+        required: false
+        type: LocationInfo
+      logLocation:
+        description: 日志文件存储位置
+        required: false
+        type: LocationInfo
+      patchLocation:
+        description: 补丁文件存储位置
+        required: false
+        type: LocationInfo
+      backupLocation:
+        description: 备份文件存储位置
+        required: false
+        type: LocationInfo
+ 
+  SystemConfig_UpdateLocationResponse:
+    type: common.CommonResponse
+   
+############################################################
+# /systemConfig/updateOrganization
+############################################################
+  SystemConfig_UpdateOrganizationRequest:
+    type: common.CommonRequest
+    properties:
+      organizationCode:
+        description: 组织机构代码
+        required: true
+        type: string
+      organizationName:
+        description: 组织机构名称
+        required: true
+        type: string
+      organizationDescription:
+        description: 组织机构描述
+        required: false
+        type: string
+        
+  SystemConfig_UpdateOrganizationResponse:
+    type: common.CommonResponse
+        
+############################################################
+# /systemConfig/queryOrganization
+############################################################
+  SystemConfig_QueryOrganizationRequest:
+    type: common.CommonRequest
+    
+  SystemConfig_QueryOrganizationResponse:
+    type: common.CommonResponse
+    properties:
+      organizationCode:
+        description: 组织机构代码
+        type: string
+      organizationName:
+        description: 组织机构名称
+        type: string
+      organizationDescription:
+        description: 组织机构描述
+        type: string
+
+############################################################
+# /systemConfig/desensitization
+############################################################
+  SystemConfig_DesensitizationRequest:
+    type: common.CommonRequest
+    properties:
+      desensityList:
+        description: 脱敏配置项
+        type: Desensity[]
+
+  SystemConfig_DesensitizationResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryDesensity
+############################################################
+  SystemConfig_QueryDesensityRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryDesensityResponse:
+    type: common.CommonResponse
+    properties:
+      desensityList:
+        description: 脱敏配置项
+        type: Desensity[]
+
+############################################################
+# /systemConfig/queryLogArchiveKeepTime
+############################################################
+  SystemConfig_QueryLogArchiveKeepTimeRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryLogArchiveKeepTimeResponse:
+    type: common.CommonResponse
+    properties:
+      riskLevel1:
+        description: 一般日志保留时间
+        type: string
+      riskLevel2:
+        description: 重要日志保留时间
+        type: string
+      riskLevel3:
+        description: 严重日志保留时间
+        type: string
+      autoLogArchiveEnable:
+        description: 是否允许自动归档 1是 0否
+        type: integer
+
+############################################################
+# /systemConfig/updateLogArchiveKeepTime
+############################################################
+  SystemConfig_UpdateLogArchiveKeepTimeRequest:
+    type: common.CommonRequest
+    properties:
+      riskLevel1:
+        description: 一般日志保留时间
+        type: string
+      riskLevel2:
+        description: 重要日志保留时间
+        type: string
+      riskLevel3:
+        description: 严重日志保留时间
+        type: string
+      autoLogArchiveEnable:
+        description: 是否允许自动归档 1是 0否
+        type: integer
+
+  SystemConfig_UpdateLogArchiveKeepTimeResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryOtherSecurityConfig
+############################################################
+  SystemConfig_QueryOtherSecurityConfigRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryOtherSecurityConfigResponse:
+    type: common.CommonResponse
+    properties:
+      preclassifiedForce:
+        description: 是否强制预定密 1是 0否
+        type: integer
+
+############################################################
+# /systemConfig/updateOtherSecurityConfig
+############################################################
+  SystemConfig_UpdateOtherSecurityConfigRequest:
+    type: common.CommonRequest
+    properties:
+      preclassifiedForce:
+        description: 是否强制预定密 1是 0否
+        required: false
+        type: integer
+
+  SystemConfig_UpdateOtherSecurityConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/updateAdvancedControlStrategy
+############################################################
+  SystemConfig_UpdateAdvancedControlStrategyRequest:
+    type: common.CommonRequest
+    properties:
+      prohibitRename:
+        description: 是否禁止改名 1是 0否
+        type: integer
+      prohibitDelete:
+        description: 是否禁止删除 1是 0否
+        type: integer
+      prohibitNetwork:
+        description: 是否禁止网络发送 1是 0否
+        type: integer
+      prohibitMailSend:
+        description: 是否禁止邮件发送 1是 0否
+        type: integer
+      prohibitRightSend:
+        description: 是否禁止右键发送 1是 0否
+        type: integer
+
+  SystemConfig_UpdateAdvancedControlStrategyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /systemConfig/queryAdvancedControlStrategy
+############################################################
+  SystemConfig_QueryAdvancedControlStrategyRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryAdvancedControlStrategyResponse:
+    type: common.CommonResponse
+    properties:
+      prohibitRename:
+        description: 是否禁止改名 1是 0否
+        type: integer
+      prohibitDelete:
+        description: 是否禁止删除 1是 0否
+        type: integer
+      prohibitNetwork:
+        description: 是否禁止网络发送 1是 0否
+        type: integer
+      prohibitMailSend:
+        description: 是否禁止邮件发送 1是 0否
+        type: integer
+      prohibitRightSend:
+        description: 是否禁止右键发送 1是 0否
+        type: integer
+
+############################################################
+# /systemConfig/queryClassifiedWhiteList
+############################################################
+  SystemConfig_QueryClassifiedWhiteListRequest:
+    type: common.CommonRequest
+
+  SystemConfig_QueryClassifiedWhiteListResponse:
+    type: common.CommonResponse
+    properties:
+      classifiedWhiteList:
+        description: 标密白名单 |分割
+        type: string
+
+############################################################
+# /systemConfig/updateClassifiedWhiteList
+############################################################
+  SystemConfig_UpdateClassifiedWhiteListRequest:
+    type: common.CommonRequest
+    properties:
+      classifiedWhiteList:
+        description: 标密白名单 |分割
+        type: string
+
+  SystemConfig_UpdateClassifiedWhiteListResponse:
+    type: common.CommonResponse

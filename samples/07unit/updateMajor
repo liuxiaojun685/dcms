@@ -1,0 +1,8 @@
+###刘强
+http://localhost:8080/dcms/api/v1/unit/updateMajor
+{
+  token:"04eccf027616a9bfaaf7dc5bedfb9eb3",
+  unitNo:"N01111",
+  name:"讯诺佳成科技",
+  description:"主定密单位"
+}

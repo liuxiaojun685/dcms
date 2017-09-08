@@ -1,0 +1,7 @@
+##刘强
+##删除审核代理人
+http://localhost:8080/dcms/api/v1/workFlow/deleteAgentById
+{
+	token:"",
+	roleId:1
+}

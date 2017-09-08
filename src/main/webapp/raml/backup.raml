@@ -1,0 +1,125 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  systemConfig: systemConfig.raml
+types:
+  BackupInfo:
+    properties:
+      backupId:
+        description: 备份历史ID
+        type: integer
+      name:
+        description: 备份名称
+        type: string
+      description:
+        description: 备份描述
+        type: string
+      createTime:
+        description: 备份时间
+        type: number
+        format: long
+      createFrom:
+        description: 备份方式 1手动 2自动
+        type: integer
+      size:
+        description: 备份文件大小 字节
+        type: number
+        format: long
+      location:
+        description: 备份位置URL
+        type: string
+      md5:
+        description: 文件MD5
+        type: string
+
+############################################################
+# /backup/add
+############################################################
+  Backup_AddRequest:
+    type: common.CommonRequest
+    properties:
+      description:
+        description: 备份描述
+        required: false
+        type: string
+
+  Backup_AddResponse:
+    type: common.CommonResponse
+    properties:
+      backupId:
+        description: 备份历史ID
+        type: integer
+
+############################################################
+# /backup/queryList
+############################################################
+  Backup_QueryListRequest:
+    type: common.PageRequest
+
+  Backup_QueryListResponse:
+    type: common.PageResponse
+    properties:
+      backupList:
+        description: 备份历史列表
+        type: BackupInfo[]
+
+############################################################
+# /backup/queryConfig
+############################################################
+  Backup_QueryConfigRequest:
+    type: common.CommonRequest
+
+  Backup_QueryConfigResponse:
+    type: common.CommonResponse
+    properties:
+      autoBackupEnable:
+        description: 是否自动备份 1是 0否
+        type: integer
+      backupLocation:
+        description: 备份位置信息
+        type: systemConfig.LocationInfo
+
+############################################################
+# /backup/updateConfig
+############################################################
+  Backup_UpdateConfigRequest:
+    type: common.CommonRequest
+    properties:
+      autoBackupEnable:
+        description: 是否自动备份 1是 0否
+        required: false
+        type: integer
+      backupLocation:
+        description: 备份位置信息
+        required: false
+        type: systemConfig.LocationInfo
+
+  Backup_UpdateConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /backup/deleteById
+############################################################
+  Backup_DeleteByIdRequest:
+    type: common.CommonRequest
+    properties:
+      backupId:
+        description: 备份历史ID
+        type: integer
+
+  Backup_DeleteByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /backup/recover
+############################################################
+  Backup_RecoverRequest:
+    type: common.CommonRequest
+    properties:
+      backupId:
+        description: 备份历史ID
+        required: false
+        type: integer
+
+  Backup_RecoverResponse:
+    type: common.CommonResponse

@@ -1,0 +1,622 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  role: role.raml
+  admin: admin.raml
+types:
+  PermissionBaseInfo:
+    properties:
+      contentRead:
+        description: 是否允许内容阅读 1是 0否
+        required: false
+        type: integer
+      contentPrint:
+        description: 是否允许内容打印 1是 0否
+        required: false
+        type: integer
+      contentPrintHideWater:
+        description: 是否允许打印隐藏水印 1是 0否
+        required: false
+        type: integer
+      contentModify:
+        description: 是否允许内容修改 1是 0否
+        required: false
+        type: integer
+      contentScreenShot:
+        description: 是否允许内容截屏 1是 0否
+        required: false
+        type: integer
+      contentCopy:
+        description: 是否允许内容拷贝 1是 0否
+        required: false
+        type: integer
+      fileCopy:
+        description: 是否允许文件拷贝 1是 0否
+        required: false
+        type: integer
+      fileSaveCopy:
+        description: 是否允许文件另存副本 1是 0否
+        required: false
+        type: integer
+
+  PermissionInfo:
+    type: PermissionBaseInfo
+    properties:
+      fileAuthorization:
+        description: 是否允许文件授权 1是 0否 2允许提审批
+        required: false
+        type: integer
+      fileLevelDecide:
+        description: 是否允许文件定密 1是 0否 2允许提审批
+        required: false
+        type: integer
+      fileLevelChange:
+        description: 是否允许密级变更 1是 0否 2允许提审批
+        required: false
+        type: integer
+      fileDispatch:
+        description: 是否允许文件签发 1是 0否 2允许提审批
+        required: false
+        type: integer
+      fileDecrypt:
+        description: 是否允许文件解密 1是 0否 2允许提审批
+        required: false
+        type: integer
+      fileUnbunding:
+        description: 是否允许文件解绑 1是 0否 2允许提审批
+        required: false
+        type: integer
+
+  PermissionPolicyInfo:
+    properties:
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 5文件解密
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      roleType:
+        description: 定密角色 1文件起草人 2定密责任人 3文件签发人 4分发使用人 5其他一般人
+        type: integer
+      permission:
+        description: 权限详情
+        type: PermissionInfo
+
+  ValidPeriodInfo:
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      validPeriod:
+        description: 格式yymmdd
+        required: false
+        type: string
+
+  FileAccessPolicyInfo:
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      userLevel:
+        description: 用户密级 1一般 2重要 3核心
+        type: integer
+      enable:
+        description: 是否允许操作 1是 0否
+        type: integer
+
+  ClientAccessPolicyInfo:
+    properties:
+      clientLevel:
+        description: 终端密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      userLevel:
+        description: 用户密级 1一般 2重要 3核心
+        type: integer
+      enable:
+        description: 是否允许登陆 1是 0否
+        type: integer
+
+  WorkFlowPolicyInfo:
+    properties:
+      workFlowPolicyId:
+        description: 流程策略ID
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      workFlowType:
+        description: 流程类型 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        required: false
+        type: integer
+      createTime:
+        description: 创建时间
+        required: false
+        type: number
+        format: long
+      workFlowRoleList:
+        description: 审批员列表 按step级数
+        required: false
+        type: WorkFlowRoleInfo[]
+
+  WorkFlowRoleInfo:
+    properties:
+      roleList:
+        description: 流程策略ID
+        type: role.RoleSimpleInfo[]
+      step:
+        description: 审批级数
+        required: false
+        type: integer
+
+  MarkKeyItem:
+    properties:
+      keyId:
+        description: 密钥ID
+        required: false
+        type: string
+      keyName:
+        description: 密钥名称
+        required: false
+        type: string
+      keyLength:
+        description: 密钥长度
+        required: false
+        type: integer
+      createTime:
+        description: 创建时间
+        required: false
+        type: number
+        format: long
+      createFrom:
+        description: 来源 0系统预置 1手动创建 2导入创建
+        required: false
+        type: integer
+      enable:
+        description: 密钥是否启用 1是 0否
+        required: false
+        type: integer
+      admin:
+        description: 创建人
+        required: false
+        type: admin.AdminSimpleInfo
+      markVersion:
+        description: 密标密钥版本
+        required: false
+        type: integer
+
+  MarkKeyHistoryItem:
+    properties:
+      keyId:
+        description: 密钥ID
+        required: false
+        type: string
+      keyName:
+        description: 密钥名称
+        required: false
+        type: string
+      enableTime:
+        description: 启用时间
+        required: false
+        type: number
+        format: long
+      disableTime:
+        description: 禁用时间
+        required: false
+        type: number
+        format: long
+
+############################################################
+# /securePolicy/updatePermissionPolicy
+############################################################
+  SecurePolicy_UpdatePermissionPolicyRequest:
+    type: [ common.CommonRequest , PermissionPolicyInfo ]
+
+  SecurePolicy_UpdatePermissionPolicyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/queryPermissionPolicyList
+############################################################
+  SecurePolicy_QueryPermissionPolicyListRequest:
+    type: common.CommonRequest
+    properties:
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        required: false
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      roleType:
+        description: 定密角色 1文件起草人 2定密责任人 3文件签发人 4分发使用人
+        required: false
+        type: integer
+
+  SecurePolicy_QueryPermissionPolicyListResponse:
+    type: common.CommonResponse
+    properties:
+      policyList: PermissionPolicyInfo[]
+
+############################################################
+# /securePolicy/updateValidPeriod
+############################################################
+  SecurePolicy_UpdateValidPeriodRequest:
+    type: [ common.CommonRequest , ValidPeriodInfo ]
+
+  SecurePolicy_UpdateValidPeriodResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/queryValidPeriodList
+############################################################
+  SecurePolicy_QueryValidPeriodListRequest:
+    type: common.CommonRequest
+
+  SecurePolicy_QueryValidPeriodListResponse:
+    type: common.CommonResponse
+    properties:
+      validPeriodList:
+        description: 按文件级别区分
+        type: ValidPeriodInfo[]
+
+############################################################
+# /securePolicy/updateFileAccessPolicy
+############################################################
+  SecurePolicy_UpdateFileAccessPolicyRequest:
+    type: [ common.CommonRequest , FileAccessPolicyInfo ]
+
+  SecurePolicy_UpdateFileAccessPolicyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/queryFileAccessPolicyList
+############################################################
+  SecurePolicy_QueryFileAccessPolicyListRequest:
+    type: common.CommonRequest
+
+  SecurePolicy_QueryFileAccessPolicyListResponse:
+    type: common.CommonResponse
+    properties:
+      fileAccessPolicyList:
+        description: 文件访问策略列表
+        type: FileAccessPolicyInfo[]
+
+############################################################
+# /securePolicy/addWorkFlow
+############################################################
+  SecurePolicy_AddWorkFlowRequest:
+    type: common.CommonRequest
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      workFlowType:
+        description: 流程类型 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        type: integer
+
+  SecurePolicy_AddWorkFlowResponse:
+    type: common.CommonResponse
+    properties:
+      workFlowPolicyId:
+        description: 流程策略ID
+        type: integer
+
+############################################################
+# /securePolicy/deleteWorkFlow
+############################################################
+  SecurePolicy_DeleteWorkFlowRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowPolicyId:
+        description: 流程策略ID
+        type: integer
+
+  SecurePolicy_DeleteWorkFlowResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/updateWorkFlow
+############################################################
+  SecurePolicy_UpdateWorkFlowRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowPolicyId:
+        description: 流程策略ID
+        type: integer
+      roleId:
+        description: 责任人角色信息ID 只有签发流程由签发人审核，其他均由定密责任人审核。
+        type: integer[]
+      step:
+        description: 审批级数
+        type: integer
+
+  SecurePolicy_UpdateWorkFlowResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/queryWorkFlow
+############################################################
+  SecurePolicy_QueryWorkFlowRequest:
+    type: common.CommonRequest
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      workFlowType:
+        description: 流程类型 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        required: false
+        type: integer
+
+  SecurePolicy_QueryWorkFlowResponse:
+    type: common.CommonResponse
+    properties:
+      workFlowPolicyList:
+        description: 流程策略信息
+        type: WorkFlowPolicyInfo[]
+
+############################################################
+# /securePolicy/queryValidPeriod
+############################################################
+  SecurePolicy_QueryValidPeriodRequest:
+    type: common.CommonRequest
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+
+  SecurePolicy_QueryValidPeriodResponse:
+    type: [ common.CommonResponse , ValidPeriodInfo ]
+    properties:
+      durationType:
+        description: 保密期限 类型 0不限 2期限
+        type: integer
+
+############################################################
+# /securePolicy/updateClientAccessPolicy
+############################################################
+  SecurePolicy_UpdateClientAccessPolicyRequest:
+    type: [ common.CommonRequest , ClientAccessPolicyInfo ]
+
+  SecurePolicy_UpdateClientAccessPolicyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/queryClientAccessPolicyList
+############################################################
+  SecurePolicy_QueryClientAccessPolicyListRequest:
+    type: common.CommonRequest
+
+  SecurePolicy_QueryClientAccessPolicyListResponse:
+    type: common.CommonResponse
+    properties:
+      fileAccessPolicyList:
+        description: 文件访问策略列表
+        type: ClientAccessPolicyInfo[]
+
+
+############################################################
+# /securePolicy/queryPermissionPolicy
+############################################################
+  SecurePolicy_QueryPermissionPolicyRequest:
+    type: common.CommonRequest
+    properties:
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      roleType:
+        description: 定密角色 1文件起草人 2定密责任人 3文件签发人 4分发使用人
+        type: integer
+
+  SecurePolicy_QueryPermissionPolicyResponse:
+    type: common.CommonResponse
+    properties:
+      permission:
+        description: 权限详情
+        type: PermissionInfo
+
+############################################################
+# /securePolicy/queryWorkFlowById
+############################################################
+  SecurePolicy_QueryWorkFlowByIdRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowPolicyId:
+        description: 流程策略ID
+        type: integer
+
+  SecurePolicy_QueryWorkFlowByIdResponse:
+    type: [ common.CommonResponse , WorkFlowPolicyInfo ]
+
+############################################################
+# /securePolicy/queryMarkKeyList
+############################################################
+  SecurePolicy_QueryMarkKeyListRequest:
+    type: common.CommonRequest
+
+  SecurePolicy_QueryMarkKeyListResponse:
+    type: common.CommonResponse
+    properties:
+      markKeyList:
+        description: 密钥列表
+        type: MarkKeyItem[]
+
+############################################################
+# /securePolicy/addMarkKey
+############################################################
+  SecurePolicy_AddMarkKeyRequest:
+    type: common.CommonRequest
+    properties:
+      keyName:
+        description: 密钥名称
+        required: false
+        type: string
+
+  SecurePolicy_AddMarkKeyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/updateMarkKey
+############################################################
+  SecurePolicy_UpdateMarkKeyRequest:
+    type: common.CommonRequest
+    properties:
+      keyId:
+        description: 密钥ID
+        type: string
+      keyName:
+        description: 密钥名称
+        required: false
+        type: string
+      enable:
+        description: 密钥是否启用 1是 0否
+        required: false
+        type: integer
+
+  SecurePolicy_UpdateMarkKeyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/deleteMarkKey
+############################################################
+  SecurePolicy_DeleteMarkKeyRequest:
+    type: common.CommonRequest
+    properties:
+      keyId:
+        description: 密钥ID
+        type: string
+
+  SecurePolicy_DeleteMarkKeyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/queryMarkKeyHistory
+############################################################
+  SecurePolicy_QueryMarkKeyHistoryRequest:
+    type: common.CommonRequest
+
+  SecurePolicy_QueryMarkKeyHistoryResponse:
+    type: common.CommonResponse
+    properties:
+      markKeyHistoryList:
+        description: 密钥列表
+        type: MarkKeyHistoryItem[]
+
+############################################################
+# /securePolicy/backupMarkKey
+############################################################
+  SecurePolicy_BackupMarkKeyRequest:
+    type: common.CommonRequest
+    properties:
+      passwd:
+        description: 加密密码
+        type: string
+
+  SecurePolicy_BackupMarkKeyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/recoverMarkKey
+############################################################
+  SecurePolicy_RecoverMarkKeyRequest:
+    type: common.CommonRequest
+
+  SecurePolicy_RecoverMarkKeyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/importMarkKey
+############################################################
+  SecurePolicy_ImportMarkKeyRequest:
+    type: common.CommonRequest
+    properties:
+      keyName:
+        description: 密钥名称
+        required: false
+        type: string
+
+  SecurePolicy_ImportMarkKeyResponse:
+    type: common.CommonResponse
+
+############################################################
+# /securePolicy/checkWorkFlow
+############################################################
+  SecurePolicy_CheckWorkFlowRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowPolicyId:
+        description: 流程策略ID
+        type: integer
+      roleId:
+        description: 责任人角色信息ID 只有签发流程由签发人审核，其他均由定密责任人审核。
+        type: integer[]
+      step:
+        description: 审批级数
+        type: integer
+
+  SecurePolicy_CheckWorkFlowResponse:
+    type: common.CommonResponse
+    properties:
+      checkList:
+        description: 缺少审批人的部门
+        type: role.ScopeInfo[]
+
+############################################################
+# /securePolicy/queryKeywordPolicy
+############################################################
+  SecurePolicy_QueryKeywordPolicyRequest:
+    type: common.CommonRequest
+
+  SecurePolicy_QueryKeywordPolicyResponse:
+    type: common.CommonResponse
+    properties:
+      keyword0:
+        description: 公开关键词
+        type: string
+      keyword1:
+        description: 内部关键词
+        type: string
+      keyword2:
+        description: 秘密关键词
+        type: string
+      keyword3:
+        description: 机密关键词
+        type: string
+      keyword4:
+        description: 绝密关键词
+        type: string
+
+############################################################
+# /securePolicy/updateKeywordPolicy
+############################################################
+  SecurePolicy_UpdateKeywordPolicyRequest:
+    type: common.CommonRequest
+    properties:
+      keyword0:
+        description: 公开关键词
+        required: false
+        type: string
+      keyword1:
+        description: 内部关键词
+        required: false
+        type: string
+      keyword2:
+        description: 秘密关键词
+        required: false
+        type: string
+      keyword3:
+        description: 机密关键词
+        required: false
+        type: string
+      keyword4:
+        description: 绝密关键词
+        required: false
+        type: string
+
+  SecurePolicy_UpdateKeywordPolicyResponse:
+    type: common.CommonResponse

@@ -1,0 +1,8 @@
+##牛犀
+##查询授权信息
+
+http://localhost:8080/dcms/api/v1/license/query
+
+{
+  "token":"dfc607a07b7ca91f59257ee5e74cf783"
+}

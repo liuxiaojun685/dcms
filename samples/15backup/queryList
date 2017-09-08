@@ -1,0 +1,9 @@
+##刘强
+##查询备份历史
+http://localhost:8080/dcms/api/v1/backup/queryList
+{
+	token:"1cd3ea7121bc86e66a15e07cfa69f252",
+	"pageNumber":0,
+	"pageSize":9,
+}
+

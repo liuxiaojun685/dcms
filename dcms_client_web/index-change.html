@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var token = GetQueryString("token");
+    var isIE=!!window.ActiveXObject;
+    var isIE6=isIE&&!window.XMLHttpRequest;
+    var isIE8=isIE&&!!document.documentMode;
+    var isIE7=isIE&&!isIE6&&!isIE8;
+    if (isIE){
+    	var workflowId = GetQueryString("workflowId");
+        if (isIE6){
+        	var href="index-ie6.html?token="+token;
+        }else if (isIE8){
+        	var href="index.html?token="+token;
+        }else if (isIE7){
+            alert("ie7");
+        }
+		if (workflowId != null){
+			href += "&workflowId="+workflowId;
+		}
+		window.location.href=href
+    }
+    
+    
+  //取url参数
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return unescape(r[2]);
+        return null;
+    }
+</script>
+</body>
+</html>

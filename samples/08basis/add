@@ -1,0 +1,7 @@
+##刘强
+##添加定密依据 安全管理员可添加
+http://localhost:8080/dcms/api/v1/basis/add
+{
+  token:"0cc29184a6f4e3cb71df6ed2dfc8e13a",
+  basis:"绝密定密依据"
+}

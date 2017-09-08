@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>电子文档密级标志生成与管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/x-icon" href=" ../img/login-in.ico" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="../css/pagination.css">
+    <link rel="stylesheet" type="text/css" href="../css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-ie6.css">
+    <link rel="stylesheet" type="text/css" href="css/ie.css">
+    <link rel="stylesheet" type="text/css" href="css/glyphicons-halflings.png-8.png.css">
+    <link rel="stylesheet" href="../css/jquery.treeview.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-multiselect.css"/>
+    <link href="tooltips/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="tooltips/css/docs.css" rel="stylesheet">
+    <link href="tooltips/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="tooltips/css/tooltips.css" rel="stylesheet" id="skin">
+    <link href="css/jquery.pagination.css" rel="stylesheet">
+    <link href="js/textshow/css/all.css" rel="stylesheet" type="text/css"/>
+    <link href="css/select.down.css" rel="stylesheet" type="text/css"/>
+    <script src="js/json2.js"></script>
+    <style>
+        .action {
+            background: #4777c8;
+        }
+
+        .navContent {
+            display: none;
+        }
+
+        .navContent li a {
+            display: block;
+        }
+
+        body {
+            white-space: nowrap;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .all {
+            background: #efefef;
+        }
+
+        .table_style tr td {
+            text-align: center;
+            vertical-align: middle !important;
+            font-size: 12px
+        }
+
+        .navbar {
+            background: #4f71b9;
+        }
+
+        table tr {
+            line-height: 40px;;
+        }
+
+        select {
+            height: 23px;
+        }
+
+        .control div {
+            float: left;
+            margin-left: 20px;
+        }
+
+        .titleBox {
+            cursor: pointer
+        }
+
+        .bigBox {
+            display: none;
+            height: 95px;
+            overflow-y: auto;
+        }
+
+        .rowname {
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .rownames {
+            font-weight: bold;
+            /*letter-spacing: 3px;*/
+        }
+
+        .unfinished table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .finished table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .applyed table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .createfileInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .inboxInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .decryptInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .declassifiedInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .ledgermanagementAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .permission input {
+            vertical-align: middle;
+        }
+
+        #createComment, #approveComment, #major {
+            width: 560px;
+        }
+     
+		.menu-left li{
+			padding:10px  30px;
+		
+		}
+		#myTab li{
+		    float:right;
+		}
+		#myfinish li{
+			float:left;
+			padding:0 15px;
+		}
+		#apply li{
+			float:left;
+			padding:0 15px;
+		}
+		#example li{
+		    float:left;
+			padding:0 15px;
+		}
+		#exampleTotal{
+		    float:left;
+		}
+		#myfinishTotal{
+		   float:left;
+		}
+		#applyTotal{
+		   float:left;
+		}
+		.totalCount{
+		   margin-left:5px;
+		}
+		.pagination>.active>a{
+		  background:#4777c8;
+		}
+	    .mpermission input{
+		  width:20px;
+		  height:20px;
+		}
+		.ipermission input{
+		  width:20px;
+		  height:20px;
+		}
+	    .permission input{
+		  width:20px;
+		  height:20px;
+		}
+		.permission{
+		  font-size:12px;
+		}
+    </style>
+</head>
+<body>
+<div>
+    <div style="width: 100%;background:#4f71b9;height:70px;">
+        <img src="../img/logo-ie6.png" alt=""/>
+    </div>
+    <div id="body">
+        <div id="menu-left" style="width:170px;height:800px;background:#4f71b9;float:left;margin-top:5px;">
+            <div class="sidebar-menu nav-collapse menu-left"></div>
+        </div>
+        <div id="main-content" style="float:left;margin-left:10px;">
+            <div class="page-header" style="margin: 5px 0 10px;border-bottom:0;">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="fa fa-home"></i>
+                        <a href="index.html">首页</a>
+					    <span style="padding:0 5px 0 0;"><a href="javascript:void(0)">/</a></span>
+                    </li>
+                    <li><a href="javascript:void(0)">流程管理</a></li>
+                </ul>
+            </div>
+            <div style="margin-top:-25px;">              
+                <div class="box border primary" style="border: 0;">
+                    <div class="box-title">
+                        <h4><span style="padding:10px;"></span></h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="tabbable header-tabs">
+                            <ul id="myTab" class="nav nav-tabs" style="height:30px;">
+                                <li id="finishedwf" onclick="myfinished(0,2)" style="display:none;"><a href="#myfinished" data-toggle="tab">已审批</a></li>   
+								<li id="myUnfinished" onclick="myUnfinished(0)" style="display:none;"><a href="#home" data-toggle="tab" id="loading"><spanclass="hidden-inline-mobile">待审批</span></a></li>
+								<li id="myapplyli0" onclick="myapply(0,0)" style="display:none;"><a href="#myapply" data-toggle="tab" id="uapply">我的申请(未审批)</a></li>
+								<li id="myapplyli1" onclick="myapply(0,1)" class="dropdown active" style="display:none;"><a href="#myapply" data-toggle="tab" id="fapplys">我的申请(已审批)</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade" id="home">
+                                    <div class="unlist">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>编号</th>
+                                                <th>流程类型</th>
+                                                <th>文件名</th>
+                                                <th>文件密级</th>
+                                                <th>发起人</th>
+                                                <th>发起时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="unfinishList">
+
+                                            </tbody>
+                                        </table>
+
+                                        <div>
+                                            <ul id="example" style="margin:0;"></ul><span id="exampleTotal" class="totalCount">共0条</span>
+                                        </div>
+                                    </div>
+                                    <div class="all unfinished" style="display:none;overflow-y:auto;">
+                                        <div style="width:800px;background:#fff;margin: 0 auto;">
+                                            <table style="border: 1px solid #4777c8;">
+                                                <tr style="border: 1px solid #4777c8;">
+                                                    <td colspan="2" class="text-center"><h4 id="uTitle" style="font-weight: bold;text-align:center;"></h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>流程名称：</span>
+                                                        <input type="hidden" id="workFlowId" style="">
+                                                        <input id="workFlowType" style="width:180px;margin-left:-5px;" readonly/>
+                                                        <span>流程状态：</span>
+                                                        <input id="flowState" style="width:140px;" readonly/>
+                                                        <span>流程级数：</span>
+                                                        <input id="totalStep" style="width:120px;" readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8; ">
+                                                        <span>文件名称：</span>
+                                                        <input style="width:440px;" id="fileName" readonly/>
+                                                        <span> 标志版本：</span>
+                                                        <input id="markVersion" style="width:120px;" readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8; ">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8; ">
+                                                        <span>紧急程度：</span>
+                                                        <select id="urgency">
+                                                            <option value="0">一般</option>
+                                                            <option value="1">重要</option>
+                                                            <option value="2">加急</option>
+                                                        </select>
+                                                        <span>秘密等级：</span>
+                                                        <select id="applyFileLevel" disabled name="applyFileLevel">
+                                                            <option value="4">绝密</option>
+                                                            <option value="3">机密</option>
+                                                            <option value="2">秘密</option>
+                                                            <option value="1">内部</option>
+                                                            <option value="0">公开</option>
+                                                        </select>                                                        
+                                                    </td>
+                                                </tr>
+												<tr>
+												    <td colspan="2">
+													<span class="rowname">保密期限：</span>
+                                                        <select id="durationType" name="durationType" onchange="select(this)" class="time1" style="margin-left:3px;">
+                                                            <option value="0" selected>不限</option>
+                                                            <option value="1">长期</option>
+                                                            <option value="2">期限</option>
+                                                            <option value="3">解密日期</option>
+                                                            <option value="4">条件</option>
+                                                        </select>
+                                                        <div class="times time1" style="display: inline-block;margin-left:160px;margin-top:-30px;"></div>   
+													</td>
+												</tr>
+                                                <tr>
+                                                    <td class="rownames" colspan="2">
+                                                        <span>主定密单位：</span>
+                                                        <input type="text" style="width:675px;" readonly id="major"/><input type="hidden" id="unitNos">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rownames" colspan="2">
+                                                        <span>辅定密单位：</span>
+                                                        <div class="list-major-input" style="border-left: 0;height: 25px;display: inline-block;margin-left:95px;margin-top:-40px;">
+                                                            <div onclick="getBlur(this)" class="i_inp" style="overflow-y: auto;width: 620px;height: 40px">
+                                                                <span class="ui-sortable disp " style="font-size: 12px;"></span>
+                                                                <input type="text" class="ipva form-control" style=" border:none; float:left; display:block; width:auto; outline:none;min-width:10px; max-width:200px; background:none; height:22px; line-height:22px; font-size:12px; " id="list-name-for-select" placeholder="[单位编号]单位名称">
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-right" style="display: inline-block;margin-left:730px;margin-top:-20px;">
+                                                            <button onclick="Minorshow()" style="padding:0 15px;">添加</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>定密依据：</span>
+                                                        <select id="basisType" name="basisType" onchange="getBasisType(this)" style="margin-top:5px;margin-left:-2px;">
+                                                            <option value="0">确定性定密</option>
+                                                            <option value="1">不明确事项</option>
+                                                            <option value="2">无权定密事项</option>
+                                                            <option value="3">派生定密</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <div id="content" class="list-major-input" style="border-left: 0;display: inline-block;margin-left:95px;">
+                                                            <div class="i_inpBasis" style="width:600px;overflow-y: auto;height: 40px;">
+                                                                <textarea id="id_basisDescription" style="width: 590px;height: 35px;overflow-y: auto;color:#000;"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-right" style="display: inline-block;margin-left:730px;">
+                                                            <button onclick="basisshow()" style="padding:0 15px;">添加</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>知悉范围：</span>
+                                                        <div class="box" style="border: 0;display: inline-block;margin-left:95px;margin-top:-30px;">
+                                                            <div class="box-body" style="background:#fff;">
+                                                                <div class="tabbable header-tabs">
+                                                                    <ul class="nav nav-tabs" style="top: 0px;">
+                                                                        <li class="clickList active">
+																		    <input type="hidden" value="0"/><a href="#box_tab5" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">列举方式</span></a>
+                                                                        </li>
+                                                                        <li class="chooseDesc">
+																		    <input type="hidden" value="1"/><a href="#box_tab4" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">描述方式</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="tab-content" style="margin-top: 0px">
+                                                                        <div class="tab-pane fade in active" id="box_tab1">
+                                                                            <input type="hidden" id="scopeValue"/>
+                                                                            <textarea id="tooltips" rows="2" readonly class="chooseList" style="resize:none;width:690px;"></textarea>
+                                                                            <textarea id="fileScopeDesc" rows="2" style="display: none;resize:none;width:690px;"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span> 安全控制：</span>
+                                                        <div class="permission" style="display:inline-block;margin-left:95px;margin-top:-30px;"></div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>扩展属性：</span>
+                                                        <span>文号：</span>
+                                                        <input id="issueNumber" name="issueNumber" style="width:150px;" type="text"/>
+                                                        <span> 份号：</span>
+                                                        <input id="docNumber" name="docNumber" style="width:150px;"  type="text"/>
+                                                        <span>份数：</span>
+                                                        <input id="duplicationAmount" name="duplicationAmount" style="width:158px;"  type="text"/>
+                                                    </td>
+                                                </tr>
+                                                <tbody id="approverByStep"></tbody>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span style="letter-spacing: 6px;">发起人： </span>
+                                                        <span style="margin-left:8px;">姓名：</span>
+                                                        <input id="createUser" name="issueNumber" style="width:150px;" type="text" readonly/>
+                                                        <span> 密级：</span>
+                                                        <input id="createLevel" name="docNumber" style="width:150px;" type="text" readonly/>
+                                                        <span>时间：</span>
+														<input id="createTime" name="duplicationAmount" style="width:158px;" type="text" readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>业务属性：</span>
+                                                        <textarea id="business" style="overflow-y: auto;color:#000;width:690px;" rows="3"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>申请理由：</span>
+                                                        <input id="createComment" style="width:690px;" name="createComment" readonly type="text"/>
+                                                    </td>
+                                                </tr>
+                                                <tr id="approveUser"></tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>审批意见：</span>
+                                                        <input id="approveComment" style="width:690px;" name="approveComment" type="text"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <nav class="text-right">
+                                                <div class="btn-group" style="margin-top: 5px;margin-right: 45px;">
+                                                    <button type="button" class="btn btn-success pass-ok">通过</button>
+                                                    <button type="button" class="btn btn-warning nopass">不通过</button>
+                                                    <button type="button" class="btn btn-info downfile">下载</button>
+                                                    <button type="button" class="btn btn-default cel">取消</button>
+                                                </div>
+                                            </nav>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="tab-pane fade" id="myfinished">
+                                    <div class="finishall">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>编号</th>
+                                                <th>流程类型</th>
+                                                <th>文件名</th>
+                                                <th>文件密级</th>
+                                                <th>发起人</th>
+                                                <th>发起时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="finishList">
+
+                                            </tbody>
+                                        </table>
+                                        
+                                        <div>
+                                            <ul id="myfinish" style="margin:0;"></ul><span id="myfinishTotal" class="totalCount">共0条</span>
+                                        </div>
+                                    </div>
+                                    <div class="all finished" style="display:none;overflow-y:auto;">
+                                        <div style="width:800px;background:#fff;margin: 0 auto;">
+                                            <table style="margin:0 auto;border: 1px solid #4777c8;">
+                                                <tr style="border:1px solid #4777c8;">
+                                                    <td colspan="2" class="text-center">
+													    <h4 style="font-weight: bold;text-align:center;">文件详情</h4>
+													</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>流程名称：</span>
+                                                        <input id="iworkFlowType" style="width:170px;" readonly/>
+                                                        <span>流程状态：</span>
+                                                        <input id="iflowState" style="width:140px;" readonly/>
+                                                        <span>流程级数：</span>
+                                                        <input id="itotalStep" style="width:115px;" readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span> 文件名称：</span>
+                                                        <input style="width:430px;" id="ifileName" readonly/>
+                                                        <span>标志版本：</span>
+                                                        <input id="imarkVersion" style="width:115px;" readonly/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>紧急程度：</span>
+                                                        <select id="iurgency" disabled>
+                                                            <option value="0">一般</option>
+                                                            <option value="1">重要</option>
+                                                            <option value="2">加急</option>
+                                                        </select>
+                                                        <span>秘密等级：</span>
+                                                        <select id="iapplyFileLevel" disabled name="applyFileLevel">
+                                                            <option value="4">绝密</option>
+                                                            <option value="3">机密</option>
+                                                            <option value="2">秘密</option>
+                                                            <option value="1">内部</option>
+                                                            <option value="0">公开</option>
+                                                        </select>                                                       
+                                                    </td>
+                                                </tr>
+												<tr>
+												    <td>
+														<span class="rowname">保密期限：</span>
+                                                        <select id="idurationType" name="durationType" disabled class="time1" style="margin-left:3px;">
+                                                            <option value="0" selected>不限</option>
+                                                            <option value="1">长期</option>
+                                                            <option value="2">期限</option>
+                                                            <option value="3">解密日期</option>
+                                                            <option value="4">条件</option>
+                                                        </select>
+                                                        <div class="itimes itime1" style="display:inline-block;margin-left:160px;margin-top:-30px;"></div>  
+													</td>
+												</tr>
+                                                <tr>
+                                                    <td class="rownames" colspan="2">
+                                                        <span>主定密单位：</span>
+                                                        <input type="text" readonly id="imajor" style=" width: 665px;"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rownames" colspan="2">
+                                                        <span>辅定密单位：</span>
+                                                        <div class="list-major-input" style="border-left: 0;margin-left:95px;margin-top:-50px;height: 37px;display:inline-block;width: 80%">
+                                                            <div class="i_inp" style="overflow-y: auto;width: 675px;height: 40px;top:10px;">
+                                                                <span class="ui-sortable idisp " style="font-size: 12px;"></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2" style="border-right:1px solid #4777c8;">
+                                                        <span> 定密依据：</span>
+                                                        <select id="ibasisType" name="basisType" disabled style="margin-top:5px;margin-left:-2px;">
+                                                            <option value="0">确定性定密</option>
+                                                            <option value="1">不明确事项</option>
+                                                            <option value="2">无权定密事项</option>
+                                                            <option value="3">派生定密</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <div id="icontent" class="list-major-input" style="border-left: 0;height: 37px;display:inline-block;width: 82%;margin-left:95px; ">
+                                                            <div class="i_inpBasis" style="width:650px;overflow-y: auto;height: 40px;top:0;">
+                                                                <!-- <span class="ui-sortable dispBasis" style="font-size:12px;"></span> -->
+                                                                <textarea id="iid_basisDescription" style="width: 645px;height: 35px;overflow-y: auto;color:#000;"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>知悉范围：</span>
+                                                        <div class="box" style="border: 0;display: inline-block;margin-left:95px;margin-top:-25px;">
+                                                            <div class="box-body" style="background: #fff;">
+                                                                <div class="tabbable header-tabs">
+                                                                    <ul class="nav nav-tabs" style="top: 10px;">
+                                                                        <li class="clickfList active">
+																		    <input type="hidden" value="0"/><a href="#box_tab5" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">列举方式</span></a>
+                                                                        </li>
+                                                                        <li class="choosefDesc">
+																		    <input type="hidden" value="1"/><a href="#box_tab4" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">描述方式</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="tab-content" style="margin-top: 0px">
+                                                                        <div class="tab-pane fade in active"><input type="hidden" id="iscopeValue"/>
+                                                                            <textarea id="itooltips" rows="2" readonly style="resize:none;width:665px;"></textarea>
+                                                                            <textarea id="iscopeDesc" rows="2" style="display: none;resize:none;width:665px;"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>安全控制：</span>
+                                                        <div class="ipermission" style="display:inline-block;margin-left:88px;margin-top:-30px;"></div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>扩展属性：</span>
+                                                        <span>文号：</span>
+                                                        <input id="iissueNumber" style="width:145px;" type="text" readonly/>
+                                                        <span> 份号：</span>
+                                                        <input id="idocNumber" style="width:145px; type="text" readonly/>
+                                                        <span>份数：</span>
+                                                        <input id="iduplicationAmount" style="width:145px; type="text" readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tbody id="iapproverByStep"></tbody>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span style="letter-spacing: 8px">发起人：</span>
+                                                        <span style="margin-left:5px;">姓名：</span>
+                                                        <input id="icreateUser" type="text" style="width:145px;" readonly/>
+                                                        <span> 密级：</span>
+                                                        <input id="icreateLevel" type="text" style="width:145px;" readonly/>
+                                                        <span>时间：</span>
+                                                        <input id="icreateTime" type="text" style="width:145px;" readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>业务属性：</span>
+                                                        <textarea id="ibusiness" style="overflow-y: auto;color:#000;width:665px;" rows="3"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span> 申请理由：</span>
+                                                        <input id="icreateComment" name="createComment" readonly type="text" style="width:665px;"/>
+                                                    </td>
+                                                </tr>
+                                                <tr id="iapproveUser"></tr>
+                                            </table>
+                                            <nav class="text-right">
+                                                <div class="btn-group" style="margin-top: 5px;margin-right: 45px;">
+                                                    <button type="button" class="btn btn-info downfile">下载</button>
+                                                    <button type="button" class="btn btn-primary" onclick="goback(2)">返回</button>
+                                                </div>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade in active" id="myapply">
+                                    <div class="applyall">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>编号</th>
+                                                <th>流程类型</th>
+                                                <th>文件名</th>
+                                                <th>文件密级</th>
+                                                <th>发起人</th>
+                                                <th>发起时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="applyList">
+
+                                            </tbody>
+                                        </table>
+                                        <div>
+                                            <ul id="apply" style="margin:0;"></ul><span id="applyTotal" class="totalCount">共0条</span>
+                                        </div>
+                                    </div>
+                                    <div class="all applyed" style="display:none;">
+                                        <div style="margin: 0 auto;width:800px;background: #fff;">
+                                            <table style="margin:0 auto;border: 1px solid #4777c8 ">
+                                                <tr style="border: 1px solid #4777c8;">
+                                                    <td colspan="2">
+													    <h4 style="font-weight: bold;text-align:center;">文件详情</h4>
+													</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right: 1px solid #4777c8;">
+                                                        <span>流程名称：</span>
+                                                        <input id="mworkFlowType" style="width:170px;" readonly/>
+                                                        <span>流程状态：</span>
+                                                        <input id="mflowState" style="width:140px;" readonly/>
+                                                        <span>流程级数：</span>
+                                                        <input id="mtotalStep" style="width:115px;" readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right: 1px solid #4777c8;">
+                                                        <span>文件名称：</span>
+                                                        <input style="width:430px;" id="mfileName" readonly/>
+                                                        <span>标志版本：</span>
+                                                        <input id="mmarkVersion" style="width:115px;"  readonly/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>紧急程度：</span>
+                                                        <select id="murgency" disabled>
+                                                            <option value="0">一般</option>
+                                                            <option value="1">重要</option>
+                                                            <option value="2">加急</option>
+                                                        </select>
+                                                        <span  class="rowname">秘密等级：</span>
+                                                        <select id="mapplyFileLevel" disabled name="applyFileLevel">
+                                                            <option value="4">绝密</option>
+                                                            <option value="3">机密</option>
+                                                            <option value="2">秘密</option>
+                                                            <option value="1">内部</option>
+                                                            <option value="0">公开</option>
+                                                        </select>                                             
+                                                    </td>
+                                                </tr>
+												<tr>
+												    <td colspan="2">
+													    <span  class="rowname">保密期限：</span>   
+													    <select id="mdurationType" name="durationType" disabled style="margin-left:5px;">
+                                                            <option value="0" selected>不限</option>
+                                                            <option value="1">长期</option>
+                                                            <option value="2">期限</option>
+                                                            <option value="3">解密日期</option>
+                                                            <option value="4">条件</option>
+                                                        </select>
+                                                        <div class="mtimes mtime1" style="display: inline-block;margin-bottom:-30px;"></div>
+													</td>
+												</tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span style="letter-spacing: 0;">主定密单位：</span>
+                                                        <input style="width:660px;" type="text" readonly id="mmajor"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span style="letter-spacing: 0;">辅定密单位：</span>
+                                                        <div class="list-major-input" style="border-left: 0;height: 37px;display:inline-block;width: 80%;margin-top:-50px;margin-left:96px;">
+                                                            <div class="i_inp" style="overflow-y: auto;width: 675px;height: 40px;top:10px;">
+                                                                <span class="ui-sortable mdisp " style="font-size: 12px;"></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>定密依据：</span>
+                                                        <select id="mbasisType" disabled style="margin-top:5px;margin-left:-2px;">
+                                                            <option value="0">确定性定密</option>
+                                                            <option value="1">不明确事项</option>
+                                                            <option value="2">无权定密事项</option>
+                                                            <option value="3">派生定密</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <div id="mcontent" class="list-major-input" style="border-left: 0;height: 37px;display:inline-block;width: 82%;margin-left: 95px;">
+                                                            <div class="i_inpBasis" style="width:665px;overflow-y: auto;height: 40px;top:0">
+                                                                <textarea id="mid_basisDescription" style="width: 645px;height: 35px;overflow-y: auto;color:#000;"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>知悉范围：</span>
+
+                                                        <div class="box" style="border: 0;display: inline-block;margin-left:95px;margin-top:-25px;">
+                                                            <div class="box-body" style="background:#fff;">
+                                                                <div class="tabbable header-tabs">
+                                                                    <ul class="nav nav-tabs" style="top: 0px;">
+                                                                        <li class="clickfList active">
+																		    <input type="hidden" value="0"/><a href="#box_tab5" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">列举方式</span></a>
+                                                                        </li>
+                                                                        <li class="choosefDesc">
+																		    <input type="hidden" value="1"/><a href="#box_tab4" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">描述方式</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div class="tab-content" style="margin-top: 0px">
+                                                                        <div class="tab-pane fade in active"><input type="hidden" id="mscopeValue"/>
+                                                                            <textarea id="mtooltips" rows="2" readonly style="resize:none;width:665px;"></textarea>
+                                                                            <textarea id="mscopeDesc" rows="2" style="display: none;resize:none；width:665px;"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>安全控制：</span>
+                                                        <div class="mpermission" style="display:inline-block;margin-left:88px;margin-top:-30px;">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>扩展属性：</span>
+                                                        <span>文号：</span>
+                                                        <input id="missueNumber" type="text" style="width:145px;" readonly/>
+                                                        <span> 份号：</span>
+                                                        <input id="mdocNumber" type="text" style="width:145px;"   readonly/>
+                                                        <span>份数：</span>
+                                                        <input id="mduplicationAmount" type="text"style="width:145px;"  readonly/>
+                                                    </td>
+
+                                                </tr>
+                                                <tbody id="mapproverByStep"></tbody>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span style="letter-spacing: 8px;">发起人：</span>
+                                                        <span style="margin-left:5px;">姓名：</span>
+                                                        <input id="mcreateUser" type="text" style="width:145px;"  readonly/>
+                                                        <span> 密级：</span>
+                                                        <input id="mcreateLevel" type="text" style="width:145px;"  readonly/>
+                                                        <span>时间：</span>
+                                                        <input id="mcreateTime" type="text" style="width:145px;"  readonly/>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="rowname" colspan="2">
+                                                        <span>业务属性：</span>
+                                                        <textarea id="mbusiness" style="overflow-y: auto;color:#000;width:665px;" rows="3"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="rowname" style="border-right:1px solid #4777c8;">
+                                                        <span>申请理由：</span>
+                                                        <input id="mcreateComment" name="createComment" readonly
+                                                               type="text" style="width:665px;"/>
+                                                    </td>
+                                                </tr>
+                                                <tr id="mapproveUser"></tr>
+                                            </table>
+                                            <nav>
+                                                <div class="btn-group" style="margin-top: 5px;margin-right: 45px;">
+                                                    <button type="button" class="btn btn-info downfile">下载</button>
+                                                    <button type="button" class="btn btn-primary" onclick="goback(1)">返回</button>
+                                                </div>
+                                            </nav>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>                      
+            </div>
+        </div>
+    </div>
+    <!--<div class="footer" style="width: 100%;background:#4f71b9;height:40px;">-->
+        <!--<p class="text-center" style="color:#fff;font-size:14px;margin-top: -10px;">© 中国航天科技集团公司  本系统使用最佳分辨率1280*720</p>-->
+    <!--</div>-->
+</div>
+<script src="js/jquery-1.7.2.min.js"></script>
+<!--<script src="../js/jquery/jquery-2.0.3.min.js"></script>-->
+<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+<script src="../js/jquery.pagination.js"></script>
+<script src="../js/laydate/laydate.js"></script>
+<script src="../layer/layer.js"></script>
+<script src="js/bootstrap-ie.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/getUrlParam.js"></script>
+<script src="js/bootstrap-multiselect.js"></script>
+<script src="js/common-ie6.js"></script>
+<script src="js/personalConsole/unfinishedByself-ie6.js"></script>
+<script src="js/jquery.PrintArea.js"></script>
+<script src="tooltips/js/bootstrap-tooltip.js"></script>
+<script src="tooltips/js/jquery.pure.tooltips.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/treeview/jquery.treeview.js" type="text/javascript"></script>
+<script src="js/treeview/jquery.cookie.js"></script>
+<script language="javascript" src="js/textshow/js/biankuai.js"></script>
+<script language="javascript" src="js/textshow/js/ui.base.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.droppable.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.draggable.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.sortable.min.js"></script>
+<script language="javascript" src="js/textshow/js/drag.js"></script>
+<script language="javascript" src="js/textshow/js/submit.js"></script>
+<div style="position:absolute;top:0;height:100%;width:100%;background-color:rgba(0,0,0,.8);z-index:100p;display: none;" id="layer_shaow">
+	<div id="dtrees" class="col-sm-12 my-xs" style="margin:30% auto;width:30%;height:300px;overflow-y:auto;background:#fff;display: none;border:2px solid #ddd;" >
+	    <h4 style="text-align:center;">知悉范围</h4>
+		<div id="dtree"></div>
+		<!--<ul id="browser" class="filetree treeview-famfamfam treeview">
+		</ul>-->
+		<div style="text-align:center;"><button style="padding:0 10px;" id="ok_dtree">确定</button><button style="padding:0 10px;" id="cel_dtree">取消</button></div>
+	</div>
+	<div id="MinorUnits" class="col-sm-12 my-xs" style="margin:30% auto;width:25%;height:300px;overflow-y:auto;background:#fff;display: none;border:2px solid #ddd;" >
+		<h4 style="text-align:center;">添加辅助定密单位</h4>
+		<table id="applyMinorUnits" style="margin-left: 10px"></table>
+		<div style="text-align:center;"><button style="padding:0 10px;" id="ok_MinorUnits">确定</button><button style="padding:0 10px;" id="cel_MinorUnits">取消</button></div>
+	</div>
+	<div id="id_layerBasisTree" class="my-xs" style="margin:30% auto;width:30%;height:300px;overflow-y:auto;background:#fff;display: none;border:2px solid #ddd;" >
+	    <h4 style="text-align:center;">添加定密依据</h4>
+		<ul id="id_basisTree" class="filetree treeview"></ul>
+		<div style="text-align:center;"><button style="padding:0 10px;" id="ok_layerBasisTree">确定</button><button style="padding:0 10px;" id="cel_layerBasisTree">取消</button></div>
+	</div>
+	<div id="id_layerBusinessTree" class="my-xs" style="margin:30% auto;width:30%;height:300px;overflow-y:auto;background:#fff;display: none;border:2px solid #ddd;" >
+		<h4 style="text-align:center;">选择业务属性</h4>
+		<ul id="id_businessTree" class="filetree treeview"></ul>
+		<div style="text-align:center;"><button style="padding:0 10px;" id="cel_layerBusinessTree">关闭</button></div>
+	</div>
+</div>
+
+
+<!-- <div id="basisContents" class="col-sm-12 my-xs" style="border-radius: 0;display: none">
+    <table id="basisContentNo" style="margin-left: 10px"></table>
+</div> -->
+
+
+
+</body>
+</html>
+

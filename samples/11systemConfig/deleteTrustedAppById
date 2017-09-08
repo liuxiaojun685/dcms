@@ -1,0 +1,7 @@
+##刘强
+##删除可信应用程序
+http://localhost:8080/dcms/api/v1/systemConfig/deleteTrustedAppById
+{
+  	token:"40040c8cc05fa34b0c474c11563e57fd",
+	tedAppId:1
+}

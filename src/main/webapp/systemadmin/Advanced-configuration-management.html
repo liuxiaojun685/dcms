@@ -1,0 +1,170 @@
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">系统管理</a></li>
+                        <li><a href="javascript:void(0)">系统高级配置管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div  class="col-sm-12">
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><span style="padding:10px;"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="tabbable header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li onclick="queryLogArchiveKeepTime()"><a href="#box_tab6" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">日志归档策略配置</span></a></li>
+                                    <!-- <li onclick="queryDesensity()"><a href="#box_tab4" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">文件名脱敏配置</span></a></li> -->
+                                    <li onclick="Timer()"><a href="#box_tab3" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">系统定时任务配置</span></a></li>
+                                    <li onclick="queryClassifiedWhiteList()"><a href="#box_tab7" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">标密白名单配置</span></a></li>
+                                    <li onclick="InitTable(0)"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">可信应用软件配置</span></a></li>
+                                    <li onclick="Watermark(2)"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">屏幕水印配置</span></a></li>
+                                    <li onclick="Watermark(1)" class="active"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">打印水印配置</span></a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab1">
+                                        <div class="row" style="overflow-y:auto;">
+                                            <div class="col-xs-12 potions1">
+                                                <table class="table table-bordered plist">
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="box_tab0">
+                                        <div class="row" style="overflow-y:auto;">
+                                            <div class="col-xs-12 potions1">
+                                                <table class="table table-bordered plist">
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="box_tab2">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="table table-bordered table-condensed table-hover plist text-center">
+                                                    <tr>
+                                                        <th style="width:5%;">编号</th>
+                                                        <th style="width:20%;">可信应用程序描述</th>
+                                                        <th style="width:20%;">进程名
+                                                        </th>
+                                                        <th style="width:47%;">关联扩展名
+                                                        </th>
+                                                        <th style="width:8%;">操作</th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    <a href="javascript:void(0)" style="margin-left:10px;text-decoration: none;" class="add-software">
+                                                        <i class="fa fa-plus"><span style="margin: 5px 10px;color:#555;font-weight:bold;">添加可信应用软件</span></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-8">
+                                                    <div class="M-box2"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade in" id="box_tab3">
+                                        <div class="row">
+                                            <div class="col-xs-12 potions1">
+                                                <table class="table table-bordered plist">
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="box_tab4">
+                                        <div class="row frameworks">
+                                            <div class="col-xs-12" style="background:#efefef;">
+                                                <div class="row">
+                                                    <div class="col-xs-12 potions1">
+                                                        <table class="table table-bordered" style="background:#fff;">
+
+                                                        </table>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="tab-pane fade in" id="box_tab6">
+                                         <div class="row">
+                                             <div class="col-xs-12 potions1">
+                                                 <table class="table table-bordered queryLogArchiveKeepTime plist" style="background:#fff;">
+
+                                                 </table>
+                                             </div>
+                                             <div class="col-xs-12 potions1">
+                                                 <table class="table table-bordered queryDesensity" style="background:#fff;">
+
+                                                 </table>
+                                             </div>
+                                         </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="box_tab7">
+                                        <div class="row">
+                                            <div class="col-xs-12 potions1">
+                                                <table class="table table-bordered queryClassifiedWhiteList plist" style="background:#fff;">
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script src="../js/jquery.pagination.js"></script>
+<script src="js/Advanced-configuration-management.js"></script>
+
+<div id="contclient" style="display:none;">
+    <form class="form-horizontal" role="form">
+        <div class="form-group form-group-lg"  style="margin-top:20px;">
+            <label class="col-sm-3 control-label" for="data2">应用程序描述：<span class="start-span">*</span></label>
+
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="data2">
+                <span class="error-span data2"></span>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group form-group-lg">
+            <label class="col-sm-3 control-label" for="data1">进程名：<span class="start-span">*</span></label>
+
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="data1">
+                <span class="error-span data1"></span>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group form-group-lg">
+            <label class="col-sm-3 control-label" for="data3">关联扩展名：<span class="start-span">*</span></label>
+
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="data3">
+                <span class="error-span data3"></span>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </form>
+</div>

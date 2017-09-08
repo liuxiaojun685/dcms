@@ -1,0 +1,33 @@
+##刘强
+##文件授权
+http://localhost:8080/dcms/api/v1/file/authorization
+{
+   "token":"d79adebf4adff1f460e020b2350df46e",
+   "fid":"1",
+   "drmList":[
+    {
+      "DRMInfo":{
+     	"contentCopy": 1,
+	    "contentFullControl": 0,
+	    "contentModify": 0,
+	    "contentPrint": 0,
+	    "contentPrintWatermark": 1,
+	    "contentRead": 1,
+	    "contentReadWatermark": 0,
+	    "contentScreenShot": 0,
+	    "fileAuthorization": 1,
+	    "fileCopy": 0,
+	    "fileDelete":1,
+	    "fileDecrypt": 0,
+	    "fileDispatch":1,
+	    "fileLevelChange": 0,
+	    "fileLevelDecide": 0,
+	    "fileOpenOffline": 1,
+	    "fileSaveCopy": 1,
+	    "fileUnbunding": 1,
+	    "varIdType":1,
+	    "varId":"uid-67f990db-d71c-4f0b-95b7-3239420bd7a5"
+   	   }
+    }
+  ]
+}

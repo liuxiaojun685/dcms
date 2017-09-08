@@ -1,0 +1,17 @@
+##牛犀
+##修改文件上传存储位置
+http://localhost:8080/dcms/api/v1/systemConfig/updateFileLocation
+
+{
+  "token":"b3775c42a096ce85a2f28d26c9ea65cc",
+  "fileLevel":"3",
+  "fileLocation":{
+      "domainName":"1",
+      "ip":"1",
+      "port":"8",
+      "path":"1",
+      "protocol":"1",
+      "account":"1",
+      "passwd":"1"
+  }
+}

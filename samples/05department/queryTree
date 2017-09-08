@@ -1,0 +1,11 @@
+##牛犀
+##查看部门树
+http://localhost:8080/dcms/api/v1/department/queryTree
+{
+  "token":"6e4b77dae44bbf65f6c004c4c3723446",
+  "hasUser":"0",
+  "hasGroup":"1",
+  "keyword":"",
+  "fileLevel":"1"
+
+} 

@@ -1,0 +1,6 @@
+##牛犀
+##删除一条中间件访问控制策略
+http://localhost:8080/dcms/api/v1/middleware/deleteACLById
+{"token":"9d25960acfbdd9dc4b6b3d7c716276e6",
+"middlewareACLId":"1"
+}

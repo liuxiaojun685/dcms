@@ -1,0 +1,8 @@
+##牛犀
+##删除一个终端
+http://localhost:8080/dcms/api/v1/client/deleteById
+
+{
+"token":"c8399b58400a66e2aa7a5ce56d8b13d0",
+ "cid":"aaaaaaaaa"
+ }

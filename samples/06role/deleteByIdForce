@@ -1,0 +1,7 @@
+##刘强
+##6.5 删除用户角色（强制）
+http://localhost:8080/dcms/api/v1/role/deleteByIdForce
+{
+   token:"e58f8fb980898408d17697d4a2a08fc8",
+	roleId:2
+}

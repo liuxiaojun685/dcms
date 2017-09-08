@@ -1,0 +1,10 @@
+##刘强
+##4.8 组批量移除用户
+http://localhost:8080/dcms/api/v1/group/deleteUserInBatches
+{
+  "token":"e916eb724b308a7e7629b45200a61282",
+  "uidList":[
+  "uid-2e353781-becf-4765-86e8-82c7ff5ee523","uid-15732953-eb41-4a0e-913f-53546cbb99bf"
+],
+  "gid":"gid-abce847d-b83e-4493-a6ee-c11da8357282"
+}

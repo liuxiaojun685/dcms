@@ -1,0 +1,5 @@
+### hy
+http://localhost:8080/dcms/api/v1/admin/login
+{account:"sysadmin",passwd:"123456"}
+
+###

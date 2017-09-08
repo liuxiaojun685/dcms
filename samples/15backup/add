@@ -1,0 +1,8 @@
+##牛犀
+##创建数据库新备份
+http://localhost:8080/dcms/api/v1/backup/add
+{
+  "token":"508d3b3e5470cdaf3c6eb5ea152b939e",
+"name":"dcms_db_preinstall.sql",
+"description":"niuxi",
+}

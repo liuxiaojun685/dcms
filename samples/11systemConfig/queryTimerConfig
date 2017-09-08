@@ -1,0 +1,6 @@
+##牛犀
+##获取定时配置
+http://localhost:8080/dcms/api/v1/systemConfig/queryTimerConfig
+{
+  "token":"10385782386a935eef9ea3bdead21d89"
+}

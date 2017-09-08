@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var token = GetQueryString("token");
+    var isIE=!!window.ActiveXObject;
+    var isIE6=isIE&&!window.XMLHttpRequest;
+    var isIE8=isIE&&!!document.documentMode;
+    var isIE7=isIE&&!isIE6&&!isIE8;
+    if (isIE){
+		var fid = GetQueryString("fid");
+		var fileName = GetQueryString("fileName");
+        if (isIE6){
+			var href="myselfInfo-ie6.html?token="+token;
+        }else if (isIE8){
+		    var href="myselfInfo.html?token="+token;
+        }else if (isIE7){
+            alert("ie7");
+        }
+		if(fid != null){
+			href+="&fid="+fid
+		}
+		if(fileName != null){
+			href+="&fileName="+fileName
+		}
+		window.location.href=href
+    }
+	
+	 //取url参数
+    function GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null)return unescape(r[2]);
+        return null;
+    }
+</script>
+</body>
+</html>

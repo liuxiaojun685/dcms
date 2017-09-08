@@ -1,0 +1,5 @@
+##牛犀
+##删除补丁
+http://localhost:8080/dcms/api/v1/client/deleteClientPatch
+
+{"token":"e1a6dc466b39fc2ad68b0b8f936824a2","patchId":"1"}

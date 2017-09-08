@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title></title>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script src="js/jquery-1.11.1.min.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/message.js"></script>
+    <script src="js/common.js"></script>
+    <style type="text/css">
+
+        /*显示类型*/
+        .showType{
+            height:40px;
+            line-height:40px;
+            float:left;
+            width: 50px;
+            font-size: 24px;
+            text-align: center;
+            font-weight: bold;
+
+        }
+        /*删除*/
+        .remove{
+            float:left;
+            width: 50px;
+            height:40px;
+            line-height:40px;
+            text-align: center;
+        }
+        /*刷新*/
+        .refresh{
+            height:40px;
+            line-height:40px;
+            float:right;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        /*展示类型字 流程 定密*/
+        .typeWf{
+            background-color: #fc2246;
+            color: #ffffff;
+            padding: 1px;
+        }
+
+            /*展示类型字 补丁 文件解密*/
+        .typePatch{
+            background-color: #09549f;
+            color: #ffffff;
+            padding: 1px;
+        }
+
+            /*展示类型字 签发*/
+        .typeDispatch{
+            background-color: #008e39;
+            color: #ffffff;
+            padding: 1px;
+        }
+
+            /*展示类型字 密级变更*/
+        .typeChange{
+            background-color: #bb19c3;
+            color: #ffffff;
+            padding: 1px;
+        }
+
+        /*每一行*/
+        .eachLine{
+            height: 41px;
+            border-bottom: 1px solid #b6b6b6;
+        }
+
+        /*消息内容*/
+        .message{
+            height: 20px;
+            font-size: 10px;
+        }
+        /*翻页*/
+        .pages{
+            height:40px;
+            line-height:40px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 500px">
+    <nav class="container-fluid header " style="background: #4777c8;height:40px;">
+        <div style="color:#fff;float:left">
+            <!--<a class="navbar-brand index rowname" href="#"></a>-->
+            <h4 class="index">消息管理</h4>
+        </div>
+        <div class="refresh" onclick="refresh()">
+            <!--<a class="navbar-brand index rowname" href="#"></a>-->
+            <img src="css/images/refresh.png"/>
+        </div>
+    </nav>
+
+    <div id="list">
+
+    </div>
+    <div class="pages">
+        <span style="background-color: #b6b6b6;padding: 3px;cursor: pointer" class="prevPage"><img src="css/images/leftPage.png"/></span>
+        <span style="background-color: #b6b6b6;padding: 3px;cursor: pointer" class="nextPage"><img src="css/images/rightPage.png"/></span>
+        <span id="current">0</span>/<span id="total">0</span>页<span><input id="need" style="width: 30px;height: 20px" type="text"> </span><a class="gopage" style="cursor: pointer">转到</a>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+##刘强
+##上传补丁，系统管理员
+http://localhost:8080/dcms/api/v1/client/addClientPatch
+{
+   token:"",
+   osType:"win8",
+   versionType:1,
+   versionName:"v1.0",
+   versionCode:1,
+   name:"est.dll",
+   description:"描述",
+   fileStream:"之后做"
+}

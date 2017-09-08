@@ -1,0 +1,8 @@
+##刘强
+##组添加用户
+http://localhost:8080/dcms/api/v1/group/addUser
+{
+  token:"6db6e3989f0f16813529674dc8ed1f56",
+  uid:"",
+  gid:""
+}  

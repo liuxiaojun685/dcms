@@ -1,0 +1,19 @@
+##牛犀
+##查询终端列表
+http://localhost:8080/dcms/api/v1/client/queryList
+
+{"token":"5d7b748c39b61865b483ba2a128abdd4",
+ "pageNumber":"0",
+ "pageSize":"5",
+ "keyword":"",
+ "ip":"",
+ "mac":"",
+ "osType":"",
+ "versionType":"",
+ "versionName":"",
+ "versionCode":"",
+ "online":"",
+ "lastLoginTimeStart":"",
+ "lastLoginTimeEnd":"1583925588541",
+
+ }

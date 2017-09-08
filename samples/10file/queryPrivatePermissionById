@@ -1,0 +1,7 @@
+##刘强
+##查询个人文件操作权限（通过fid）
+http://localhost:8080/dcms/api/v1/file/queryPrivatePermissionById
+{
+  "token":"4c0540f93996747125721931caab1a82",
+  "fid":""
+}

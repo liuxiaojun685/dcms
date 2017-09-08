@@ -1,0 +1,7 @@
+##牛犀
+##删除定密依据
+http://localhost:8080/dcms/api/v1/Basis/Delete
+
+{"token":"ed686aca32ea14fa356c2cb5538346c5",
+"basisId":"4",
+}

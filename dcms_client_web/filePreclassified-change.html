@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var isIE=!!window.ActiveXObject;
+    var isIE6=isIE&&!window.XMLHttpRequest;
+    var isIE8=isIE&&!!document.documentMode;
+    var isIE7=isIE&&!isIE6&&!isIE8;
+    if (isIE){
+        if (isIE6){
+            window.location.href="filePreclassified-ie6.html"
+        }else if (isIE8){
+            window.location.href="filePreclassified.html"
+        }else if (isIE7){
+            alert("ie7");
+        }
+    }
+//    if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/6./i)=="6."){
+//        alert("IE 6");
+//        window.location.href="filePreclassified-ie6.html"
+//    } else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion.match(/8./i)=="8."){
+//        alert("IE 8");
+//        window.location.href="filePreclassified-ie6.html"
+//    }
+
+</script>
+</body>
+</html>

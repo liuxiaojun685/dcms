@@ -1,0 +1,8 @@
+##牛犀
+##删除部门
+http://localhost:8080/dcms/api/v1/department/deleteById
+
+{
+  "token":"db252d6939a8a53e0893cf4b1ecccb7c",
+  "did":"f0c8ee53-d204-45c1-a4c2-620104bee685"
+} 

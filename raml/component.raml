@@ -1,0 +1,47 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  ComponentInfo:
+    properties:
+      componentId:
+        description: 组件ID
+        type: integer
+      name:
+        description: 组件名称
+        type: string
+      description:
+        description: 组件描述
+        type: string
+      enable:
+        description: 是否启用 1是 0否
+        type: integer
+
+############################################################
+# /component/query
+############################################################
+  Component_QueryRequest:
+    type: common.CommonRequest
+
+  Component_QueryResponse:
+    type: common.CommonResponse
+    properties:
+      componentList:
+        description: 组件列表
+        type: ComponentInfo[]
+
+############################################################
+# /component/updateById
+############################################################
+  Component_UpdateByIdRequest:
+    type: common.CommonRequest
+    properties:
+      componentId:
+        description: 组件ID
+        type: integer
+      enable:
+        description: 是否启用 1是 0否
+        type: integer
+
+  Component_UpdateByIdResponse:
+    type: common.CommonResponse

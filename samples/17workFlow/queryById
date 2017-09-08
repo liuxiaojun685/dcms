@@ -1,0 +1,10 @@
+##牛犀
+##查询流程信息
+http://localhost:8080/dcms/api/v1/workFlow/queryById
+
+{
+   token:"37d9e461456d073154aab7cb3576b82a",
+   workFlowId:2
+  
+ 
+}

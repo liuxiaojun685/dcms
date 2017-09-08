@@ -1,0 +1,20 @@
+##刘强
+##修改定时配置
+http://localhost:8080/dcms/api/v1/systemConfig/updateTimerConfig
+{
+  	token:"0eb66ed489eee5e28c158e1fea08fb1f",
+	timerMailAlarmStartTime:1483495961000,
+	timerMailAlarmPeriod:1484100761000,
+	timerBackupStartTime:1483495961000,
+	timerBackupPeriod:1484100761000,
+	timerClientLogStartTime:1483495961000,
+	timerClientLogPeriod:1484100761000,
+	timerDirSyncStartTime:1483495961000,
+	timerDirSyncPeriod:1484100761000,
+	timerAutoDecodeStartTime:1483495961000,
+	timerAutoDecodePeriod:1484100761000,
+	timerFileStatisticStartTime:1483495961000,
+	timerFileStatisticPeriod:1484100761000,
+	timerCancelApproverStartTime:1483495961000,
+	timerCancelApproverPeriod:1484100761000
+}

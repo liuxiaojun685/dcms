@@ -1,0 +1,8 @@
+##刘强
+##部门添加用户
+http://localhost:8080/dcms/api/v1/department/addUser
+{
+  token:"db252d6939a8a53e0893cf4b1ecccb7c",
+  uid:"e8bbbc27-2f58-42b3-bae8-18b2f0f48ae3",
+  did:"f0c8ee53-d204-45c1-a4c2-620104bee685"
+}  

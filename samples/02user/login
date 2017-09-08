@@ -1,0 +1,16 @@
+##刘强
+http://localhost:8080/dcms/api/v1/user/login
+{
+  "account":"liu",
+  "passwd":"123",
+  "description":"终端描述",
+  "clientLevel":1,
+  "versionName":"v1.0",
+  "pcName":"终端1",
+  "versionCode":1,
+  "versionType":1,
+  "osType":"win10",
+  "mac":"40-F0-2F-76-6D-82"
+}
+
+###z`

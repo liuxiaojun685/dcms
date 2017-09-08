@@ -1,0 +1,79 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:cache="http://www.springframework.org/schema/cache" xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+     http://www.springframework.org/schema/aop
+     http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-4.0.xsd
+     http://www.springframework.org/schema/data/jpa
+     http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd
+     http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+     http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+
+    <!-- 数据源 -->
+    <context:property-placeholder ignore-resource-not-found="true" location="classpath:jdbc.properties" />
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="url" value="${ds.url}" />
+        <property name="username" value="${ds.username}" />
+        <property name="password" value="${ds.password}" />
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="5" />
+        <property name="minIdle" value="5" />
+        <property name="maxActive" value="50" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        <property name="validationQuery" value="SELECT 'x'" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="true" />
+        <property name="removeAbandonedTimeout" value="1800" />
+        <property name="logAbandoned" value="true" />
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小,mysql 不使用 -->
+        <property name="poolPreparedStatements" value="false" />
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat" />
+        <!-- 慢查询sql打印 -->
+        <property name="connectionProperties" value="druid.stat.slowSqlMillis=200;druid.stat.logSlowSql=false" />
+    </bean>
+
+    <!-- 实体扫描并生成Repository -->
+    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="databasePlatform" value="cn.bestsec.dcms.platform.utils.hql.CustomSQLDialect" />
+    </bean>
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+        <property name="packagesToScan" value="cn.bestsec.dcms.platform.entity" />
+        <property name="jpaProperties">
+            <props>
+                <!-- 命名规则 My_NAME->MyName 自动更新数据库表结构（仅适用于开发阶段，正式运行后最好是手动维护数据库表结构） -->
+                <!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop> -->
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 自动寻找Repository接口并提供实现类以支持@Autowired注入，包名支持通配符，repository-impl-postfix="impl" -->
+    <jpa:repositories base-package="cn.bestsec.dcms.platform" />
+    <!-- 事务，校验，测试时需要加事务注解@Transactional，网站运行需要配置OpenEntityManagerInViewFilter -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    <!-- proxy-target-class为true时@Transactional需要注解实现类的方法，而false则使用java的基于接口的代理 -->
+    <tx:annotation-driven proxy-target-class="true" />
+    <!-- 自动搜索providerClass，也可指定org.hibernate.validator.HibernateValidator ，需提供资源文件classpath:ValidationMessages.properties -->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+</beans>

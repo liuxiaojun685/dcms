@@ -1,0 +1,125 @@
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">管理员日志审计</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div id="content" class="col-lg-12">
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><span style="padding:10px;"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="table header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" onclick="InitTable(0)"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i>
+                                        <span class="hidden-inline-mobile">安全审计日志管理</span></a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab1">
+                                        <div class="potions" style="background:#efefef;">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <table class="" style="background:#efefef;margin-bottom:10px;">
+                                                        <tr>
+                                                            <td>
+                                                                <span>时间：</span>
+                                                                <input style="width:160px;" type="text"
+                                                                       class="laydate-icon" id="start">
+                                                                <span>至</span>
+                                                                <input style="width:160px;" type="text" class="laydate-icon" id="end">
+                                                            </td>
+                                                            <td>
+                                                                <span>动作类别：</span>
+                                                                <select class="state">
+                                                                    <option value="">全部</option>
+                                                                    <option value="登录">登录</option>
+                                                                    <option value="注销">注销</option>
+                                                                    <option value="修改密码">修改密码</option>
+                                                                    <option value="重置用户密码">重置用户密码</option>
+                                                                    <option value="用户与组织管理">用户与组织管理</option>
+                                                                    <option value="终端管理">终端管理</option>
+                                                                    <option value="用户角色管理">用户角色管理</option>
+                                                                    <option value="定密策略管理">定密策略管理</option>
+                                                                    <option value="配置管理">配置管理</option>
+                                                                    <option value="授权许可">授权许可</option>
+                                                                    <option value="组件管理">组件管理</option>
+                                                                    <option value="备份管理">备份管理</option>
+                                                                    <option value="集成管理">集成管理</option>
+                                                                    <option value="日志导出">日志导出</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+
+                                                                <span>管理员类型：</span>
+                                                                <select class="leixing">
+                                                                    <option value="0">全部</option>
+                                                                    <option value="1">安全审计员</option>
+                                                                    <option value="2">系统管理员</option>
+                                                                    <option value="3">安全保密管理员</option>
+
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <span>关键字：</span>
+                                                                <input style="width:150px;" type="text" class="ke">
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-primary" onclick="seachUser()">查询</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table class="table table-bordered table-hover table-condensed"
+                                                           id="tab" style="table-layout: fixed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="display:none;"><input id="allCkb" type="checkbox"></th>
+                                                            <th style="width:5%">编号</th>
+                                                            <th style="display:none;">管理员姓名</th>
+                                                            <th style="width:8%">管理员账号</th>
+                                                            <th style="width:17%">操作日期</th>
+                                                            <th style="width:10%">操作类别</th>
+                                                            <th style="width:40%">操作详情</th>
+                                                            <th style="width:10%">操作IP</th>
+                                                            <th style="width:10%">风险等级</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="list">
+                                                        </tbody>
+
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-8">
+                                                    <div  class="M-box3"></div>
+                                                </div>
+                                                <div class="col-xs-4 text-right">
+                                                    <input type="button" class="btn btn-primary downLog" value="导出" onclick="downLog()"/><a href="" id="excelhref" class="hide"><span id="excel"></span></a>
+                                                    <input type="button" class="btn btn-primary logArchive" value="归档" onclick="logArchive()"/>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script src="js/logadmin.js"></script>

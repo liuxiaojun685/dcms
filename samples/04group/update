@@ -1,0 +1,11 @@
+##牛犀
+##修改用户组
+
+http://localhost:8080/dcms/api/v1/group/update
+
+{"token":"09089b34fbe0b61a6f412b10c562459b",
+"gid":"牛犀",
+"name":"牛犀",
+"description":"牛犀",
+"did":"牛犀"
+}

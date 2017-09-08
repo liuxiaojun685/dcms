@@ -1,0 +1,58 @@
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">系统管理</a></li>
+                        <li><a href="javascript:void(0)">系统信息</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><span style="padding:10px;"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="table header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" onclick="InitTable(0)"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">系统信息</span></a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active potions1" id="box_tab1">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="table table-bordered table-hover table-condensed">
+                                                    <tr>
+                                                        <td>操作系统:</td>
+                                                        <td class="osType"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>平台版本:</td>
+                                                        <td class="platformVersion"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background: #efefef;">数据库:</td>
+                                                        <td class="datebase"></td>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script src="js/system-information.js"></script>

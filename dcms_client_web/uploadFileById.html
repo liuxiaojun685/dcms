@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <title></title>
+    <link rel="stylesheet" href="css/uploadFileById3.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/style.css">-->
+    <link rel="stylesheet" type="text/css" href="css/jquery.treeview.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap-multiselect.css"/>-->
+    <link href="tooltips/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="tooltips/css/docs.css" rel="stylesheet">
+    <link href="tooltips/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="tooltips/css/tooltips.css" rel="stylesheet" id="skin">
+    <link href="js/textshow/css/all.css" rel="stylesheet" type="text/css"/>
+    <link href="css/select.down.css" rel="stylesheet" type="text/css"/>
+    <link href="css/css/cloud-admin.css" rel="stylesheet">
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/json2.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/treeview/jquery.treeview.js"></script>
+    <script src="js/treeview/jquery.cookie.js"></script>
+    <script src="js/bootstrap-paginator.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/uploadFileById.js"></script>
+    <script type="text/javascript" src="js/jquery-form.js"></script>
+    <script src="../layer/layer.js"></script>
+    <script src="js/laydate/laydate.js"></script>
+    <script src="tooltips/js/bootstrap-tooltip.js"></script>
+    <script src="tooltips/js/jquery.pure.tooltips.js"></script>
+    <script src="js/placeholder.js"></script>
+    <script language="javascript" src="js/textshow/js/ui.base.min.js"></script>
+    <script language="javascript" src="js/textshow/js/ui.droppable.min.js"></script>
+    <script language="javascript" src="js/textshow/js/ui.draggable.min.js"></script>
+    <script language="javascript" src="js/textshow/js/ui.sortable.min.js"></script>
+    <script language="javascript" src="js/textshow/js/submit.js"></script>
+    <style>
+        .upload input{
+            line-height: 25px;
+        }
+        .upload select{
+            padding:2px 0;
+        }
+
+    </style>
+</head>
+<body>
+<div id="text">
+    <table class="upload">
+        <tr>
+            <td colspan="4"><h4 class="index" style="font-weight: bold">电子文档密级管理系统</h4></td>
+        </tr>
+        <tr>
+            <td style="width:12%;letter-spacing:3px;font-weight: bold;" class="text-right"><span>文件标识：</span></td>
+            <td style="width:38%"><input id="fid" class="form-control" readonly/></td>
+            <td style="width:12%;letter-spacing: 3px;font-weight: bold;" class="text-right"><span>文件名称：</span></td>
+            <td style="width:38%"><input id="filename" class="form-control"  readonly/></td>
+        </tr>
+        <tr>
+            <td class="text-right" style="letter-spacing:3px;font-weight: bold;">秘密等级：</td>
+            <td id="fileLevel">
+                <select id="ss" name="fileLevel" class="form-control" onclick="PermissionPolicychoose()">
+                    <option value="4">绝密</option>
+                    <option value="3">机密</option>
+                    <option value="2">秘密</option>
+                    <option value="1">内部</option>
+                    <option value="0">公开</option>
+                </select>
+            </td>
+            <td class="text-right" style="letter-spacing: 3px;font-weight: bold;">紧急程度：</td>
+            <td>
+                <select id="urgency" class="form-control">
+                    <option value="0">一般</option>
+                    <option value="1">重要</option>
+                    <option value="2">加急</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="letter-spacing:3px;font-weight: bold;">保密期限：</td>
+            <td colspan="1">
+                <select id="durationType" name="durationType"  onchange="dur()" class="time1 form-control">
+                    <option value="0" selected>不限</option>
+                    <option value="1">长期</option>
+                    <option value="2">期限</option>
+                    <option value="3">解密日期</option>
+                    <option value="4">条件</option>
+                </select>
+            </td>
+            <td colspan="2" >
+                <div class=" times time1" style="width:300px;margin-left:40px;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="font-weight: bold;">主定密单位：</td>
+            <td colspan="3">
+                <input type="text" readonly id="major" class="form-control"/>
+                <input type="hidden" id="unitNos">
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="line-height: 60px;font-weight: bold;">辅定密单位：</td>
+            <td colspan="3">
+                <div class="list-name-input">
+                    <div onclick="getBlur(this)" class="i_inp" style="height:40px;overflow-y: auto;width:610px;display:
+                    inline-block">
+                        <span class="ui-sortable disp " style="font-size: 12px;">
+                        </span>
+                        <input type="text" class="ipva form-control" style=" border:none; float:left; display:block; width:auto; outline:none; margin:5px; width:auto; min-width:10px; max-width:200px; background:none; height:20px; line-height:20px; font-size:12px; " id="list-name-for-select" placeholder="[单位编号]单位名称">
+                    </div>
+                    <div style="display: inline-block;margin-left: 620px;margin-top: -5px;">
+                        <input style="padding:5px 15px; font-size: medium;"  onclick="Minorshow()" type="button" value="添加">
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="letter-spacing:3px;font-weight: bold;">定密依据：</td>
+            <td colspan="1">
+                <select id="basisType" name="basisType" class="form-control">
+                    <option value="0">确定性定密</option>
+                    <option value="1">不明确事项</option>
+                    <option value="2">无权定密事项</option>
+                    <option value="3">派生定密</option>
+                </select>
+            </td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="3">
+                <div id="content" class="list-name-select">
+                    <div onclick="getBasisBlur(this)" class="i_inpBasis"
+                         style="display: inline-block;height:40px;overflow-y: auto;width:610px;top:10px;">
+                                <span class="ui-sortable dispBasis" style="font-size:12px;">
+                                </span>
+                        <input type="text" class="ipvabasis form-control"
+                               style=" border:none; float:left; display:block; width:auto; outline:none; margin:5px; width:auto; min-width:10px; max-width:200px; background:none; height:20px; line-height:20px; font-size:12px; "
+                               placeholder="[密级]依据内容">
+                    </div>
+                    <div style="display: inline-block;margin-left: 620px;">
+                        <input style="padding: 5px 15px; font-size: medium;" onclick="dispBasisshow()" type="button" value="添加">
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="letter-spacing:3px;font-weight: bold;">
+                知悉范围：
+                <input type="hidden" id="fileScopes">
+            </td>
+            <td colspan="3">
+                <div class="box" style="border: 0;">
+                    <div class="box-body">
+                        <div class="tabbable header-tabs">
+                            <ul class="nav nav-tabs" style="top: -30px;">
+                                <li class="choose1 active"><input type="hidden" value="0"/><a href="#box_tab5"
+                                                                                              data-toggle="tab"><i
+                                        class="fa fa-cog"></i> <span class="hidden-inline-mobile">列举方式</span></a></li>
+                                <li class="choose2"><input type="hidden" value="1"/><a href="#box_tab4"
+                                                                                       data-toggle="tab"><i
+                                        class="fa fa-cog"></i> <span class="hidden-inline-mobile">描述方式</span></a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="box_tab1">
+                                    <textarea id="tooltips" rows="4" cols="20" class="form-control choose"
+                                              style="resize:none;"></textarea>
+                                    <textarea id="fileScopeDesc" rows="4" cols="20" class="form-control"
+                                              style="display: none;resize:none;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="letter-spacing: 3px;font-weight: bold;">安全控制：</td>
+            <td colspan="3">
+                <div class="permission">
+                    <input style="" type="checkbox" name="contentRead" ><span>内容阅读</span>
+                    <input type="checkbox" name="contentPrint"><span>内容打印</span>
+                    <input type="checkbox" name="contentPrintHideWater"><span>打印隐藏水印</span>
+                    <input type="checkbox" name="contentModify"><span>内容修改</span>
+                    <input type="checkbox" name="contentScreenShot"><span>内容截屏</span>
+                    <input type="checkbox" name="contentCopy"><span>内容拷贝</span>
+                    <input type="checkbox" name="fileCopy"><span>文件拷贝</span>
+                    <input type="checkbox" name="fileSaveCopy"><span>文件另存副本</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="letter-spacing: 3px;font-weight: bold;">扩展属性：</td>
+            <td colspan="3">
+                <span>文号：</span>
+                <input id="issueNumber" name="issueNumber" type="text" style="height: 25px"/>
+                <span>份号：</span>
+                    <input id="docNumber" name="docNumber" type="text" style="height: 25px"/>
+                <span>份数：</span>
+                    <input id="duplicationAmount" name="duplicationAmount" type="text"
+                           style="height: 25px"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right" style="letter-spacing: 3px;font-weight: bold;">文件概要：</td>
+            <td colspan="3">
+                <textarea class="form-control" id="createComment" name="createComment" rows="3"  style="resize:none;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="text-center">
+                <input style="padding:5px 15px; font-weight: bold; font-size: medium; margin-top: 5px;" type="button" onclick="tjsj();" value="提交">
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+</script>
+</body>
+<div id="dtree" class="col-sm-12 my-xs" style="border-radius: 0;display: none">
+    <input type="text" style="margin-left: 75px" id="treeworde"><input type="button" value="搜索" style="margin-left: 10px" id="treechoose">
+    <ul id="browser" class="filetree  treeview">
+    </ul>
+</div>
+
+<div id="MinorUnits" class="col-sm-12 my-xs" style="border-radius: 0;display: none">
+    <table id="applyMinorUnits" style="margin-left: 10px"></table>
+</div>
+
+<div id="basisContents" class="col-sm-12 my-xs" style="border-radius: 0;display: none">
+    <table id="basisContent" style="margin-left: 10px"></table>
+</div>
+<!--调用ocx-->
+<OBJECT id="ocx" WIDTH=528 HEIGHT=45 classid="CLSID:FE876719-85A6-43AB-8496-6A4BA4E0E414" style="display: none"/>
+</html>

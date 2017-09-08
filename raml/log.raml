@@ -1,0 +1,308 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  admin: admin.raml
+  user: user.raml
+  client: client.raml
+  file: file.raml
+types:
+  AdminLogInfo:
+    properties:
+      adminLogId:
+        description: 管理员日志ID
+        type: integer
+      createTime:
+        description: 入库时间
+        type: number
+        format: long
+      operateTime:
+        description: 操作时间
+        type: number
+        format: long
+      operateType:
+        description: 操作类型
+        type: string
+      operateDescription:
+        description: 操作详情 概要 关键词搜索
+        type: string
+      operateResult:
+        description: 操作结果 1成功 2失败
+        type: integer
+      admin:
+        description: 管理员信息
+        type: admin.AdminSimpleInfo
+      ip:
+        description: 操作机器IP地址
+        type: string
+      riskLevel:
+        description: 重要程度 1一般 2重要 3严重
+        type: integer
+      reserve:
+        description: 预留
+        type: string
+
+  ClientRequestLogInfo:
+    properties:
+      clientRequestLogId:
+        description: 终端请求日志ID
+        type: integer
+      createTime:
+        description: 入库时间
+        type: number
+        format: long
+      operateTime:
+        description: 操作时间
+        type: number
+        format: long
+      operateType:
+        description: 操作类型 登陆 注销 修改密码 策略更新 文件下载
+        type: string
+      operateDescription:
+        description: 操作详情 用户[xxx]登陆失败，原因账号或密码错误
+        type: string
+      operateResult:
+        description: 操作结果 1成功 2失败
+        type: integer
+      user:
+        description: 用户信息
+        type: user.UserSimpleInfo
+      client:
+        description: 终端信息
+        type: client.ClientSimpleInfo
+      riskLevel:
+        description: 重要程度 1一般 2重要 3严重
+        type: integer
+      reserve:
+        description: 预留
+        type: string
+
+  ClientLogInfo:
+    properties:
+      operateTime:
+        description: 操作时间
+        type: number
+        format: long
+      operateType:
+        description: 操作类型 阅读 打印（有无水印） 编辑 截屏 内容复制 文件复制 删除 另存 重命名 发送 预定密 正式定密 签发 变更 解密 解绑 授权
+        type: string
+      operateDescription:
+        description: 操作详情 用户[xxx]打印失败，原因没有权限。
+        type: string
+      operateResult:
+        description: 操作结果 1成功 2失败
+        type: integer
+      user:
+        description: 用户信息
+        type: user.UserSimpleInfo
+      client:
+        description: 终端信息
+        type: client.ClientSimpleInfo
+      srcFile:
+        description: 终端请求日志ID
+        type: file.FileSimpleInfo
+      desFile:
+        description: 终端请求日志ID
+        type: file.FileSimpleInfo
+      operateWay:
+        description: 操作方法 内容粘贴 U盘拷贝 光盘刻录 网络共享 邮件发送
+        type: string
+      riskLevel:
+        description: 重要程度 1一般 2重要 3严重
+        type: integer
+      reserve:
+        description: 预留
+        type: string
+
+############################################################
+# /log/queryAdminLog
+############################################################
+  Log_QueryAdminLogRequest:
+    type: common.PageRequest
+    properties:
+      operateType:
+        description: 操作类型
+        required: false
+        type: string
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+      operateTimeStart:
+        description: 操作时间起始
+        required: false
+        type: number
+        format: long
+      operateTimeEnd:
+        description: 操作时间截止
+        required: false
+        type: number
+        format: long
+      adminType:
+        description: 管理员类型。2系统管理员 3安全保密管理员
+        required: false
+        type: integer
+      riskLevel:
+        description: 重要程度 1一般 2重要 3严重
+        required: false
+        type: integer
+
+  Log_QueryAdminLogResponse:
+    type: common.PageResponse
+    properties:
+      adminLogList:
+        description: 管理员日志列表
+        type: AdminLogInfo[]
+
+############################################################
+# /log/queryClientRequestLog
+############################################################
+  Log_QueryClientRequestLogRequest:
+    type: common.PageRequest
+    properties:
+      operateType:
+        description: 操作类型
+        required: false
+        type: string
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+      operateTimeStart:
+        description: 操作时间起始
+        required: false
+        type: number
+        format: long
+      operateTimeEnd:
+        description: 操作时间截止
+        required: false
+        type: number
+        format: long
+      riskLevel:
+        description: 重要程度 1一般 2重要 3严重
+        required: false
+        type: integer
+
+  Log_QueryClientRequestLogResponse:
+    type: common.PageResponse
+    properties:
+      clientRequestLogList:
+        description: 日志列表
+        type: ClientRequestLogInfo[]
+
+############################################################
+# /log/queryClientLog
+############################################################
+  Log_QueryClientLogRequest:
+    type: common.PageRequest
+    properties:
+      operateTypes:
+        description: 操作类型
+        required: false
+        type: string[]
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+      operateTimeStart:
+        description: 操作时间起始
+        required: false
+        type: number
+        format: long
+      operateTimeEnd:
+        description: 操作时间截止
+        required: false
+        type: number
+        format: long
+      riskLevel:
+        description: 重要程度 1一般 2重要 3严重
+        required: false
+        type: integer
+
+  Log_QueryClientLogResponse:
+    type: common.PageResponse
+    properties:
+      clientLogList:
+        description: 日志列表
+        type: ClientLogInfo[]
+
+############################################################
+# /log/uploadLog
+############################################################
+  Log_UploadLogRequest:
+    type: common.CommonRequest
+
+  Log_UploadLogResponse:
+    type: common.CommonResponse
+
+############################################################
+# /log/exportAdminLog
+############################################################
+  Log_ExportAdminLogRequest:
+    type: common.CommonRequest
+    properties:
+      operateType:
+        description: 操作类型
+        required: false
+        type: string
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+      operateTimeStart:
+        description: 操作时间起始
+        required: false
+        type: number
+        format: long
+      operateTimeEnd:
+        description: 操作时间截止
+        required: false
+        type: number
+        format: long
+      adminType:
+        description: 管理员类型。2系统管理员 3安全保密管理员
+        required: false
+        type: integer
+      riskLevel:
+        description: 重要程度 1一般 2重要 3严重
+        required: false
+        type: integer
+
+  Log_ExportAdminLogResponse:
+    type: common.CommonResponse
+
+############################################################
+# /log/queryFileLevelManagementLog
+############################################################
+  Log_QueryFileLevelManagementLogRequest:
+    type: common.PageRequest
+    properties:
+      operateType:
+        description: 操作类型 预定密 正式定密 文件签发 密级变更 文件解密
+        required: false
+        type: string
+      operateTimeStart:
+        description: 操作时间起始
+        required: false
+        type: number
+        format: long
+      operateTimeEnd:
+        description: 操作时间截止
+        required: false
+        type: number
+        format: long
+
+  Log_QueryFileLevelManagementLogResponse:
+    type: common.PageResponse
+    properties:
+      clientLogList:
+        description: 日志列表
+        type: ClientLogInfo[]
+
+############################################################
+# /log/logArchive
+############################################################
+  Log_LogArchiveRequest:
+    type: common.CommonRequest
+
+  Log_LogArchiveResponse:
+    type: common.CommonResponse

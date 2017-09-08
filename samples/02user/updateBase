@@ -1,0 +1,10 @@
+##刘强
+##修改用户一般信息
+http://localhost:8080/dcms/api/v1/user/updateBase
+{
+  "token":"7927009d88bb877b568434ba0d92730d",
+  "uid":"",#以数据库中为准
+  "name":"用户1",
+  "gender":1,
+  "phone":"18408286192"
+}

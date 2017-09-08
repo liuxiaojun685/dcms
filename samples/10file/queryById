@@ -1,0 +1,7 @@
+##牛犀
+##精确查询文件属性
+http://localhost:8080/dcms/api/v1/File/QueryById
+{
+"token":"5410298585895b922f4353e9ca09dfd5",
+"fid":"1"
+}

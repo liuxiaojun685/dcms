@@ -1,0 +1,6 @@
+##刘强  获取文件上传存储位置
+http://localhost:8080/dcms/api/v1/systemConfig/queryFileLocation
+{
+  token:"5a571b869b50871a056764a16480c9a2",
+  fileLevel:4
+}

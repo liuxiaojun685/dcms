@@ -1,0 +1,7 @@
+##牛犀
+##查询分发范围及权限
+http://localhost:8080/dcms/api/v1/File/QueryDispatchList
+{
+"token":"d669a7519490b0fb7275d3ae43bd2113",
+"fid":"1"
+}

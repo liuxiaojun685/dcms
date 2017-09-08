@@ -1,0 +1,12 @@
+##刘强
+##添加用户
+http://localhost:8080/dcms/api/v1/user/add
+
+{
+  "token":"23a44266c60a3acd6345c0d663f0a32d",
+  "account":"qiang",
+  "name":"用户1",
+  "gender":1,
+  "phone":"18408286192",
+  "level":2
+}

@@ -1,0 +1,9 @@
+##牛犀
+##删除用户角色
+http://localhost:8080/dcms/api/v1/role/deleteById
+{
+  "token":"315010d4f134e9100dc5f1e19cd0b269",
+  "roleId":"4"
+
+
+}

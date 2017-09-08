@@ -1,0 +1,8 @@
+##刘强
+##17.8 查询已办理的审批
+http://localhost:8080/dcms/api/v1/workFlow/queryFinished
+{
+   token:"21074fa7fab3643369d4831e274d49c1",
+   pageNumber:0,
+   pageSize:9
+}

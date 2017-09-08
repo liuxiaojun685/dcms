@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="page-header">
+            <ul class="breadcrumb">
+                <li>
+                    <i class="fa fa-home"></i>
+                    <a href="index.html">首页</a>
+                </li>
+                <li><a href="javascript:void(0)">角色管理</a></li>
+                <li><a href="javascript:void(0)">系统角色管理</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="box border primary">
+                <div class="box-title">
+                    <h4><span style="padding:10px;"></span></h4>
+                </div>
+                <div class="box-body">
+                    <div class="table header-tabs">
+                        <ul class="nav nav-tabs">
+                            <li class="active" onclick="InitTable(0)"><a href="#box_tab1" data-toggle="tab"><i
+                                    class="fa fa-cog"></i> <span class="hidden-inline-mobile">系统角色管理</span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="box_tab1">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <table class="table table-bordered table-hover table-condensed table-responsive" style="table-layout: fixed">
+                                            <thead>
+                                            <tr>
+                                                <th style="width:5%;">编号</th>
+                                                <th style="width:15%;">角色名称</th>
+                                                <th style="width:45%">角色描述</th>
+                                                <th style="width:15%;">内置关联用户</th>
+                                                <th style="width:10%;">角色属性</th>
+                                                <th style="width:10%;">角色关联</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="tab">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="./js/management_role.js"></script>
+<div id="tree" style="display:none;">
+    <ul id="browser" class="filetree treeview-famfamfam treeview">
+    </ul>
+</div>
+<div id="managerole" style="display: none;">
+    <table class="table table-bordered table-hover table-condensed table-responsive" style="border: 0" id="tabs">
+        <thead>
+        <tr>
+            <th style="width:10%;">编号</th>
+            <th style="width:20%;display: none;">管理员ID</th>
+            <th style="width:30%">登录名</th>
+            <th style="width:25%;">姓名</th>
+            <th style="width:25%;">派生人</th>
+            <th style="width:10%;">操作</th>
+        </tr>
+        <tbody id="emptyRole">
+        </tbody>
+        </thead>
+    </table>
+</div>

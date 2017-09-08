@@ -1,0 +1,4 @@
+##牛犀
+##重置用户密码
+http://localhost:8080/dcms/api/v1/user/resetPasswd
+{"token":"a269ced4d75dc2b6f104831ef2f1229b","uid":"uid-67f990db-d71c-4f0b-95b7-3239420bd7a5"}

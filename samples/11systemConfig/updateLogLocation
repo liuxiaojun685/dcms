@@ -1,0 +1,16 @@
+##刘强
+##修改日志上传位置
+http://localhost:8080/dcms/api/v1/systemConfig/updateLogLocation
+{
+  token:"a5db9d88ea0768043537103cca313ff0",
+  logLocation:{
+	  domainName:"www.xnjc.com",
+	  ip:"192.168.0.11",
+	  port:"8080",
+	  path:"c:",
+	  protocol:"http",
+	  account:"liu",
+	  passwd:"123456"
+  }
+  
+}

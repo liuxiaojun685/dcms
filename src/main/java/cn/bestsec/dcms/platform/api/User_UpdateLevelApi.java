@@ -1,0 +1,15 @@
+package cn.bestsec.dcms.platform.api;
+
+import cn.bestsec.dcms.platform.api.exception.ApiException;
+import cn.bestsec.dcms.platform.api.model.*;
+
+/**
+ * 自动生成的API接口类，不要手动修改
+ */
+public interface User_UpdateLevelApi {
+    /**
+     * 权限:安全管理员
+
+     */
+    User_UpdateLevelResponse execute(User_UpdateLevelRequest user_UpdateLevelRequest) throws ApiException;
+}

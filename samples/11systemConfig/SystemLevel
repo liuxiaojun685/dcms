@@ -1,0 +1,8 @@
+##牛犀
+系统定级
+http://localhost:8080/dcms/api/v1/systemConfig/SystemLevel
+{
+ "token":"d669a7519490b0fb7275d3ae43bd2113",
+"level":"8",
+
+}

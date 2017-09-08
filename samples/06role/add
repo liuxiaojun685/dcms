@@ -1,0 +1,10 @@
+##牛犀
+##添加用户角色
+http://localhost:8080/dcms/api/v1/role/add
+{
+  "token":"23a44266c60a3acd6345c0d663f0a32d",
+  "roleType":"qiang",
+  "fileLevel":"用户1",
+  "uid":1
+
+}

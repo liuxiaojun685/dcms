@@ -1,0 +1,8 @@
+##牛犀 
+##获取本地认证配置
+http://localhost:8080/dcms/api/v1/systemConfig/queryLocalAuthConfig 
+
+{
+  "token":"04eccf027616a9bfaaf7dc5bedfb9eb3"
+
+}

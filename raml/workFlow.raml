@@ -1,0 +1,592 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  file: file.raml
+  user: user.raml
+  securePolicy: securePolicy.raml
+  unit: unit.raml
+  basis: basis.raml
+types:
+  AgentRoleInfo:
+    properties:
+      roleId:
+        description: 代理人角色ID
+        type: integer
+      roleType:
+        description: 角色类型 2定密责任人 3文件签发人
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      approveAgent:
+        description: 审批代理人
+        required: false
+        type: user.UserSimpleInfo
+      agentInvalidTime:
+        description: 委托到期时间
+        required: false
+        type: number
+        format: long
+
+  WorkFlowSimpleInfo:
+    properties:
+      workFlowId:
+        description: 流程ID
+        type: integer
+      workFlowType:
+        description: 流程名称 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        type: integer
+      srcFile:
+        description: 源文件信息
+        type: file.FileSimpleInfo
+      desFile:
+        description: 目标文件信息
+        type: file.FileSimpleInfo
+        properties:
+          isDesensity:
+            description: 文件名是否脱敏处理 0否 1是
+            required: false
+            type: integer
+      applyFileLevel:
+        description: 申请的文件密级
+        required: false
+        type: integer
+      flowState:
+        description: 流程状态 1已完成 0未完成
+        type: integer
+      createTime:
+        description: 发起时间
+        type: number
+        format: long
+      createUser:
+        description: 发起人信息
+        type: user.UserSimpleInfo
+      urgency:
+        description: 文件重要紧急程度
+        required: false
+        type: integer
+
+  WorkFlowInfo:
+    type: WorkFlowSimpleInfo
+    properties:
+      applyValidPeriod:
+        description: 申请的保密期限 格式yymmdd
+        required: false
+        type: string
+      durationType:
+        description: 保密期限 类型 0不限 1长期 2期限 3解密日期 4条件
+        required: false
+        type: integer
+      durationDescription:
+        description: 保密期限 描述
+        required: false
+        type: string
+      fileDecryptTime:
+        description: 文件解密日期
+        required: false
+        type: number
+        format: long
+      fileScope:
+        description: 分发范围
+        required: false
+        type: file.FileScopeInfo[]
+      fileScopeDesc:
+        description: 分发范围描述
+        required: false
+        type: string
+      applyBasis:
+        description: 申请的定密依据
+        required: false
+        type: basis.BasisInfo[]
+      basisType:
+        description: 定密依据类型 0确定性定密 1不明确事项 2无权定密事项 3派生定密
+        required: false
+        type: integer
+      basisDesc:
+        description: 定密依据描述
+        required: false
+        type: string
+      issueNumber:
+        description: 文号
+        required: false
+        type: string
+      docNumber:
+        description: 份号
+        required: false
+        type: integer
+      duplicationAmount:
+        description: 签发份数
+        required: false
+        type: integer
+      majorUnit:
+        description: 主定密单位
+        required: false
+        type: unit.UnitInfo
+      applyMinorUnit:
+        description: 申请的辅助定密单位
+        required: false
+        type: unit.UnitInfo[]
+      createComment:
+        description: 申请理由描述
+        type: string
+      totalStep:
+        description: 审批总级数
+        type: integer
+      currentStep:
+        description: 审批当前级数
+        type: integer
+      flowTrack:
+        description: 流程轨迹详情
+        required: false
+        type: FlowTrackInfo[]
+      permission:
+        description: 权限详情
+        required: false
+        type: securePolicy.PermissionBaseInfo
+      markVersion:
+        description: 密标版本
+        required: false
+        type: integer
+      business:
+        description: 业务属性
+        required: false
+        type: string
+
+  FlowTrackInfo:
+    properties:
+      approveStep:
+        description: 审批级数(次序号)
+        type: integer
+      approveState:
+        description: 审批状态 0未审批 1通过 2否决
+        type: integer
+      approveComment:
+        description: 审批意见
+        type: string
+      approveTime:
+        description: 审批时间
+        type: number
+        format: long
+      approveUser:
+        description: 审批人信息
+        type: user.UserSimpleInfo
+
+############################################################
+# /workFlow/create
+############################################################
+  WorkFlow_CreateRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowType:
+        description: 流程名称 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        type: integer
+      srcFid:
+        description: 文件ID
+        type: string
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+      applyFileLevel:
+        description: 申请的文件密级
+        type: integer
+      applyValidPeriod:
+        description: 申请的保密期限 格式yymmdd
+        required: false
+        type: string
+      durationType:
+        description: 保密期限 类型 0不限 1长期 2期限 3解密日期 4条件
+        required: false
+        type: integer
+      durationDescription:
+        description: 保密期限 描述
+        required: false
+        type: string
+      fileDecryptTime:
+        description: 文件解密日期
+        required: false
+        type: number
+        format: long
+      fileScope:
+        description: 分发范围
+        required: false
+        type: file.FileScopeItem[]
+      fileScopeDesc:
+        description: 分发范围描述
+        required: false
+        type: string
+      applyBasis:
+        description: 申请的定密依据
+        required: false
+        type: basis.BasisInfo[]
+      basisType:
+        description: 定密依据类型 0确定性定密 1不明确事项 2无权定密事项 3派生定密
+        required: false
+        type: integer
+      basisDesc:
+        description: 定密依据描述
+        required: false
+        type: string
+      issueNumber:
+        description: 文号
+        required: false
+        type: string
+      docNumber:
+        description: 份号
+        required: false
+        type: integer
+      duplicationAmount:
+        description: 签发份数
+        required: false
+        type: integer
+      applyMajorUnit:
+        description: 申请的辅助定密单位ID
+        required: false
+        type: unit.UnitInfo
+      applyMinorUnit:
+        description: 申请的辅助定密单位ID
+        required: false
+        type: unit.UnitInfo[]
+      createComment:
+        description: 申请理由描述
+        type: string
+      approverByStep:
+        description: 责任人角色信息ID 只有签发流程由签发人审核，其他均由定密责任人审核。现在只填1个下一级审批人角色id
+        required: false
+        type: integer[]
+      permission:
+        description: 权限详情
+        required: false
+        type: securePolicy.PermissionBaseInfo
+      markVersion:
+        description: 密标版本
+        required: false
+        type: integer
+      urgency:
+        description: 文件重要紧急程度
+        required: false
+        type: integer
+      business:
+        description: 业务属性
+        required: false
+        type: string
+
+  WorkFlow_CreateResponse:
+    type: common.CommonResponse
+    properties:
+      workFlowId:
+        description: 流程ID
+        type: integer
+
+############################################################
+# /workFlow/approval
+############################################################
+  WorkFlow_ApprovalRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowId:
+        description: 流程ID
+        type: integer
+      approveLevel:
+        description: 审批的文件密级
+        required: false
+        type: integer
+      approveValidPeriod:
+        description: 审批的保密期限 格式yymmdd
+        required: false
+        type: string
+      durationType:
+        description: 保密期限 类型 0不限 1长期 2期限 3解密日期 4条件
+        required: false
+        type: integer
+      durationDescription:
+        description: 保密期限 描述
+        required: false
+        type: string
+      fileDecryptTime:
+        description: 文件解密日期
+        required: false
+        type: number
+        format: long
+      fileScope:
+        description: 分发范围
+        required: false
+        type: file.FileScopeItem[]
+      fileScopeDesc:
+        description: 分发范围描述
+        required: false
+        type: string
+      approveBasis:
+        description: 审批的定密依据
+        required: false
+        type: basis.BasisInfo[]
+      basisType:
+        description: 定密依据类型 0确定性定密 1不明确事项 2无权定密事项 3派生定密
+        required: false
+        type: integer
+      basisDesc:
+        description: 定密依据描述
+        required: false
+        type: string
+      issueNumber:
+        description: 文号
+        required: false
+        type: string
+      docNumber:
+        description: 份号
+        required: false
+        type: integer
+      duplicationAmount:
+        description: 签发份数
+        required: false
+        type: integer
+      majorUnit:
+        description: 主定密单位
+        required: false
+        type: unit.UnitInfo
+      approveMinorUnit:
+        description: 审批的辅助定密单位
+        required: false
+        type: unit.UnitInfo[]
+      approveComment:
+        description: 审批意见
+        type: string
+      approveState:
+        description: 审批状态 1通过 2否决
+        type: integer
+      permission:
+        description: 权限详情
+        required: false
+        type: securePolicy.PermissionBaseInfo
+      markVersion:
+        description: 密标版本
+        required: false
+        type: integer
+      urgency:
+        description: 文件重要紧急程度
+        required: false
+        type: integer
+      approverByStep:
+        description: 下一级审批人角色id
+        required: false
+        type: integer[]
+      business:
+        description: 业务属性
+        required: false
+        type: string
+
+  WorkFlow_ApprovalResponse:
+    type: common.CommonResponse
+
+############################################################
+# /workFlow/queryUnfinished
+############################################################
+  WorkFlow_QueryUnfinishedRequest:
+    type: common.PageRequest
+
+  WorkFlow_QueryUnfinishedResponse:
+    type: common.PageResponse
+    properties:
+      workFlowList:
+        description: 流程列表
+        type: WorkFlowSimpleInfo[]
+
+############################################################
+# /workFlow/addAgent
+############################################################
+  WorkFlow_AddAgentRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 代理人角色ID
+        type: integer
+      approveAgentUid:
+        description: 审批代理人uid
+        type: string
+      agentInvalidTime:
+        description: 委托到期时间
+        type: number
+        format: long
+
+  WorkFlow_AddAgentResponse:
+    type: common.CommonResponse
+    properties:
+      agentId:
+        description: 委托ID
+        type: integer
+
+############################################################
+# /workFlow/deleteAgentById
+############################################################
+  WorkFlow_DeleteAgentByIdRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 代理人角色ID
+        type: integer
+
+  WorkFlow_DeleteAgentByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /workFlow/updateAgentById
+############################################################
+  WorkFlow_UpdateAgentByIdRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 代理人角色ID
+        type: integer
+      agentInvalidTime:
+        description: 委托到期时间
+        type: number
+        format: long
+
+  WorkFlow_UpdateAgentByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /workFlow/queryAgent
+############################################################
+  WorkFlow_QueryAgentRequest:
+    type: common.CommonRequest
+
+  WorkFlow_QueryAgentResponse:
+    type: common.CommonResponse
+    properties:
+      agentRoleList:
+        description: 代理人角色列表
+        type: AgentRoleInfo[]
+
+############################################################
+# /workFlow/queryFinished
+############################################################
+  WorkFlow_QueryFinishedRequest:
+    type: common.PageRequest
+
+  WorkFlow_QueryFinishedResponse:
+    type: common.PageResponse
+    properties:
+      workFlowList:
+        description: 流程列表
+        type: WorkFlowSimpleInfo[]
+
+############################################################
+# /workFlow/queryMyRequest
+############################################################
+  WorkFlow_QueryMyRequestRequest:
+    type: common.PageRequest
+    properties:
+      state:
+        description: 我的申请完成状态 0未完成，1完成
+        required: false
+        type: integer
+
+  WorkFlow_QueryMyRequestResponse:
+    type: common.PageResponse
+    properties:
+      workFlowList:
+        description: 流程列表
+        type: WorkFlowSimpleInfo[]
+
+############################################################
+# /workFlow/queryById
+############################################################
+  WorkFlow_QueryByIdRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowId:
+        description: 流程ID
+        type: integer
+
+  WorkFlow_QueryByIdResponse:
+    type: [ common.CommonResponse , WorkFlowInfo ]
+
+############################################################
+# /workFlow/queryList
+############################################################
+  WorkFlow_QueryListRequest:
+    type: common.PageRequest
+    properties:
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+      flowState:
+        description: 流程状态 1已完成 0未完成
+        required: false
+        type: integer
+
+  WorkFlow_QueryListResponse:
+    type: common.PageResponse
+    properties:
+      workFlowList:
+        description: 流程列表
+        type: WorkFlowSimpleInfo[]
+
+############################################################
+# /workFlow/queryApproverSelectList
+############################################################
+  WorkFlow_QueryApproverSelectListRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowType:
+        description: 流程名称 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        required: false
+        type: integer
+      applyFileLevel:
+        description: 申请的文件密级
+        required: false
+        type: integer
+      workFlowId:
+        description: 流程ID
+        required: false
+        type: integer
+      step:
+        description: 级数
+        required: false
+        type: integer
+
+  WorkFlow_QueryApproverSelectListResponse:
+    type: common.CommonResponse
+    properties:
+      totalStep:
+        description: 总审批级数
+        type: integer
+      stepList:
+        description:
+        type: securePolicy.WorkFlowRoleInfo[]
+
+############################################################
+# /workFlow/canCreate
+############################################################
+  WorkFlow_CanCreateRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowType:
+        description: 流程名称 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        type: integer
+      srcFid:
+        description: 文件ID
+        type: string
+      applyFileLevel:
+        description: 申请的文件密级
+        type: integer
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+
+  WorkFlow_CanCreateResponse:
+    type: common.CommonResponse
+
+############################################################
+# /workFlow/downloadFileById
+############################################################
+  WorkFlow_DownloadFileByIdRequest:
+    type: common.CommonRequest
+    properties:
+      workFlowId:
+        description: 流程ID
+        type: integer
+
+  WorkFlow_DownloadFileByIdResponse:
+    type: common.CommonResponse

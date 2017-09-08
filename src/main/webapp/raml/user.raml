@@ -1,0 +1,485 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  UserSimpleInfo:
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+      account:
+        description: 登录名
+        type: string
+      name:
+        description: 姓名
+        type: string
+      level:
+        description: 密级 1一般 2重要 3核心
+        type: integer
+      online:
+        description: 在线状态 1在线 2离线
+        type: integer
+
+  UserInfo:
+    type: UserSimpleInfo
+    properties:
+      gender:
+        description: 性别 1男 2女
+        type: integer
+      phone:
+        description: 电话
+        type: string
+      mail:
+        description: 邮箱
+        type: string
+      position:
+        description: 职位
+        type: string
+      state:
+        description: 用户状态 1已删除 4已锁定
+        type: integer
+      passwdState:
+        description: 密码状态 1初始未修改 2已修改
+        type: integer
+      createFrom:
+        description: 创建方式 1手动创建 2导入创建 3同步创建
+        type: integer
+      createTime:
+        description: 创建时间(UTC)
+        type: number
+        format: long
+      firstLoginTime:
+        description: 首次登陆时间(UTC)
+        type: number
+        format: long
+      lastLoginTime:
+        description: 末次登陆时间(UTC)
+        type: number
+        format: long
+      lastLoginType:
+        description: 末次登陆方式 1WEB平台 2终端
+        type: integer
+      lastLoginAddress:
+        description: 末次登陆地址
+        type: string
+      departmentName:
+        description: 所属部门名称
+        required: false
+        type: string
+      adminType:
+        description: 管理员类型 1安全审计员 2系统管理员 3安全保密管理员
+        type: integer
+      isHaveRole:
+        description: 用户是否有角色 1是 0否
+        type: integer
+
+  MessageHistoryInfo:
+    properties:
+      msgId:
+        description: 消息ID
+        type: integer
+      message:
+        description: 消息内容
+        type: string
+      type:
+        description: 消息类型 wf 流程通知 file 文件通知
+        type: string
+      url:
+        description: 消息链接
+        type: string
+      createTime:
+        description: 产生时间
+        type: number
+        format: long
+
+############################################################
+# /user/login
+############################################################
+  User_LoginRequest:
+    properties:
+      account:
+        description: 登录名
+        type: string
+      passwd:
+        description: 密码
+        type: string
+      clientLevel:
+        description: 终端密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      ip:
+        description: 终端IP
+        type: string
+      mac:
+        description: 终端MAC
+        type: string
+      pcName:
+        description: 终端名称
+        required: false
+        type: string
+      osType:
+        description: 终端操作系统 windows linux kylin
+        required: false
+        type: string
+      versionType:
+        description: 终端版本类型
+        required: false
+        type: integer
+      versionName:
+        description: 终端版本名
+        required: false
+        type: string
+      versionCode:
+        description: 终端版本号
+        required: false
+        type: integer
+
+  User_LoginResponse:
+    type: common.CommonResponse
+    properties:
+      token:
+        description: 校验码
+        required: false
+        type: string
+      remainTimes:
+        description: 剩余尝试次数，code=2006时返回且只返回这一个字段。
+        required: false
+        type: integer
+      uid:
+        description: 用户ID
+        required: false
+        type: string
+      name:
+        description: 用户姓名
+        required: false
+        type: string
+      level:
+        description: 用户密级 1一般 2重要 3核心
+        required: false
+        type: integer
+      state:
+        description: 用户状态 1已删除 4已锁定
+        required: false
+        type: integer
+      passwdState:
+        description: 密码状态 1初始未修改 2已修改
+        required: false
+        type: integer
+      passwdForceChange:
+        description: 是否强制修改密码 1是 0否
+        required: false
+        type: integer
+      cid:
+        description: 终端ID
+        required: false
+        type: string
+      roleType:
+        description: 角色类型 0默认 2定密责任人 3文件签发人 7签入人(特权) 8签出人(特权) 2|3 0
+        type: string
+
+############################################################
+# /user/logout
+############################################################
+  User_LogoutRequest:
+    type: common.CommonRequest
+
+  User_LogoutResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/updatePasswd
+############################################################
+  User_UpdatePasswdRequest:
+    type: common.CommonRequest
+    properties:
+      passwd:
+        description: 新密码
+        type: string
+      oldPasswd:
+        description: 旧密码
+        type: string
+
+  User_UpdatePasswdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/resetPasswd
+############################################################
+  User_ResetPasswdRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+
+  User_ResetPasswdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/add
+############################################################
+  User_AddRequest:
+    type: common.CommonRequest
+    properties:
+      account:
+        description: 登录名
+        type: string
+      name:
+        description: 姓名
+        type: string
+      gender:
+        description: 性别 1男 2女
+        type: integer
+      phone:
+        description: 电话
+        required: false
+        type: string
+      mail:
+        description: 邮箱
+        required: false
+        type: string
+      position:
+        description: 职位
+        required: false
+        type: string
+      level:
+        description: 密级 1一般 2重要 3核心
+        required: false
+        type: integer
+      did:
+        description: 部门ID
+        required: false
+        type: string
+
+  User_AddResponse:
+    type: common.CommonResponse
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+
+############################################################
+# /user/updateBase
+############################################################
+  User_UpdateBaseRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+      name:
+        description: 姓名
+        required: false
+        type: string
+      gender:
+        description: 性别 1男 2女
+        required: false
+        type: integer
+      phone:
+        description: 电话
+        required: false
+        type: string
+      mail:
+        description: 邮箱
+        required: false
+        type: string
+      position:
+        description: 职位
+        required: false
+        type: string
+      did:
+        description: 移动到新部门ID
+        required: false
+        type: string
+
+  User_UpdateBaseResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/deleteById
+############################################################
+  User_DeleteByIdRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+
+  User_DeleteByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/queryList
+############################################################
+  User_QueryListRequest:
+    type: common.PageRequest
+    properties:
+      keyword:
+        description: 关键词 可以是姓名职位邮箱等
+        required: false
+        type: string
+      level:
+        description: 密级 1一般 2重要 3核心
+        required: false
+        type: integer
+      state:
+        description: 用户状态 1已删除 4已锁定
+        required: false
+        type: integer
+      onlineState:
+        description: 在线状态 1在线 2离线
+        required: false
+        type: integer
+      createFrom:
+        description: 创建方式 1手动创建 2导入创建 3同步创建
+        required: false
+        type: integer
+      did:
+        description: 所属部门ID
+        required: false
+        type: string
+      gid:
+        description: 所属组ID
+        required: false
+        type: string
+
+  User_QueryListResponse:
+    type: common.PageResponse
+    properties:
+      userList: UserInfo[]
+
+############################################################
+# /user/import
+############################################################
+  User_ImportRequest:
+    type: common.CommonRequest
+    properties:
+      fileStream:
+        description: 文件流(Base64)
+        type: string
+
+  User_ImportResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/syncUserList
+############################################################
+  User_SyncUserListRequest:
+    type: common.CommonRequest
+
+  User_SyncUserListResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/updateLevel
+############################################################
+  User_UpdateLevelRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+      level:
+        description: 密级 1一般 2重要 3核心
+        type: integer
+
+  User_UpdateLevelResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/unlock
+############################################################
+  User_UnlockRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+
+  User_UnlockResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/queryPasswdRule
+############################################################
+  User_QueryPasswdRuleRequest:
+    type: common.CommonRequest
+
+  User_QueryPasswdRuleResponse:
+    type: common.CommonResponse
+    properties:
+      minLength:
+        description: 密码最短字符数
+        type: integer
+      maxLength:
+        description: 密码最长字符数
+        type: integer
+      containsNumber:
+        description: 密码是否必须包含数字
+        type: integer
+      containsLetter:
+        description: 密码是否必须包含字母大小写
+        type: integer
+      containsSpecial:
+        description: 密码是否必须包含特殊字符
+        type: integer
+
+############################################################
+# /user/refreshMessage
+############################################################
+  User_RefreshMessageRequest:
+    type: common.CommonRequest
+
+  User_RefreshMessageResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/queryMessageHistory
+############################################################
+  User_QueryMessageHistoryRequest:
+    type: common.PageRequest
+
+  User_QueryMessageHistoryResponse:
+    type: common.PageResponse
+    properties:
+      msgList:
+        description: 消息历史列表
+        type: MessageHistoryInfo[]
+
+############################################################
+# /user/deleteMessageHistory
+############################################################
+  User_DeleteMessageHistoryRequest:
+    type: common.CommonRequest
+    properties:
+      msgId:
+        description: 消息ID
+        type: integer
+
+  User_DeleteMessageHistoryResponse:
+    type: common.CommonResponse
+
+############################################################
+# /user/queryRoleType
+############################################################
+  User_QueryRoleTypeRequest:
+    type: common.CommonRequest
+
+  User_QueryRoleTypeResponse:
+    type: common.CommonResponse
+    properties:
+      roleTypes:
+        description: 角色类型 0默认 2定密责任人 3文件签发人 7签入人(特权) 8签出人(特权)
+        type: integer[]
+
+############################################################
+# /user/deleteByIds
+############################################################
+  User_DeleteByIdsRequest:
+    type: common.CommonRequest
+    properties:
+      uids:
+        description: 用户ID
+        type: string[]
+
+  User_DeleteByIdsResponse:
+    type: common.CommonResponse

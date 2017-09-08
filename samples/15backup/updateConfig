@@ -1,0 +1,18 @@
+##牛犀
+##更新备份配置
+http://localhost:8080/dcms/api/v1/backup/updateConfig
+
+{
+  "token":"9e64705621d7e3d2e5c173f3a69ca287",
+  "autoBackupEnable":"2",
+  "autoBackupPeriod":"2",
+  "backupLocation":{
+      "domainName":"2",
+      "ip":"1",
+      "port":"1",
+      "path":"8",
+      "protocol":"9",
+      "account":"1",
+      "passwd":"1"
+  }
+}

@@ -1,0 +1,7 @@
+##刘强
+##批量删除终端
+http://localhost:8080/dcms/api/v1/client/deleteInBatches
+{
+  token:"1a92e09d7f8f7c9007dd9e4b826cb7f1",
+  cidList:["a62fbf52-4a4b-4bda-9788-45f85b7a2d9b","cid-91557f8e-6745-4b08-a304-946549fc0684"]
+}

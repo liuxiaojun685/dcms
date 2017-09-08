@@ -1,0 +1,6 @@
+###刘强
+###查询终端密级访问控制表 安全管理员
+http://localhost:8080/dcms/api/v1/securePolicy/queryClientAccessPolicyList
+{
+  token:"6993c319e33c7e41b83dc9805f567d63"
+}

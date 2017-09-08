@@ -1,0 +1,19 @@
+##刘强
+##修改本地认证配置
+http://localhost:8080/dcms/api/v1/systemConfig/updateLocalAuthConfig
+{
+  	token:"5261d6ffd44d4c5229ef9f978bae6606",
+	localAuthEnable:1,
+	localAuthPasswdMin:1,
+	localAuthPasswdMax:1,
+	localAuthPasswdContainsNumber:1,
+	localAuthPasswdContainsLetter:1,
+	localAuthPasswdContainsSpecial:1,
+	localAuthPasswdLockThreshold:1,
+	localAuthPasswdForceChange:1,
+	localAuthUnlockByAdmin:1,
+	localAuthInitPasswd:"123456",
+	localAuthInitPasswdForceChange:1,
+	localAuthPasswdLockTime:1483495961000       , ##Long
+	localAuthPasswdPeriod:1484100761000  ##Long
+}

@@ -1,0 +1,94 @@
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">角色管理</a></li>
+                        <li><a href="javascript:void(0)">定密责任人管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><span style="padding:10px;"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="table header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" onclick="InitTable(0)"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">定密责任人管理</span></a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab1">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="table table-bordered table-hover table-condensed table-responsive">
+                                                    <thead>
+                                                    <tr>
+                                                        <th style="width:5%;">编号</th>
+                                                        <th style="width:20%;">用户姓名</th>
+                                                        <th style="display:none;">角色ID</th>
+                                                        <th style="width:30%;">文件密级</th>
+                                                        <th style="width:35%;">负责范围</th>
+                                                        <th style="width:10%;">操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="tab">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <a href="javascript:void(0)"><i class="fa fa-plus add-role"><span style="padding:5px 10px;color:#555;font-weight:bold;">添加定密责任人</span></i></a>
+                                            </div>
+                                            <div id="checkInfo" class="col-xs-9">
+                                            </div>
+                                            <div class="col-xs-1">
+                                                <button class="btn btn-primary" onclick="checkInfo()">配置检测</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<script src="./js/role_info.js"></script>
+<div id="layer1" style="display:none;">
+    <ul id="browser" class="filetree treeview-famfamfam treeview">
+    </ul>
+</div>
+<div id="layer5" style="display:none;">
+    <div class="row">
+        <div style="" class="col-xs-12">
+            <ul id="browser1" class="filetree treeview-famfamfam treeview">
+            </ul>
+        </div>
+        <!--<div class="col-xs-1" style="">-->
+            <!--<input type="button" value=">>" class="btn btn-default"-->
+                   <!--style="margin:120px 0 20px 0;display:block;padding:3px 8px;"-->
+                   <!--onclick="clickget2()"/>-->
+            <!--<input type="button" value="<<" style="display:block;padding:3px 8px;" onclick="clickdel2()"-->
+                   <!--class="btn btn-default"/>-->
+        <!--</div>-->
+        <!--<div style="" class="col-xs-5">-->
+            <!--<h5 class="text-center">已选范围</h5>-->
+            <!--<table class="" id="list">-->
+            <!--</table>-->
+        <!--</div>-->
+    </div>
+</div>

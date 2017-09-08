@@ -1,0 +1,270 @@
+@charset "utf-8";
+/*通用*/
+body {
+    font-family: "微软雅黑","宋体", "Segoe UI", "Lucida Grande", Helvetica, Arial, sans-serif, FreeSans, Arimo;
+    margin:0;
+    padding:0;
+    text-decoration: none;
+    list-style: none;
+    font-weight:normal;
+    color:#555555;
+}
+select,input{
+    color:#555555;
+}
+ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd {
+    margin:0;
+    padding:0;
+    border:none;
+    list-style:none;
+}
+table td,th{
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+table{
+    background: #fff;
+}
+table td,th{
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+}
+table tr td{
+    vertical-align: middle;
+}
+#list  td{
+    text-align: left;
+}
+table thead tr{
+    background: #e7e7e7;
+    color:#000;
+    font-size: 13px;
+    font-weight: bold;
+}
+table td{
+    text-align: center;
+}
+.cont{
+    width:50%;
+    position:absolute;z-index: 100;
+    border: 1px solid #ddd;
+    background: #fff;
+    margin-left:25%;
+    border-radius: 5px;
+    box-shadow: 0 0 0 #ddd;
+    display:none;
+}
+.cont1{
+    width:25%;
+    position:absolute;
+    z-index: 100;
+    border: 1px solid #ddd;
+    margin-left:40%;
+    margin-top:5%;
+    border-radius: 5px;
+    box-shadow: 0 0 0 #ddd;
+    display:none;
+}
+.cont2{
+    width:50%;
+    position:absolute;z-index: 100;
+    border: 1px solid #ddd;
+    background: #fff;
+    margin-left:25%;
+    border-radius: 5px;
+    box-shadow: 0 0 0 #ddd;
+    display:none;
+}
+#panel a{
+    padding-right: 10px;
+    text-decoration: none;
+    display:none;
+    cursor: pointer;
+}
+.cont1 button{
+    margin-bottom: 10px;
+}
+  /*组织机构树 begin*/
+.bmname{
+    border-radius: 5px;
+    width:70%;
+    border: 1px solid #ddd;
+}
+ .opation .add,.resh,.sea,.delt{
+     margin:15px 0;
+     padding:0 20px;
+ }
+ .opation .add-sea{
+     margin-left:5px;
+ }
+.opation>.text{
+    position: absolute;
+    margin-left:40%;
+    background: #fff;
+    top:-8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.opation>.text>span{
+    padding:20px;
+}
+.opation .btns{
+    border: 1px solid #ddd;
+    height:20%;
+}
+.add-btn>button{
+    margin:10px 0;
+}
+.add-btn>button:first-child{
+    margin-right:10px;
+    margin-left:30%;
+}
+.btns2>form>div{
+    margin-bottom:10px;
+    margin-left:8px;
+}
+.btns2>form>div>input{
+    width:60%;
+}
+/*content*/
+.class{
+    border:1px solid red;
+}
+.potions1 table tr td:first-child{
+    background: #EFEFEF;
+    width:20%;
+    font-weight:bold;
+    text-align: left;
+    padding-left:20px;
+    color:#555555;
+    vertical-align: middle;
+ }
+.potions1 table tr:last-child td{
+    background: #fff;
+}
+.potions1 table tr td:last-child {
+    text-align: left;
+    vertical-align: middle;
+}
+.box-body1 ul li{
+    list-style: none;
+}
+.box-body1 ul li a{
+ text-decoration: none;
+}
+.error-span{
+    color: #ff0000;
+    padding:5px 10px 10px 0;
+}
+.error-span1{
+    color: #ff0000;
+    padding:5px 10px 10px 0;
+}
+.start-span{
+    color: #ff0000;
+    font-size: 14px;
+    margin-left: -5px
+}
+.plist1 tr td:first-child{
+    width:10%;
+}
+.plist2 tr td,th{
+    text-align: center;
+   vertical-align: middle;
+}
+.plist2 tr td:first-child{
+    width:8%;
+}
+.plist2 input[type="checkbox"]{
+    border-radius: 50%;
+    color:red;
+}
+.plist tr td>span{
+    color:red;
+    padding-left:5px;
+}
+.tabs>li{
+     list-style: none;
+     float:left;
+     padding:10px 20px;
+ }
+.tabs>li>a{
+    text-decoration: none;
+}
+.active1{
+    border:1px solid #ddd;
+    color:#000;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+}
+.clear{
+    clear:both;
+}
+.out {
+    border-top:60px #EFEFEF solid;/*上边框宽度等于表格第一行行高*/
+    width:0px;/*让容器宽度为0*/
+    height:0px;/*让容器高度为0*/
+    border-left:100px #d0d0d0 solid;/*左边框宽度等于表格第一行第一格宽度*/
+    position:relative;/*让里面的两个子容器绝对定位*/
+}
+b {
+    font-style:normal;
+    display:block;
+    position:absolute;
+    top:-50px;
+    left:-60px;
+    width:55px;
+}
+em {
+    font-style:normal;
+    display:block;
+    position:absolute;
+    top:-20px;
+    left:-90px;
+    width:55px;
+}
+.user-list tr td:first-child{
+    background: #efefef;
+}
+.user-list tr:last-child td{
+    background: #fff;
+}
+
+.rowname{
+    background: #EFEFEF;
+    font-size: 16px;
+    font-weight:bold;
+}
+
+.rowsname{
+    background: ghostwhite;
+    font-weight:bold;
+}
+
+.btn-circle {
+    width: 32px;
+    height: 32px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    color: #FFFFFF;
+    background-color: #ac2925;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.btn-square {
+    height: 30px;
+    text-align: center;
+    font-size: 12px;
+    color: #FFFFFF;
+    background-color: #4479C3;
+    line-height: 1.428571429;
+    border-radius: 5px;
+    padding: 0 20px;
+}

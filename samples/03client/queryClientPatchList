@@ -1,0 +1,4 @@
+##刘强
+##查询补丁列表 只有系统管理员可以查询
+http://localhost:8080/dcms/api/v1/client/queryClientPatchList
+{token:"",pageNumber:"0",pageSize:"9"}

@@ -1,0 +1,6 @@
+###刘强
+##获取水印信息
+http://localhost:8080/dcms/api/v1/systemConfig/queryWatermarkConfig
+{
+  token:"5a571b869b50871a056764a16480c9a2"
+}

@@ -1,0 +1,9 @@
+##牛犀
+##组移除用户
+http://localhost:8080/dcms/api/v1/group/deleteUser
+
+{"token":"09089b34fbe0b61a6f412b10c562459b",
+"uid":"牛犀",
+"gid":"牛犀"
+
+}

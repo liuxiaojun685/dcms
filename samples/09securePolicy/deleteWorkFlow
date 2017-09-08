@@ -1,0 +1,7 @@
+##刘强
+##删除工作流
+http://localhost:8080/dcms/api/v1/securePolicy/deleteWorkFlow
+{
+   token:"c84f7a8f64b5566f344755c4189c4fe3",
+   workFlowPolicyId:1
+}

@@ -1,0 +1,82 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+
+############################################################
+# /license/query
+############################################################
+  License_QueryRequest:
+
+  License_QueryResponse:
+    type: common.CommonResponse
+    properties:
+      source:
+        description: 授权源
+        type: string
+      customId:
+        description: 客户编号
+        required: false
+        type: string
+      customName:
+        description: 客户名称
+        required: false
+        type: string
+      state:
+        description: 授权状态 1正式版 2试用版
+        required: false
+        type: integer
+      onlineMax:
+        description: 网络版最大个数
+        required: false
+        type: integer
+      offlineMax:
+        description: 单机版最大个数
+        required: false
+        type: integer
+      middlewareMax:
+        description: 中间件最大个数
+        required: false
+        type: integer
+      startTime:
+        description: 导入授权日期
+        required: false
+        type: number
+        format: long
+      endTime:
+        description: 授权到期日期
+        required: false
+        type: number
+        format: long
+
+############################################################
+# /license/export
+############################################################
+  License_ExportRequest:
+
+  License_ExportResponse:
+    type: common.CommonResponse
+    properties:
+      source:
+        description: 授权源
+        type: string
+
+############################################################
+# /license/import
+############################################################
+  License_ImportRequest:
+    properties:
+      licenseText:
+        description: 授权码
+        type: string
+
+  License_ImportResponse:
+    type: common.CommonResponse
+
+############################################################
+# /license/importFile
+############################################################
+  License_ImportFileRequest:
+
+  License_ImportFileResponse:
+    type: common.CommonResponse

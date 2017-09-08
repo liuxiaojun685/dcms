@@ -1,0 +1,6 @@
+##刘强
+##获取邮件管理配置
+http://localhost:8080/dcms/api/v1/systemConfig/QueryMailConfig
+{
+  token:"2c54a720bcb9709c7d449948dc7be2e8"
+}

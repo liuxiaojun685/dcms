@@ -1,0 +1,9 @@
+##刘强   查询个人文件台账
+##filter Integer 必须 1文件收件箱 2拟稿箱 3待解密(定密责任人专用) 4已解密(定密责任人专用)
+http://localhost:8080/dcms/api/v1/file/queryPrivateList
+{
+   token:"21074fa7fab3643369d4831e274d49c1",
+   pageNumber:0,
+   pageSize:9,
+   filter:1
+}

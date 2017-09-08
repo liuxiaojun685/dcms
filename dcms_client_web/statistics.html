@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>电子文档密级标志生成与管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/x-icon" href=" ../img/login-in.ico" media="screen"/>
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/cloud-admin.css">
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/pagination.css">
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/themes/default.css" id="skin-switcher">
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/responsive.css">
+    <link href="../font-awesome/css/font-awesome.min.css" media="screen"  rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen"  href="css/style.css">
+    <link rel="stylesheet" media="screen"  href="../css/jquery.treeview.css"/>
+    <link rel="stylesheet" media="screen"  type="text/css" href="css/bootstrap-multiselect.css"/>
+    <link href="tooltips/css/bootstrap-responsive.css" media="screen"  rel="stylesheet">
+    <link href="tooltips/css/docs.css" media="screen"  rel="stylesheet">
+    <link href="tooltips/js/google-code-prettify/prettify.css" media="screen"  rel="stylesheet">
+    <link href="tooltips/css/tooltips.css" media="screen"  rel="stylesheet" id="skin">
+    <link href="css/jquery.pagination.css" media="screen"  rel="stylesheet">
+    <link href="js/textshow/css/all.css" media="screen"  rel="stylesheet" type="text/css"/>
+    <link href="css/select.down.css" media="screen" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .action {
+            background: #4777c8;
+        }
+
+        .navContent {
+            display: none;
+        }
+
+        .navContent li a {
+            display: block;
+        }
+
+        body {
+            white-space: nowrap;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .all {
+            background: #efefef;
+        }
+
+        .table_style tr td {
+            text-align: center;
+            vertical-align: middle !important;
+            font-size: 12px
+        }
+
+        .navbar {
+            background: #4f71b9;
+        }
+
+        table tr {
+            line-height: 40px;;
+        }
+
+        select {
+            height: 23px;
+        }
+
+        .control div {
+            float: left;
+            margin-left: 20px;
+        }
+
+        .titleBox {
+            cursor: pointer
+        }
+
+        .bigBox {
+            display: none;
+            height: 95px;
+            overflow-y: auto;
+        }
+
+        .rowname {
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .rownames {
+            font-weight: bold;
+            /*letter-spacing: 3px;*/
+        }
+
+        .unfinished table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .finished table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .applyed table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .createfileInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .inboxInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .decryptInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .declassifiedInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .ledgermanagementAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .permission input {
+            vertical-align: middle;
+        }
+
+        #createComment, #approveComment, #major {
+            width: 560px;
+        }
+        @media screen and  (min-width: 768px) {
+            #body {
+                min-height:650px;
+            }
+        }
+        @media screen and  (min-width: 992px) {
+            #body {
+                min-height:730px;
+            }
+        }
+        @media screen and  (min-width: 1200px) {
+            #body {
+                min-height:900px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="width: 100%;background:#4f71b9;height:70px;">
+        <div class="navbar-brand">
+            <a href="javascript:void(0)">
+                <img src="../img/logo.png" alt=""/>
+            </a>
+        </div>
+    </div>
+    <div id="body">
+        <div id="sidebar" class="sidebar" style="height:100%;">
+            <div class="sidebar-menu nav-collapse menu-left">
+            </div>
+        </div>
+        <div id="main-content" style="margin-left:190px;">
+<div class="page-header" style="margin: 5px 0 10px;">
+    <ul class="breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:void(0)">首页</a>
+        </li>
+        <li><a href="javascript:void(0)">统计与分析</a></li>
+    </ul>
+</div>
+<div class="main-content" style="margin: 5px 0 10px;">
+    <div class="container">
+            <div class="col-md-6">
+                <div class="box border primary">
+                    <div class="box-title">
+                        <h4><i class="fa fa-signal"></i>密级</h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div id="statisticsfileLevel" style="height:200px;"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="box border primary">
+                    <div class="box-title">
+                        <h4><i class="fa fa-bar-chart-o"></i>状态</h4>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div id="statisticsfileState" style="height:200px;"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+        </div>
+    </div>
+    <!--<div class="footer" style="width: 100%;background:#4f71b9;height:40px;">-->
+    <!--<p class="text-center" style="color:#fff;font-size:14px;margin-top: -10px;">© 中国航天科技集团公司  本系统使用最佳分辨率1280*720</p>-->
+    <!--</div>-->
+</div>
+<script src="js/jquery-1.11.1.min.js"></script>
+<!--<script src="../js/jquery/jquery-2.0.3.min.js"></script>-->
+<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+<script src="../js/jquery.pagination.js"></script>
+<script src="../js/laydate/laydate.js"></script>
+<script src="../layer/layer.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/getUrlParam.js"></script>
+<script src="js/bootstrap-multiselect.js"></script>
+<script src="js/common.js"></script>
+<script src="js/personalConsole/statistics.js"></script>
+<script src="js/jquery.PrintArea.js"></script>
+<script src="tooltips/js/bootstrap-tooltip.js"></script>
+<script src="tooltips/js/jquery.pure.tooltips.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/treeview/jquery.treeview.js" type="text/javascript"></script>
+<script src="js/treeview/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/echarts.min.js"></script>
+<script language="javascript" src="js/textshow/js/biankuai.js"></script>
+<script language="javascript" src="js/textshow/js/ui.base.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.droppable.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.draggable.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.sortable.min.js"></script>
+<script language="javascript" src="js/textshow/js/drag.js"></script>
+
+<script language="javascript" src="js/textshow/js/submit.js"></script>
+</body>
+</html>
+
+
+

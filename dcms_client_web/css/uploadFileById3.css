@@ -1,0 +1,41 @@
+* {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+    color:#fff;
+}
+input{
+    border:1px solid #fff;
+    background: transparent;
+}
+#text {
+    width: 800px;
+    height: 600px;
+    background: #ddd;
+}
+#text2 {
+    width: 800px;
+    height: 635px;
+    background: #4777c8;
+}
+.upload{
+    width:800px;
+}
+.upload tr{
+    line-height: 35px;
+}
+.upload tr:first-child td:first-child {
+    text-align: center;
+    line-height: 40px;
+
+}
+.upload tr td select{
+    border-radius: 4px;
+    height:25px;
+    border: 0;
+}
+.permission span{
+    padding-right:10px;
+    padding-left:5px;
+}

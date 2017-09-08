@@ -1,0 +1,11 @@
+##刘强
+##更新一条中间件访问控制策略
+http://localhost:8080/dcms/api/v1/middleware/updateACLById
+{
+	token:"4759837540a9d10c039644329bb798fb",
+	middlewareACLId:1,
+	ip:"192.168.0.11",
+	enable:1,
+	passwdEnable:1,
+	passwd:"123456"
+}

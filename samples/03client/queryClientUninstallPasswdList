@@ -1,0 +1,10 @@
+##牛犀
+##查询卸载密码列表
+http://localhost:8080/dcms/api/v1/client/queryClientUninstallPasswdList
+
+{
+"token":"07c5ec9e6891aaa59930d462ae3b6c4f",
+"pageNumber":"1",
+"pageSize":"5",
+
+}

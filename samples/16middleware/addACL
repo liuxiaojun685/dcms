@@ -1,0 +1,13 @@
+##牛犀
+##增加访问控制策略
+http://localhost:8080/dcms/api/v1/middleware/addACL
+
+{
+  "token":"9e64705621d7e3d2e5c173f3a69ca287",
+  "middlewareId":"3",
+  "ip":"3",
+  "enable":"3",
+  "passwdEnable":"3",
+  "passwd":"3",
+
+}

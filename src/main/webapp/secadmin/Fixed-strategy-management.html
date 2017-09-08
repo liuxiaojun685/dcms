@@ -1,0 +1,100 @@
+﻿
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">定密策略管理</a></li>
+                        <li><a href="javascript:void(0)">定密策略管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><span style="padding:10px;"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="table header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" onclick="InitTable()"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">定密策略管理</span></a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab1">
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <table style="background: #efefef;">
+                                                    <tr>
+                                                        <td>
+                                                            <span>定密状态：</span>
+                                                            <select id="level">
+                                                                <option value="1">预定密</option>
+                                                                <option value="2">正式定密</option>
+                                                                <option value="3">文件签发</option>
+                                                                <option value="4">密级变更</option>
+                                                                <option value="5">文件解密</option>
+                                                            </select>
+                                                            <span>定密角色：</span>
+                                                            <select id="versionType">
+                                                                <option value="1">文件起草人</option>
+                                                                <option value="2">定密责任人</option>
+                                                                <option value="3">文件签发人</option>
+                                                                <option value="4">分发使用人</option>
+
+                                                            </select>
+                                                            <button class="btn btn-primary" onclick="seachUser()">查询
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-7"></div>
+                                        </div>
+                                        <div class="row " style=" margin-top:10px;">
+                                            <div class="col-xs-12  potions1">
+                                                <table class="table table-bordered plist1">
+                                                    <tbody id="list"></tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <table style="background: #efefef;">
+                                                    <tr>
+                                                        <td>
+                                                            <span>高级管控策略</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-7"></div>
+                                        </div>
+                                        <div class="row " style=" margin-top:10px;">
+                                            <div class="col-xs-12  potions1">
+                                                <table class="table table-bordered plist1">
+                                                    <tbody id="lista"></tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script src="js/Fixed-strategy-management.js"></script>

@@ -1,0 +1,28 @@
+##刘强        修改定密策略
+http://localhost:8080/dcms/api/v1/securePolicy/updatePermissionPolicy
+{
+  token:"8042f80092602136763f3eb4f5ed5e42",
+  fileState:1,
+  fileLevel:1,
+  roleType:1,
+  permission:{
+    contentRead:1,
+    contentreadWatermark:0,
+    contentprint:0,
+    contentprintWatermark:1,
+    contentmodify:0,
+    contentscreenShot:0,
+    contentcopy:1,
+    contentfullControl:0,
+    fileCopy:0,
+    fileDelete:1,
+    fileSaveCopy:1,
+    fileOpenOffline:1,
+    fileAuthorization:1,
+    fileLevelDecide:0,
+    fileLevelChange:0,
+    fileDispatch:1,
+    fileDecrypt:0,
+    fileUnbunding:1
+  }
+}

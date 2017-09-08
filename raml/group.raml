@@ -1,0 +1,184 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  GroupSimpleInfo:
+    properties:
+      gid:
+        description: 用户组ID
+        type: string
+      name:
+        description: 用户组名称
+        type: string
+
+  GroupInfo:
+    type: GroupSimpleInfo
+    properties:
+      description:
+        description: 用户组描述
+        type: string
+      departmentName:
+        description: 所属部门名称
+        type: string
+      createTime:
+        description: 创建时间
+        type: number
+        format: long
+
+############################################################
+# /group/add
+############################################################
+  Group_AddRequest:
+    type: common.CommonRequest
+    properties:
+      name:
+        description: 用户组名称
+        type: string
+      description:
+        description: 用户组描述
+        type: string
+      did:
+        description: 所属部门ID
+        type: string
+
+  Group_AddResponse:
+    type: common.CommonResponse
+    properties:
+      gid:
+        description: 用户组ID
+        type: string
+
+############################################################
+# /group/update
+############################################################
+  Group_UpdateRequest:
+    type: common.CommonRequest
+    properties:
+      gid:
+        description: 用户组ID
+        type: string
+      name:
+        description: 用户组名称
+        required: false
+        type: string
+      description:
+        description: 用户组描述
+        required: false
+        type: string
+      did:
+        description: 所属部门ID
+        required: false
+        type: string
+
+  Group_UpdateResponse:
+    type: common.CommonResponse
+    properties:
+      gid:
+        description: 用户组ID
+        type: string
+
+############################################################
+# /group/delete
+############################################################
+  Group_DeleteRequest:
+    type: common.CommonRequest
+    properties:
+      gid:
+        description: 用户组ID
+        type: string
+
+  Group_DeleteResponse:
+    type: common.CommonResponse
+
+############################################################
+# /group/addUser
+############################################################
+  Group_AddUserRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+      gid:
+        description: 用户组ID
+        type: string
+
+  Group_AddUserResponse:
+    type: common.CommonResponse
+
+############################################################
+# /group/deleteUser
+############################################################
+  Group_DeleteUserRequest:
+    type: common.CommonRequest
+    properties:
+      uid:
+        description: 用户ID
+        type: string
+      gid:
+        description: 用户组ID
+        type: string
+
+  Group_DeleteUserResponse:
+    type: common.CommonResponse
+
+############################################################
+# /group/queryList
+############################################################
+  Group_QueryListRequest:
+    type: common.PageRequest
+    properties:
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+
+  Group_QueryListResponse:
+    type: common.PageResponse
+    properties:
+      groupList: GroupInfo[]
+
+############################################################
+# /group/addUserInBatches
+############################################################
+  Group_AddUserInBatchesRequest:
+    type: common.CommonRequest
+    properties:
+      uidList:
+        description: 用户ID数组
+        type: string[]
+      gid:
+        description: 用户组ID
+        type: string
+
+  Group_AddUserInBatchesResponse:
+    type: common.CommonResponse
+
+############################################################
+# /group/deleteUserInBatches
+############################################################
+  Group_DeleteUserInBatchesRequest:
+    type: common.CommonRequest
+    properties:
+      uidList:
+        description: 用户ID数组
+        type: string[]
+      gid:
+        description: 用户组ID
+        type: string
+
+  Group_DeleteUserInBatchesResponse:
+    type: common.CommonResponse
+
+############################################################
+# /group/queryById
+############################################################
+  Group_QueryByIdRequest:
+    type: common.CommonRequest
+    properties:
+      gid:
+        description: 用户组ID
+        type: string
+
+  Group_QueryByIdResponse:
+    type: [ common.CommonResponse , GroupInfo ]

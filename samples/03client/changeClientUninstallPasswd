@@ -1,0 +1,9 @@
+##刘强
+##修改卸载密码,只有系统管理员可以修改密码。
+http://localhost:8080/dcms/api/v1/client/changeClientUninstallPasswd
+
+{
+	token:"6db6e3989f0f16813529674dc8ed1f56",
+	passwd:"123456",
+	description:"首次卸载密码"
+}

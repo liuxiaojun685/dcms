@@ -1,0 +1,8 @@
+##牛犀
+##获取最新补丁
+http://localhost:8080/dcms/api/v1/client/queryNewestVersion
+
+{"token":"c8399b58400a66e2aa7a5ce56d8b13d0",
+ "osType":"aaaaaaaaa",
+ "versionType":"1"
+ }

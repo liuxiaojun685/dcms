@@ -1,0 +1,106 @@
+package cn.bestsec.dcms.platform.api.model;
+
+import cn.bestsec.dcms.platform.api.support.CommonRequestFieldsSupport;
+
+/**
+ * 自动生成的API请求/响应Model类，不要手动修改
+ */
+public class Log_ExportAdminLogRequest extends CommonRequestFieldsSupport {
+    private String token;
+    private String operateType;
+    private String keyword;
+    private Long operateTimeStart;
+    private Long operateTimeEnd;
+    private Integer adminType;
+    private Integer riskLevel;
+    
+    public Log_ExportAdminLogRequest() {
+    }
+
+    public Log_ExportAdminLogRequest(String token, String operateType, String keyword, Long operateTimeStart, Long operateTimeEnd, Integer adminType, Integer riskLevel) {
+        this.token = token;
+        this.operateType = operateType;
+        this.keyword = keyword;
+        this.operateTimeStart = operateTimeStart;
+        this.operateTimeEnd = operateTimeEnd;
+        this.adminType = adminType;
+        this.riskLevel = riskLevel;
+    }
+
+    /**
+     * 
+     */
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    /**
+     * 操作类型
+     */
+    public String getOperateType() {
+        return operateType;
+    }
+
+    public void setOperateType(String operateType) {
+        this.operateType = operateType;
+    }
+
+    /**
+     * 关键词
+     */
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    /**
+     * 操作时间起始
+     */
+    public Long getOperateTimeStart() {
+        return operateTimeStart;
+    }
+
+    public void setOperateTimeStart(Long operateTimeStart) {
+        this.operateTimeStart = operateTimeStart;
+    }
+
+    /**
+     * 操作时间截止
+     */
+    public Long getOperateTimeEnd() {
+        return operateTimeEnd;
+    }
+
+    public void setOperateTimeEnd(Long operateTimeEnd) {
+        this.operateTimeEnd = operateTimeEnd;
+    }
+
+    /**
+     * 管理员类型。2系统管理员 3安全保密管理员
+     */
+    public Integer getAdminType() {
+        return adminType;
+    }
+
+    public void setAdminType(Integer adminType) {
+        this.adminType = adminType;
+    }
+
+    /**
+     * 重要程度 1一般 2重要 3严重
+     */
+    public Integer getRiskLevel() {
+        return riskLevel;
+    }
+
+    public void setRiskLevel(Integer riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+}

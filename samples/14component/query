@@ -1,0 +1,6 @@
+##刘强
+##查询组件列表
+http://localhost:8080/dcms/api/v1/component/query
+{
+  token:"0014c68c99aa26ca730e84de1d0f45ba"
+}

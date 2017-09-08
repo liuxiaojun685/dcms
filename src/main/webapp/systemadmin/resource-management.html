@@ -1,0 +1,85 @@
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">系统管理</a></li>
+                        <li><a href="javascript:void(0)">资源管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><span style="padding:10px;"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="table header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li class="active" onclick="InitTable(0)"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">资源管理</span></a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab1">
+                                        <div class="row">
+                                            <div class="col-xs-12 potions1">
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <td>CPU使用率:</td>
+                                                        <td class="cpuFree"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CPU信息/型号/频率:</td>
+                                                        <td class="cpuInfo"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>内存剩余容量:</td>
+                                                        <td class="memFree"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>内存总容量:</td>
+                                                        <td class="memTotal"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>硬盘剩余容量:</td>
+                                                        <td class="hdFree"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>硬盘总容量:</td>
+                                                        <td class="hdTotal"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>日志存储剩余容量:</td>
+                                                        <td class="logFree"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>日志存储总容量:</td>
+                                                        <td class="logTotal"></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td>文件存储剩余容量:</td>
+                                                        <td class="fileFree"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="background: #efefef;">文件存储总容量:</td>
+                                                        <td class="fileTotal"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script src="js/resource-management.js"></script>

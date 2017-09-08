@@ -1,0 +1,109 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  BusinessInfo:
+    properties:
+      bId:
+        description: 业务属性ID
+        type: integer
+      name:
+        description: 业务名称
+        type: string
+
+  BusinessNode:
+    properties:
+      bId:
+        description: 业务属性ID
+        type: integer
+      name:
+        description: 业务名称
+        type: string
+      bList:
+        description: 业务属性列表
+        type: BusinessNode[]
+
+############################################################
+# /business/add
+############################################################
+  Business_AddRequest:
+    type: common.CommonRequest
+    properties:
+      parentId:
+        description: 业务属性ID
+        required: false
+        type: integer
+      name:
+        description: 业务名称
+        type: string
+
+  Business_AddResponse:
+    type: common.CommonResponse
+    properties:
+      bId:
+        description: 业务属性ID
+        type: integer
+
+############################################################
+# /business/delete
+############################################################
+  Business_DeleteRequest:
+    type: common.CommonRequest
+    properties:
+      bId:
+        description: 业务属性ID
+        type: integer
+
+  Business_DeleteResponse:
+    type: common.CommonResponse
+
+############################################################
+# /business/update
+############################################################
+  Business_UpdateRequest:
+    type: common.CommonRequest
+    properties:
+      bId:
+        description: 业务属性ID
+        type: integer
+      name:
+        description: 业务名称
+        type: string
+
+  Business_UpdateResponse:
+    type: common.CommonResponse
+    properties:
+      bId:
+        description: 业务属性ID
+        type: integer
+
+############################################################
+# /business/queryList
+############################################################
+  Business_QueryListRequest:
+    type: common.CommonRequest
+    properties:
+      parentId:
+        description: 业务属性ID
+        required: false
+        type: integer
+
+  Business_QueryListResponse:
+    type: common.CommonResponse
+    properties:
+      bList:
+        description: 业务属性列表
+        type: BusinessInfo[]
+
+############################################################
+# /business/queryTree
+############################################################
+  Business_QueryTreeRequest:
+    type: common.CommonRequest
+
+  Business_QueryTreeResponse:
+    type: common.CommonResponse
+    properties:
+      bList:
+        description: 业务属性列表
+        type: BusinessNode[]

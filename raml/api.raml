@@ -1,0 +1,2803 @@
+#%RAML 1.0
+title: dcms backend api
+uses:
+  admin: admin.raml
+  backup: backup.raml
+  basis: basis.raml
+  business: business.raml
+  client: client.raml
+  common: common.raml
+  component: component.raml
+  department: department.raml
+  file: file.raml
+  group: group.raml
+  license: license.raml
+  log: log.raml
+  middleware: middleware.raml
+  role: role.raml
+  securePolicy: securePolicy.raml
+  systemConfig: systemConfig.raml
+  unit: unit.raml
+  user: user.raml
+  workFlow: workFlow.raml
+  statistics: statistics.raml
+
+version: v1
+baseUri: http://api.dcms.cn
+mediaType: application/json
+
+############################################################
+# 1 管理员
+############################################################
+/admin/login:
+  displayName: 1.1 管理员登录
+  description: |
+    权限:不检查
+  post:
+    body:
+      type: admin.Admin_LoginRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_LoginResponse
+
+/admin/logout:
+  displayName: 1.2 管理员注销
+  description: |
+    权限:管理员
+  post:
+    body:
+      type: admin.Admin_LogoutRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_LogoutResponse
+
+/admin/update:
+  displayName: 1.3 管理员修改个人信息
+  description: |
+    权限:管理员
+    <br>请求修改密码并成功后，需要重新登陆。
+  post:
+    body:
+      type: admin.Admin_UpdateRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_UpdateResponse
+
+/admin/addAdmin:
+  displayName: 1.4 添加用户管理员
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: admin.Admin_AddAdminRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_AddAdminResponse
+
+/admin/queryDefaultAdmin:
+  displayName: 1.5 默认管理员列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: admin.Admin_QueryDefaultAdminRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_QueryDefaultAdminResponse
+
+/admin/queryScopeAdmin:
+  displayName: 1.6 管理员用户列表(成为管理员的所有用户)
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: admin.Admin_QueryScopeAdminRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_QueryScopeAdminResponse
+
+/admin/deleteAdmin:
+  displayName: 1.7 移除管理员角色用户
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: admin.Admin_DeleteAdminRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_DeleteAdminResponse
+
+/admin/updateAdmin:
+  displayName: 1.8 修改管理员角色用户
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: admin.Admin_UpdateAdminRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_UpdateAdminResponse
+
+/admin/identifyingCode:
+  displayName: 1.9 生成验证码
+  description: |
+    权限:任意
+  post:
+    body:
+      type: admin.Admin_IdentifyingCodeRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_IdentifyingCodeResponse
+
+/admin/queryDeriveAdmin:
+  displayName: 1.10 派生管理员列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: admin.Admin_QueryDeriveAdminRequest
+    responses:
+      200:
+        body:
+          type: admin.Admin_QueryDeriveAdminResponse
+
+############################################################
+# 2 用户
+############################################################
+/user/login:
+  displayName: 2.1 用户登入（通过终端）
+  description: |
+    权限:不检查
+    <br>登陆时尽可能的传入详细终端信息，后台需记录数据。
+    <br>登陆失败时判断remainTimes字段，显示剩余尝试次数。
+    <br>判断passwdForceChange是否强制修改密码，如果是，强制弹出修改密码界面。
+  post:
+    body:
+      type: user.User_LoginRequest
+    responses:
+      200:
+        body:
+          type: user.User_LoginResponse
+
+/user/logout:
+  displayName: 2.2 用户登出
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: user.User_LogoutRequest
+    responses:
+      200:
+        body:
+          type: user.User_LogoutResponse
+
+/user/updatePasswd:
+  displayName: 2.3 用户修改密码
+  description: |
+    权限:终端用户
+    <br>新密码不能与旧密码相同。
+  post:
+    body:
+      type: user.User_UpdatePasswdRequest
+    responses:
+      200:
+        body:
+          type: user.User_UpdatePasswdResponse
+
+/user/resetPasswd:
+  displayName: 2.4 重置用户密码
+  description: |
+    权限:系统管理员
+    <br>重置后，该用户密码恢复默认未修改状态，错误登陆次数清零。
+  post:
+    body:
+      type: user.User_ResetPasswdRequest
+    responses:
+      200:
+        body:
+          type: user.User_ResetPasswdResponse
+
+/user/add:
+  displayName: 2.5 创建用户
+  description: |
+    权限:系统管理员
+    <br>用户密级可以不设，默认0未分配。
+    <br>传入did可以直接分配用户到指定部门。
+  post:
+    body:
+      type: user.User_AddRequest
+    responses:
+      200:
+        body:
+          type: user.User_AddResponse
+
+/user/updateBase:
+  displayName: 2.6 编辑修改用户基本信息
+  description: |
+    权限:系统管理员
+    <br>根据uid修改用户的基本信息
+  post:
+    body:
+      type: user.User_UpdateBaseRequest
+    responses:
+      200:
+        body:
+          type: user.User_UpdateBaseResponse
+
+/user/deleteById:
+  displayName: 2.7 删除用户
+  description: |
+    权限:系统管理员
+    <br>如果用户有未完成的审批，不能删除。
+    <br>如果用户作为责任人/特权人/代理人，不能删除。
+    <br>根据uid删除用户信息及用户与部门组的联系一并删除，
+  post:
+    body:
+      type: user.User_DeleteByIdRequest
+    responses:
+      200:
+        body:
+          type: user.User_DeleteByIdResponse
+
+/user/queryList:
+  displayName: 2.8 查询用户列表
+  description: |
+    权限:系统管理员和安全管理员
+  post:
+    body:
+      type: user.User_QueryListRequest
+    responses:
+      200:
+        body:
+          type: user.User_QueryListResponse
+
+/user/import:
+  displayName: 2.9 从文件模板批量导入用户
+  description: |
+    权限:系统管理员
+    <br>将文件编成base64流放到fileStream里。
+  post:
+    body:
+      type: user.User_ImportRequest
+    responses:
+      200:
+        body:
+          type: user.User_ImportResponse
+
+/user/syncUserList:
+  displayName: 2.10 从AD批量同步用户
+  description: |
+    权限:系统管理员
+    <br>需要考虑AD用户表和本地用户表的对应关系，后期在做。
+  post:
+    body:
+      type: user.User_SyncUserListRequest
+    responses:
+      200:
+        body:
+          type: user.User_SyncUserListResponse
+
+/user/updateLevel:
+  displayName: 2.11 编辑修改用户密级
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: user.User_UpdateLevelRequest
+    responses:
+      200:
+        body:
+          type: user.User_UpdateLevelResponse
+
+/user/unlock:
+  displayName: 2.12 用户解锁
+  description: |
+    权限:系统管理员
+    <br>解锁后错误登陆次数清零，用户可以尝试进行登陆。
+  post:
+    body:
+      type: user.User_UnlockRequest
+    responses:
+      200:
+        body:
+          type: user.User_UnlockResponse
+
+/user/queryPasswdRule:
+  displayName: 2.13 获取用户密码规则
+  description: |
+    权限:任意
+  post:
+    body:
+      type: user.User_QueryPasswdRuleRequest
+    responses:
+      200:
+        body:
+          type: user.User_QueryPasswdRuleResponse
+
+/user/refreshMessage:
+  displayName: 2.14 刷新用户消息通知
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: user.User_RefreshMessageRequest
+    responses:
+      200:
+        body:
+          type: user.User_RefreshMessageResponse
+
+/user/queryMessageHistory:
+  displayName: 2.15 查询用户消息通知
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: user.User_QueryMessageHistoryRequest
+    responses:
+      200:
+        body:
+          type: user.User_QueryMessageHistoryResponse
+
+/user/deleteMessageHistory:
+  displayName: 2.16 删除用户消息通知
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: user.User_DeleteMessageHistoryRequest
+    responses:
+      200:
+        body:
+          type: user.User_DeleteMessageHistoryResponse
+
+/user/queryRoleType:
+  displayName: 2.17 查询用户角色类型
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: user.User_QueryRoleTypeRequest
+    responses:
+      200:
+        body:
+          type: user.User_QueryRoleTypeResponse
+
+/user/deleteByIds:
+  displayName: 2.18 批量删除用户
+  description: |
+    权限:系统管理员
+    <br>如果用户有未完成的审批，不能删除。
+    <br>如果用户作为责任人/特权人/代理人，不能删除。
+    <br>根据uid删除用户信息及用户与部门组的联系一并删除，
+  post:
+    body:
+      type: user.User_DeleteByIdsRequest
+    responses:
+      200:
+        body:
+          type: user.User_DeleteByIdsResponse
+
+############################################################
+# 3 终端
+############################################################
+/client/queryList:
+  displayName: 3.1 查询终端列表
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: client.Client_QueryListRequest
+    responses:
+      200:
+        body:
+          type: client.Client_QueryListResponse
+
+/client/queryNewestVersion:
+  displayName: 3.2 获取最新补丁(检查新版本)
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: client.Client_QueryNewestVersionRequest
+    responses:
+      200:
+        body:
+          type: client.Client_QueryNewestVersionResponse
+
+/client/loadPolicy:
+  displayName: 3.3 同步终端策略到本地
+  description: |
+    权限:任意
+  post:
+    body:
+      type: client.Client_LoadPolicyRequest
+    responses:
+      200:
+        body:
+          type: client.Client_LoadPolicyResponse
+
+/client/add:
+  displayName: 3.4 添加一个单机版终端
+  description: |
+    权限:系统管理员
+    <br>单机版终端只支持管理员手动录入。
+  post:
+    body:
+      type: client.Client_AddRequest
+    responses:
+      200:
+        body:
+          type: client.Client_AddResponse
+
+/client/deleteById:
+  displayName: 3.5 删除一个终端
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: client.Client_DeleteByIdRequest
+    responses:
+      200:
+        body:
+          type: client.Client_DeleteByIdResponse
+
+/client/updateById:
+  displayName: 3.6 修改终端信息
+  description: |
+    权限:系统管理员
+    <br>管理员只可以修改描述，其他信息由终端自动录入，只可读。
+  post:
+    body:
+      type: client.Client_UpdateByIdRequest
+    responses:
+      200:
+        body:
+          type: client.Client_UpdateByIdResponse
+
+/client/queryClientPatchList:
+  displayName: 3.7 查询补丁列表
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: client.Client_QueryClientPatchListRequest
+    responses:
+      200:
+        body:
+          type: client.Client_QueryClientPatchListResponse
+
+/client/addClientPatch:
+  displayName: 3.8 上传补丁
+  description: |
+    权限:系统管理员
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+  post:
+    body:
+      type: client.Client_AddClientPatchRequest
+    responses:
+      200:
+        body:
+          type: client.Client_AddClientPatchResponse
+
+/client/deleteClientPatch:
+  displayName: 3.9 删除补丁
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: client.Client_DeleteClientPatchRequest
+    responses:
+      200:
+        body:
+          type: client.Client_DeleteClientPatchResponse
+
+/client/queryClientUninstallPasswdList:
+  displayName: 3.10 查询卸载密码历史
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: client.Client_QueryClientUninstallPasswdListRequest
+    responses:
+      200:
+        body:
+          type: client.Client_QueryClientUninstallPasswdListResponse
+
+/client/changeClientUninstallPasswd:
+  displayName: 3.11 修改卸载密码
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: client.Client_ChangeClientUninstallPasswdRequest
+    responses:
+      200:
+        body:
+          type: client.Client_ChangeClientUninstallPasswdResponse
+
+/client/deleteInBatches:
+  displayName: 3.12 批量删除终端
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: client.Client_DeleteInBatchesRequest
+    responses:
+      200:
+        body:
+          type: client.Client_DeleteInBatchesResponse
+
+/client/downloadNewestVersion:
+  displayName: 3.13 下载最新补丁
+  description: |
+    权限:终端用户
+    <br>GET，以普通HTTP参数形式请求，返回application/octet-stream文件
+  post:
+    body:
+      type: client.Client_DownloadNewestVersionRequest
+    responses:
+      200:
+        body:
+          type: client.Client_DownloadNewestVersionResponse
+
+/client/loadWatermarkConfig:
+  displayName: 3.14 下载水印配置文件
+  description: |
+    权限:终端用户
+    <br>GET，以普通HTTP参数形式请求，返回application/octet-stream文件
+  post:
+    body:
+      type: client.Client_LoadWatermarkConfigRequest
+    responses:
+      200:
+        body:
+          type: client.Client_LoadWatermarkConfigResponse
+
+/client/showWatermarkByLevel:
+  displayName: 3.15 根据密级配置显示水印以及获取全局高级管控配置
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: client.Client_ShowWatermarkByLevelRequest
+    responses:
+      200:
+        body:
+          type: client.Client_ShowWatermarkByLevelResponse
+
+############################################################
+# 4 用户组
+############################################################
+/group/add:
+  displayName: 4.1 创建用户组
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: group.Group_AddRequest
+    responses:
+      200:
+        body:
+          type: group.Group_AddResponse
+
+/group/update:
+  displayName: 4.2 修改用户组
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: group.Group_UpdateRequest
+    responses:
+      200:
+        body:
+          type: group.Group_UpdateResponse
+
+/group/delete:
+  displayName: 4.3 删除用户组
+  description: |
+    权限:系统管理员
+    组内没有用户时可以删除，否则不能删除。
+  post:
+    body:
+      type: group.Group_DeleteRequest
+    responses:
+      200:
+        body:
+          type: group.Group_DeleteResponse
+
+/group/addUser:
+  displayName: 4.4 组添加用户
+  description: |
+    权限:系统管理员
+    <br>用户允许在多个组
+  post:
+    body:
+      type: group.Group_AddUserRequest
+    responses:
+      200:
+        body:
+          type: group.Group_AddUserResponse
+
+/group/deleteUser:
+  displayName: 4.5 组移除用户
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: group.Group_DeleteUserRequest
+    responses:
+      200:
+        body:
+          type: group.Group_DeleteUserResponse
+
+/group/queryList:
+  displayName: 4.6 查询组列表
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: group.Group_QueryListRequest
+    responses:
+      200:
+        body:
+          type: group.Group_QueryListResponse
+
+/group/addUserInBatches:
+  displayName: 4.7 组批量添加用户
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: group.Group_AddUserInBatchesRequest
+    responses:
+      200:
+        body:
+          type: group.Group_AddUserInBatchesResponse
+
+/group/deleteUserInBatches:
+  displayName: 4.8 组批量移除用户
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: group.Group_DeleteUserInBatchesRequest
+    responses:
+      200:
+        body:
+          type: group.Group_DeleteUserInBatchesResponse
+
+/group/queryById:
+  displayName: 4.9 查询组信息
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: group.Group_QueryByIdRequest
+    responses:
+      200:
+        body:
+          type: group.Group_QueryByIdResponse
+
+############################################################
+# 5 部门
+############################################################
+/department/add:
+  displayName: 5.1 创建部门
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: department.Department_AddRequest
+    responses:
+      200:
+        body:
+          type: department.Department_AddResponse
+
+/department/updateById:
+  displayName: 5.2 修改部门
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: department.Department_UpdateByIdRequest
+    responses:
+      200:
+        body:
+          type: department.Department_UpdateByIdResponse
+
+/department/deleteById:
+  displayName: 5.3 删除部门
+  description: |
+    权限:系统管理员
+    <br>部门及其子部门没有用户时可以删除，否则不能删除。
+  post:
+    body:
+      type: department.Department_DeleteByIdRequest
+    responses:
+      200:
+        body:
+          type: department.Department_DeleteByIdResponse
+
+/department/queryTree:
+  displayName: 5.4 查看部门树
+  description: |
+    权限:任意
+    <br>组织架构树中默认包含部门节点，hasUser/hasGroup表示是否包含用户/组节点。
+    <br>同时包含用户/组节点时，自动包含组内用户节点。
+    <br>fileLevel在包含用户节点的情况下，筛选有访问该密级文件权限的用户，未包含有效用户的组/部门节点被隐藏。
+    <br>关键词检索优先级最低。
+  post:
+    body:
+      type: department.Department_QueryTreeRequest
+    responses:
+      200:
+        body:
+          type: department.Department_QueryTreeResponse
+
+/department/addUser:
+  displayName: 5.5 部门添加用户
+  description: |
+    权限:系统管理员
+    <br>一个用户只能隶属于一个部门
+  post:
+    body:
+      type: department.Department_AddUserRequest
+    responses:
+      200:
+        body:
+          type: department.Department_AddUserResponse
+
+/department/deleteUser:
+  displayName: 5.6 部门移除用户
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: department.Department_DeleteUserRequest
+    responses:
+      200:
+        body:
+          type: department.Department_DeleteUserResponse
+
+/department/queryList:
+  displayName: 5.7 查看部门列表
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: department.Department_QueryListRequest
+    responses:
+      200:
+        body:
+          type: department.Department_QueryListResponse
+
+/department/queryById:
+  displayName: 5.8 查询部门信息
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: department.Department_QueryByIdRequest
+    responses:
+      200:
+        body:
+          type: department.Department_QueryByIdResponse
+
+############################################################
+# 6 角色
+############################################################
+/role/add:
+  displayName: 6.1 添加用户角色
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: role.Role_AddRequest
+    responses:
+      200:
+        body:
+          type: role.Role_AddResponse
+
+/role/deleteById:
+  displayName: 6.2 删除用户角色
+  description: |
+    权限:安全管理员
+    <br>如果该角色没有其他人，不能删除。
+  post:
+    body:
+      type: role.Role_DeleteByIdRequest
+    responses:
+      200:
+        body:
+          type: role.Role_DeleteByIdResponse
+
+/role/queryTree:
+  displayName: 6.3 查询角色树
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: role.Role_QueryTreeRequest
+    responses:
+      200:
+        body:
+          type: role.Role_QueryTreeResponse
+
+/role/queryList:
+  displayName: 6.4 查询角色列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: role.Role_QueryListRequest
+    responses:
+      200:
+        body:
+          type: role.Role_QueryListResponse
+
+/role/deleteByIdForce:
+  displayName: 6.5 删除用户角色（强制）
+  description: |
+    权限:安全管理员
+    <br>不做检查，直接删除角色。
+  post:
+    body:
+      type: role.Role_DeleteByIdForceRequest
+    responses:
+      200:
+        body:
+          type: role.Role_DeleteByIdForceResponse
+
+/role/updateScope:
+  displayName: 6.6 修改用户角色负责部门
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: role.Role_UpdateScopeRequest
+    responses:
+      200:
+        body:
+          type: role.Role_UpdateScopeResponse
+
+/role/queryScope:
+  displayName: 6.7 查询用户角色负责部门
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: role.Role_QueryScopeRequest
+    responses:
+      200:
+        body:
+          type: role.Role_QueryScopeResponse
+
+/role/updateLevel:
+  displayName: 6.8 更新角色负责的密级
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: role.Role_UpdateLevelRequest
+    responses:
+      200:
+        body:
+          type: role.Role_UpdateLevelResponse
+
+/role/checkRoleScope:
+  displayName: 6.9 检测缺少责任人的部门
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: role.Role_CheckRoleScopeRequest
+    responses:
+      200:
+        body:
+          type: role.Role_CheckRoleScopeResponse
+
+############################################################
+# 7 定密单位
+############################################################
+/unit/addMinor:
+  displayName: 7.1 添加辅助定密单位
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: unit.Unit_AddMinorRequest
+    responses:
+      200:
+        body:
+          type: unit.Unit_AddMinorResponse
+
+/unit/deleteMinor:
+  displayName: 7.2 删除辅助定密单位
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: unit.Unit_DeleteMinorRequest
+    responses:
+      200:
+        body:
+          type: unit.Unit_DeleteMinorResponse
+
+/unit/queryMinorList:
+  displayName: 7.3 查询辅助定密单位列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: unit.Unit_QueryMinorListRequest
+    responses:
+      200:
+        body:
+          type: unit.Unit_QueryMinorListResponse
+
+/unit/updateMajor:
+  displayName: 7.4 修改主定密单位
+  description: |
+    权限:安全管理员
+    <br>主定密单位只能有一个
+  post:
+    body:
+      type: unit.Unit_UpdateMajorRequest
+    responses:
+      200:
+        body:
+          type: unit.Unit_UpdateMajorResponse
+
+/unit/queryMajorList:
+  displayName: 7.5 查询主定密单位
+  description: |
+    权限:任意
+  post:
+    body:
+      type: unit.Unit_QueryMajorListRequest
+    responses:
+      200:
+        body:
+          type: unit.Unit_QueryMajorListResponse
+
+############################################################
+# 8 定密依据
+############################################################
+/basis/addBasis:
+  displayName: 8.1 添加定密依据
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_AddBasisRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_AddBasisResponse
+
+/basis/deleteBasis:
+  displayName: 8.2 删除定密依据
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_DeleteBasisRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_DeleteBasisResponse
+
+/basis/queryBasisClassList:
+  displayName: 8.3 查询定密依据分类列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: basis.Basis_QueryBasisClassListRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_QueryBasisClassListResponse
+
+/basis/updateBasis:
+  displayName: 8.4 修改定密依据
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_UpdateBasisRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_UpdateBasisResponse
+
+/basis/addBasisClass:
+  displayName: 8.5 添加定密依据分类
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_AddBasisClassRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_AddBasisClassResponse
+
+/basis/addBasisItem:
+  displayName: 8.6 添加定密依据事项
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_AddBasisItemRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_AddBasisItemResponse
+
+/basis/deleteBasisClass:
+  displayName: 8.7 删除定密依据分类
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_DeleteBasisClassRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_DeleteBasisClassResponse
+
+/basis/deleteBasisItem:
+  displayName: 8.8 删除定密依据事项
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_DeleteBasisItemRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_DeleteBasisItemResponse
+
+/basis/updateBasisClass:
+  displayName: 8.9 修改定密依据分类
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_UpdateBasisClassRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_UpdateBasisClassResponse
+
+/basis/updateBasisItem:
+  displayName: 8.10 修改定密依据事项
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: basis.Basis_UpdateBasisItemRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_UpdateBasisItemResponse
+
+/basis/queryBasisList:
+  displayName: 8.11 查询定密依据列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: basis.Basis_QueryBasisListRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_QueryBasisListResponse
+
+/basis/queryBasisItemList:
+  displayName: 8.12 查询定密依据事项列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: basis.Basis_QueryBasisItemListRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_QueryBasisItemListResponse
+
+/basis/queryBasisTree:
+  displayName: 8.13 查询定密依据树
+  description: |
+    权限:任意
+  post:
+    body:
+      type: basis.Basis_QueryBasisTreeRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_QueryBasisTreeResponse
+
+############################################################
+# 9 安全策略
+############################################################
+/securePolicy/updatePermissionPolicy:
+  displayName: 9.1 修改定密策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_UpdatePermissionPolicyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_UpdatePermissionPolicyResponse
+
+/securePolicy/queryPermissionPolicyList:
+  displayName: 9.2 查询定密策略列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryPermissionPolicyListRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryPermissionPolicyListResponse
+
+/securePolicy/updateValidPeriod:
+  displayName: 9.3 修改默认保密期限策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_UpdateValidPeriodRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_UpdateValidPeriodResponse
+
+/securePolicy/queryValidPeriodList:
+  displayName: 9.4 查询默认保密期限列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryValidPeriodListRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryValidPeriodListResponse
+
+/securePolicy/updateFileAccessPolicy:
+  displayName: 9.5 修改文件密级访问控制策略
+  description: |
+    权限:安全管理员
+    <br>表示用户可登陆的终端密级
+  post:
+    body:
+      type: securePolicy.SecurePolicy_UpdateFileAccessPolicyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_UpdateFileAccessPolicyResponse
+
+/securePolicy/queryFileAccessPolicyList:
+  displayName: 9.6 查询文件密级访问控制表
+  description: |
+    权限:安全管理员
+    <br>表示用户可操作的文件密级
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryFileAccessPolicyListRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryFileAccessPolicyListResponse
+
+/securePolicy/addWorkFlow:
+  displayName: 9.7 新建流程策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_AddWorkFlowRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_AddWorkFlowResponse
+
+/securePolicy/deleteWorkFlow:
+  displayName: 9.8 删除流程策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_DeleteWorkFlowRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_DeleteWorkFlowResponse
+
+/securePolicy/updateWorkFlow:
+  displayName: 9.9 修改流程策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_UpdateWorkFlowRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_UpdateWorkFlowResponse
+
+/securePolicy/queryWorkFlow:
+  displayName: 9.10 查询流程策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryWorkFlowRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryWorkFlowResponse
+
+/securePolicy/queryValidPeriod:
+  displayName: 9.11 查询默认保密期限
+  description: |
+    权限:任意
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryValidPeriodRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryValidPeriodResponse
+
+/securePolicy/updateClientAccessPolicy:
+  displayName: 9.12 修改终端密级访问控制策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_UpdateClientAccessPolicyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_UpdateClientAccessPolicyResponse
+
+/securePolicy/queryClientAccessPolicyList:
+  displayName: 9.13 查询终端密集访问控制表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryClientAccessPolicyListRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryClientAccessPolicyListResponse
+
+/securePolicy/queryPermissionPolicy:
+  displayName: 9.14 查询文件默认权限策略
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryPermissionPolicyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryPermissionPolicyResponse
+
+/securePolicy/queryWorkFlowById:
+  displayName: 9.15 查询流程策略详情
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryWorkFlowByIdRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryWorkFlowByIdResponse
+
+/securePolicy/queryMarkKeyList:
+  displayName: 9.16 查询密钥列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryMarkKeyListRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryMarkKeyListResponse
+
+/securePolicy/addMarkKey:
+  displayName: 9.17 新建密钥
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_AddMarkKeyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_AddMarkKeyResponse
+
+/securePolicy/updateMarkKey:
+  displayName: 9.17 修改密钥信息
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_UpdateMarkKeyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_UpdateMarkKeyResponse
+
+/securePolicy/deleteMarkKey:
+  displayName: 9.18 删除密钥
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_DeleteMarkKeyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_DeleteMarkKeyResponse
+
+/securePolicy/queryMarkKeyHistory:
+  displayName: 9.19 查询密钥历史
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryMarkKeyHistoryRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryMarkKeyHistoryResponse
+
+/securePolicy/backupMarkKey:
+  displayName: 9.20 备份密钥
+  description: |
+    权限:安全管理员
+    <br>GET，以普通HTTP参数形式请求，返回application/octet-stream文件
+  post:
+    body:
+      type: securePolicy.SecurePolicy_BackupMarkKeyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_BackupMarkKeyResponse
+
+/securePolicy/recoverMarkKey:
+  displayName: 9.21 还原密钥
+  description: |
+    权限:安全管理员
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+  post:
+    body:
+      type: securePolicy.SecurePolicy_RecoverMarkKeyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_RecoverMarkKeyResponse
+
+/securePolicy/importMarkKey:
+  displayName: 9.22 导入密钥
+  description: |
+    权限:安全管理员
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+  post:
+    body:
+      type: securePolicy.SecurePolicy_ImportMarkKeyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_ImportMarkKeyResponse
+
+/securePolicy/checkWorkFlow:
+  displayName: 9.23 检查没有审批人的部门
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_CheckWorkFlowRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_CheckWorkFlowResponse
+
+/securePolicy/queryKeywordPolicy:
+  displayName: 9.24 查询密点分析关键词策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryKeywordPolicyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryKeywordPolicyResponse
+
+/securePolicy/updateKeywordPolicy:
+  displayName: 9.25 修改密点分析关键词策略
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: securePolicy.SecurePolicy_UpdateKeywordPolicyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_UpdateKeywordPolicyResponse
+
+############################################################
+# 10 文件
+############################################################
+/file/queryPrivateList:
+  displayName: 10.1 查询个人文件台账
+  description: |
+    权限:终端用户
+    <br>文件收件箱：作为分发使用人的已签发文件和作为定密责任人（有定密历史）的文件,作为签发人的文件
+    <br>文件拟稿箱：作为文件起草人的所有文件
+    <br>待解密：作为定密责任人的即将到或超过解密日期的正式定密/密级变更/文件签发文件
+    <br>已解密：作为定密责任人的已解密的文件
+    <br>负责范围内文件：作为定密责任人可视范围内的所有文件
+  post:
+    body:
+      type: file.File_QueryPrivateListRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryPrivateListResponse
+
+/file/queryList:
+  displayName: 10.2 查询文件台账
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: file.File_QueryListRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryListResponse
+
+/file/queryById:
+  displayName: 10.3 精确查询文件属性
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: file.File_QueryByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryByIdResponse
+
+/file/authorization:
+  displayName: 10.4 文件授权
+  description: |
+    权限:终端用户
+    <br>有授权权限的用户可以授权。
+  post:
+    body:
+      type: file.File_AuthorizationRequest
+    responses:
+      200:
+        body:
+          type: file.File_AuthorizationResponse
+
+/file/queryDispatchList:
+  displayName: 10.5 查询文件分发范围及对应权限
+  description: |
+    权限:终端用户
+    <br>只有已签发过或授权的文件有分发范围。
+  post:
+    body:
+      type: file.File_QueryDispatchListRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryDispatchListResponse
+
+/file/queryPrivatePermissionById:
+  displayName: 10.6 查询个人文件操作权限（通过fid）
+  description: |
+    权限:终端用户
+    <br>查询个人对指定文件的可操作权限，决定了终端右键菜单可选项和文件操作等权限。
+    <br>如果系统没有记录这个文件(预定密文件)，返回错误，终端应尝试通过文件属性查用户角色的默认权限。
+    <br>如果文件未被签发或授权，接口返回用户所属角色(起草人，定密/签发人)的默认权限。
+    <br>用户对文件的角色可以是多个，默认权限是叠加的。
+  post:
+    body:
+      type: file.File_QueryPrivatePermissionByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryPrivatePermissionByIdResponse
+
+/file/queryPrivatePermissionNoId:
+  displayName: 10.7 查询个人文件操作权限（通过文件属性）
+  description: |
+    权限:终端用户
+    <br>查询个人对指定文件的可操作权限，决定了终端右键菜单可选项和文件操作等权限。
+    <br>用户对文件的角色可以是多个，默认权限是叠加的。
+    <br>fileIsMyCreate表示用户是否是文件起草人，如果是返回结果叠加起草人默认权限。
+    <br>用户可能是定密责任人或签发人，如果是返回结果叠加对应权限。
+  post:
+    body:
+      type: file.File_QueryPrivatePermissionNoIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryPrivatePermissionNoIdResponse
+
+/file/applyNewFid:
+  displayName: 10.8 申请新的文件fid
+  description: |
+    权限:终端用户
+    <br>终端申请一个系统分配的fid，作为文件的唯一识别，并存到文件头里。
+  post:
+    body:
+      type: file.File_ApplyNewFidRequest
+    responses:
+      200:
+        body:
+          type: file.File_ApplyNewFidResponse
+
+/file/uploadFileById:
+  displayName: 10.9 上传文件
+  description: |
+    权限:终端用户
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+    <br>字段属性要与文件头中匹配。fid作为文件的唯一识别。
+  post:
+    body:
+      type: file.File_UploadFileByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_UploadFileByIdResponse
+
+/file/downloadFileById:
+  displayName: 10.10 下载文件GET
+  description: |
+    权限:终端用户
+    <br>GET，以普通HTTP参数形式请求，返回application/octet-stream文件
+    <br>字段属性要与文件头中匹配。fid作为文件的唯一识别。
+  post:
+    body:
+      type: file.File_DownloadFileByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_DownloadFileByIdResponse
+
+/file/queryExistById:
+  displayName: 10.11 查询文件是否存在或是否不同步
+  description: |
+    权限:终端用户
+    <br>如果不同步，用户需要下载新的文件。
+  post:
+    body:
+      type: file.File_QueryExistByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryExistByIdResponse
+
+/file/canUpload:
+  displayName: 10.12 是否可以上传文件
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: file.File_CanUploadRequest
+    responses:
+      200:
+        body:
+          type: file.File_CanUploadResponse
+
+/file/fileTrack:
+  displayName: 10.13 文件追踪
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: file.File_FileTrackRequest
+    responses:
+      200:
+        body:
+          type: file.File_FileTrackResponse
+
+/file/commitAnalysis:
+  displayName: 10.14 上传原始文件，执行密点分析
+  description: |
+    权限:终端用户
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+    <br>字段属性要与文件头中匹配。fid作为文件的唯一识别。
+  post:
+    body:
+      type: file.File_CommitAnalysisRequest
+    responses:
+      200:
+        body:
+          type: file.File_CommitAnalysisResponse
+
+/file/queryAnalysis:
+  displayName: 10.15 查询密点分析结果
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: file.File_QueryAnalysisRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryAnalysisResponse
+############################################################
+# 11 系统配置
+############################################################
+/systemConfig/queryEnvironment:
+  displayName: 11.1 查看系统信息和资源使用情况
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryEnvironmentRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryEnvironmentResponse
+
+/systemConfig/queryWatermarkConfig:
+  displayName: 11.2 获取水印信息
+  description: |
+    权限:任意
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryWatermarkConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryWatermarkConfigResponse
+
+/systemConfig/updateWatermarkConfig:
+  displayName: 11.3 修改水印配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateWatermarkConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateWatermarkConfigResponse
+
+/systemConfig/systemLevel:
+  displayName: 11.4 系统定级
+  description: |
+    权限:安全管理员。
+    <br>一次调用生效，不可修改。初次传入level值设定系统密级，后续调用当作查看系统密级接口。
+  post:
+    body:
+      type: systemConfig.SystemConfig_SystemLevelRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_SystemLevelResponse
+
+/systemConfig/updateFileLocation:
+  displayName: 11.5 修改文件上传存储位置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateFileLocationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateFileLocationResponse
+
+/systemConfig/queryFileLocation:
+  displayName: 11.6 获取文件上传存储位置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryFileLocationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryFileLocationResponse
+
+/systemConfig/updateLogLocation:
+  displayName: 11.7 修改日志上传位置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateLogLocationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateLogLocationResponse
+
+/systemConfig/queryLogLocation:
+  displayName: 11.8 获取日志上传存储位置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryLogLocationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryLogLocationResponse
+
+/systemConfig/updateMailConfig:
+  displayName: 11.9 修改邮件告警配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateMailConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateMailConfigResponse
+
+/systemConfig/queryMailConfig:
+  displayName: 11.10 获取邮件告警配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryMailConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryMailConfigResponse
+
+/systemConfig/updateLocalAuthConfig:
+  displayName: 11.11 修改本地认证配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateLocalAuthConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateLocalAuthConfigResponse
+
+/systemConfig/queryLocalAuthConfig:
+  displayName: 11.12 获取本地认证配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryLocalAuthConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryLocalAuthConfigResponse
+
+/systemConfig/updateAdAuthConfig:
+  displayName: 11.13 修改AD认证配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateAdAuthConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateAdAuthConfigResponse
+
+/systemConfig/queryAdAuthConfig:
+  displayName: 11.14 获取AD认证配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryAdAuthConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryAdAuthConfigResponse
+
+/systemConfig/updateTimerConfig:
+  displayName: 11.15 修改定时配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateTimerConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateTimerConfigResponse
+
+/systemConfig/queryTimerConfig:
+  displayName: 11.16 获取定时配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryTimerConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryTimerConfigResponse
+
+/systemConfig/connectTest:
+  displayName: 11.17 连接验证测试
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_ConnectTestRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_ConnectTestResponse
+
+/systemConfig/addTrustedApp:
+  displayName: 11.18 添加可信应用程序
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_AddTrustedAppRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_AddTrustedAppResponse
+
+/systemConfig/deleteTrustedAppById:
+  displayName: 11.19 删除可信应用程序
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_DeleteTrustedAppByIdRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_DeleteTrustedAppByIdResponse
+
+/systemConfig/queryTrustedAppList:
+  displayName: 11.20 查询可信应用程序列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryTrustedAppListRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryTrustedAppListResponse
+
+/systemConfig/queryLocationList:
+  displayName: 11.21 获取存储位置配置列表
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryLocationListRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryLocationListResponse
+
+/systemConfig/updateLocation:
+  displayName: 11.22 更新存储位置配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateLocationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateLocationResponse
+
+/systemConfig/updateOrganization:
+  displayName: 11.23 更新组织机构
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateOrganizationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateOrganizationResponse
+
+/systemConfig/queryOrganization:
+  displayName: 11.24 查询组织机构
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryOrganizationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryOrganizationResponse
+
+/systemConfig/updateTrustedApp:
+  displayName: 11.25 修改可信应用程序
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateTrustedAppRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateTrustedAppResponse
+
+/systemConfig/desensitization:
+  displayName: 11.26 配置密级数据脱敏处理
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_DesensitizationRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_DesensitizationResponse
+
+/systemConfig/queryDesensity:
+  displayName: 11.27 查询密级数据脱敏处理配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryDesensityRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryDesensityResponse
+
+/systemConfig/queryLogArchiveKeepTime:
+  displayName: 11.28 查询日志归档保留时间配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryLogArchiveKeepTimeRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryLogArchiveKeepTimeResponse
+
+/systemConfig/updateLogArchiveKeepTime:
+  displayName: 11.29 修改日志归档保留时间配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateLogArchiveKeepTimeRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateLogArchiveKeepTimeResponse
+
+/systemConfig/queryOtherSecurityConfig:
+  displayName: 11.30 查询其他安全配置
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryOtherSecurityConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryOtherSecurityConfigResponse
+
+/systemConfig/updateOtherSecurityConfig:
+  displayName: 11.31 修改其他安全配置
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateOtherSecurityConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateOtherSecurityConfigResponse
+
+/systemConfig/updateAdvancedControlStrategy:
+  displayName: 11.32 修改高级管控策略配置
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateAdvancedControlStrategyRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateAdvancedControlStrategyResponse
+
+/systemConfig/queryAdvancedControlStrategy:
+  displayName: 11.33 查询高级管控策略配置
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryAdvancedControlStrategyRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryAdvancedControlStrategyResponse
+
+/systemConfig/queryClassifiedWhiteList:
+  displayName: 11.34 查询标密白名单
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryClassifiedWhiteListRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryClassifiedWhiteListResponse
+
+/systemConfig/updateClassifiedWhiteList:
+  displayName: 11.35 修改标密白名单
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: systemConfig.SystemConfig_UpdateClassifiedWhiteListRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_UpdateClassifiedWhiteListResponse
+
+############################################################
+# 12 系统授权
+############################################################
+/license/query:
+  displayName: 12.1 查询授权信息
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: license.License_QueryRequest
+    responses:
+      200:
+        body:
+          type: license.License_QueryResponse
+
+/license/export:
+  displayName: 12.2 导出授权源
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: license.License_ExportRequest
+    responses:
+      200:
+        body:
+          type: license.License_ExportResponse
+
+/license/import:
+  displayName: 12.3 导入授权码
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: license.License_ImportRequest
+    responses:
+      200:
+        body:
+          type: license.License_ImportResponse
+
+/license/importFile:
+  displayName: 12.4 导入授权文件
+  description: |
+    权限:系统管理员
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+  post:
+    body:
+      type: license.License_ImportFileRequest
+    responses:
+      200:
+        body:
+          type: license.License_ImportFileResponse
+
+############################################################
+# 13 日志
+############################################################
+/log/queryAdminLog:
+  displayName: 13.1 查询管理员日志
+  description: |
+    权限:日志审计员
+  post:
+    body:
+      type: log.Log_QueryAdminLogRequest
+    responses:
+      200:
+        body:
+          type: log.Log_QueryAdminLogResponse
+
+/log/queryClientRequestLog:
+  displayName: 13.2 查询终端用户行为请求日志
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: log.Log_QueryClientRequestLogRequest
+    responses:
+      200:
+        body:
+          type: log.Log_QueryClientRequestLogResponse
+
+/log/queryClientLog:
+  displayName: 13.3 查询终端文件操作日志
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: log.Log_QueryClientLogRequest
+    responses:
+      200:
+        body:
+          type: log.Log_QueryClientLogResponse
+
+/log/uploadLog:
+  displayName: 13.4 上传终端日志
+  description: |
+    权限:终端用户
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+  post:
+    body:
+      type: log.Log_UploadLogRequest
+    responses:
+      200:
+        body:
+          type: log.Log_UploadLogResponse
+
+/log/exportAdminLog:
+  displayName: 13.5 导出管理员日志信息
+  description: |
+    权限:安全审计员
+  post:
+    body:
+      type: log.Log_ExportAdminLogRequest
+    responses:
+      200:
+        body:
+          type: log.Log_ExportAdminLogResponse
+
+/log/queryFileLevelManagementLog:
+  displayName: 13.6 查询文件密级管理日志
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: log.Log_QueryFileLevelManagementLogRequest
+    responses:
+      200:
+        body:
+          type: log.Log_QueryFileLevelManagementLogResponse
+
+/log/logArchive:
+  displayName: 13.7 日志归档
+  description: |
+    权限:安全审计员
+  post:
+    body:
+      type: log.Log_LogArchiveRequest
+    responses:
+      200:
+        body:
+          type: log.Log_LogArchiveResponse
+
+############################################################
+# 14 组件
+############################################################
+/component/query:
+  displayName: 14.1 查看组件信息接口
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: component.Component_QueryRequest
+    responses:
+      200:
+        body:
+          type: component.Component_QueryResponse
+
+/component/updateById:
+  displayName: 14.2 修改组件状态
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: component.Component_UpdateByIdRequest
+    responses:
+      200:
+        body:
+          type: component.Component_UpdateByIdResponse
+
+############################################################
+# 15 备份
+############################################################
+/backup/add:
+  displayName: 15.1 创建数据库新备份
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: backup.Backup_AddRequest
+    responses:
+      200:
+        body:
+          type: backup.Backup_AddResponse
+
+/backup/queryList:
+  displayName: 15.2 查询备份历史
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: backup.Backup_QueryListRequest
+    responses:
+      200:
+        body:
+          type: backup.Backup_QueryListResponse
+
+/backup/queryConfig:
+  displayName: 15.3 查询备份配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: backup.Backup_QueryConfigRequest
+    responses:
+      200:
+        body:
+          type: backup.Backup_QueryConfigResponse
+
+/backup/updateConfig:
+  displayName: 15.4 更新备份配置
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: backup.Backup_UpdateConfigRequest
+    responses:
+      200:
+        body:
+          type: backup.Backup_UpdateConfigResponse
+
+/backup/deleteById:
+  displayName: 15.5 删除备份
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: backup.Backup_DeleteByIdRequest
+    responses:
+      200:
+        body:
+          type: backup.Backup_DeleteByIdResponse
+
+/backup/recover:
+  displayName: 15.6 备份恢复到数据库
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: backup.Backup_RecoverRequest
+    responses:
+      200:
+        body:
+          type: backup.Backup_RecoverResponse
+
+############################################################
+# 16 中间件
+############################################################
+/middleware/queryList:
+  displayName: 16.1 获取中间件列表详情
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: middleware.Middleware_QueryListRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_QueryListResponse
+
+/middleware/addACL:
+  displayName: 16.2 增加中间件访问控制策略
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: middleware.Middleware_AddACLRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_AddACLResponse
+
+/middleware/deleteACLById:
+  displayName: 16.3 删除一条中间件访问控制策略
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: middleware.Middleware_DeleteACLByIdRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_DeleteACLByIdResponse
+
+/middleware/updateACLById:
+  displayName: 16.4 更新一条中间件访问控制策略
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: middleware.Middleware_UpdateACLByIdRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_UpdateACLByIdResponse
+
+/middleware/queryFileHeader:
+  displayName: 16.5 查询密标文件头属性
+  description: |
+    权限:中间件对接
+    <br>应用系统获取文件的密标属性信息，如文件标识、秘密等级等。
+    <br>
+    <br>通过http上传文件可以使用下面的形式。
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body 附件名参数名rfilename
+    <br>文件流放入file表单项，数据以json字符串形式放入body表单项，文件名放入rfilename表单项。
+    <br>
+    <br>通过其他方式上传文件可以使用下面的形式。
+    <br>application/json for POST
+  post:
+    body:
+      type: middleware.Middleware_QueryFileHeaderRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_QueryFileHeaderResponse
+
+/middleware/classifyFile:
+  displayName: 16.6 文件标定密
+  description: |
+    权限:中间件对接
+    <br>应用系统对文件进行标定密动作，如文件预定密或文件去除密标。
+    <br>
+    <br>通过http上传文件可以使用下面的形式。
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body 附件名参数名rfilename
+    <br>文件流放入file表单项，数据以json字符串形式放入body表单项，文件名放入rfilename表单项。
+    <br>
+    <br>通过其他方式上传文件可以使用下面的形式。
+    <br>application/json for POST
+  post:
+    body:
+      type: middleware.Middleware_ClassifyFileRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_ClassifyFileResponse
+
+/middleware/uploadCirculationLog:
+  displayName: 16.7 上传密标文件流转日志
+  description: |
+    权限:中间件对接
+  post:
+    body:
+      type: middleware.Middleware_UploadCirculationLogRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_UploadCirculationLogResponse
+
+/middleware/userRegister:
+  displayName: 16.8 账户注册
+  description: |
+    权限:中间件对接
+  post:
+    body:
+      type: middleware.Middleware_UserRegisterRequest
+    responses:
+      200:
+        body:
+          type: middleware.Middleware_UserRegisterResponse
+
+############################################################
+# 17 流程
+############################################################
+/workFlow/create:
+  displayName: 17.1 流程申请
+  description: |
+    权限:终端用户
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+    <br>正式定密：文件ID/文件密级/保密期限/定密依据/辅助定密单位/签发范围/申请理由。
+    <br>密级变更：文件ID/文件密级/保密期限/申请理由。
+    <br>文件签发：文件ID/签发范围/申请理由。
+    <br>文件解密：文件ID/申请理由。
+  post:
+    body:
+      type: workFlow.WorkFlow_CreateRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_CreateResponse
+
+/workFlow/approval:
+  displayName: 17.2 流程审批
+  description: |
+    权限:终端用户
+    <br>正式定密：流程ID/审批意见/审批状态。决定文件密级/保密期限/定密依据/辅助定密单位，建议签发范围。
+    <br>密级变更：流程ID/审批意见/审批状态。决定文件密级/保密期限。
+    <br>文件签发：流程ID/审批意见/审批状态。决定签发范围
+    <br>文件解密：仅流程ID/审批意见/审批状态。
+  post:
+    body:
+      type: workFlow.WorkFlow_ApprovalRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_ApprovalResponse
+
+/workFlow/queryUnfinished:
+  displayName: 17.3 查询未办理的审批
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryUnfinishedRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryUnfinishedResponse
+
+/workFlow/addAgent:
+  displayName: 17.4 添加审核代理人
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_AddAgentRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_AddAgentResponse
+
+/workFlow/deleteAgentById:
+  displayName: 17.5 删除审核代理人
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_DeleteAgentByIdRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_DeleteAgentByIdResponse
+
+/workFlow/updateAgentById:
+  displayName: 17.6 更新审核代理人期限
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_UpdateAgentByIdRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_UpdateAgentByIdResponse
+
+/workFlow/queryAgent:
+  displayName: 17.7 查询委托审核人列表
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryAgentRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryAgentResponse
+
+/workFlow/queryFinished:
+  displayName: 17.8 查询已办理的审批
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryFinishedRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryFinishedResponse
+
+/workFlow/queryMyRequest:
+  displayName: 17.9 查询我提交的审批
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryMyRequestRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryMyRequestResponse
+
+/workFlow/queryById:
+  displayName: 17.10 查询流程信息
+  description: |
+    权限:任意
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryByIdRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryByIdResponse
+
+/workFlow/queryList:
+  displayName: 17.11 查询流程列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryListRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryListResponse
+
+/workFlow/queryApproverSelectList:
+  displayName: 17.12 获取流程审批人待选列表
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryApproverSelectListRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryApproverSelectListResponse
+
+/workFlow/canCreate:
+  displayName: 17.13 是否可以发起流程
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_CanCreateRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_CanCreateResponse
+
+/workFlow/downloadFileById:
+  displayName: 17.14 下载流程附件GET
+  description: |
+    权限:终端用户
+    <br>GET，以普通HTTP参数形式请求，返回application/octet-stream文件
+    <br>字段属性要与文件头中匹配。fid作为文件的唯一识别。
+  post:
+    body:
+      type: workFlow.WorkFlow_DownloadFileByIdRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_DownloadFileByIdResponse
+
+############################################################
+# 18 统计
+############################################################
+/statistics/adminUsage:
+  displayName: 18.1 统计管理员使用量
+  description: |
+    权限:日志审计员
+  post:
+    body:
+      type: statistics.Statistics_AdminUsageRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_AdminUsageResponse
+
+/statistics/userOnline:
+  displayName: 18.2 统计用户在线数量
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: statistics.Statistics_UserOnlineRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_UserOnlineResponse
+
+/statistics/environment:
+  displayName: 18.3 统计系统资源
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: statistics.Statistics_EnvironmentRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_EnvironmentResponse
+
+/statistics/clientOnline:
+  displayName: 18.4 统计终端在线
+  description: |
+    权限:系统管理员
+  post:
+    body:
+      type: statistics.Statistics_ClientOnlineRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_ClientOnlineResponse
+
+/statistics/queryFileList:
+  displayName: 18.5 统计文件台账数量
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: statistics.Statistics_QueryFileListRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_QueryFileListResponse
+
+/statistics/queryWorkFlowList:
+  displayName: 18.6 统计流程审核状态数量
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: statistics.Statistics_QueryWorkFlowListRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_QueryWorkFlowListResponse
+
+/statistics/fileTrend:
+  displayName: 18.7 统计文件趋势
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: statistics.Statistics_FileTrendRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_FileTrendResponse
+
+/statistics/fileManyTrend:
+  displayName: 18.8 多条件统计文件趋势
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: statistics.Statistics_FileManyTrendRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_FileManyTrendResponse
+
+/statistics/fileInLevel:
+  displayName: 18.9 统计终端用户所有密级的文件数量
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: statistics.Statistics_FileInLevelRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_FileInLevelResponse
+
+/statistics/fileInState:
+  displayName: 18.10 统计终端用户所有状态的文件数量
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: statistics.Statistics_FileInStateRequest
+    responses:
+      200:
+        body:
+          type: statistics.Statistics_FileInStateResponse
+
+############################################################
+# 19 业务属性
+############################################################
+/business/add:
+  displayName: 19.1 添加业务属性
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: business.Business_AddRequest
+    responses:
+      200:
+        body:
+          type: business.Business_AddResponse
+
+/business/delete:
+  displayName: 19.2 删除业务属性
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: business.Business_DeleteRequest
+    responses:
+      200:
+        body:
+          type: business.Business_DeleteResponse
+
+/business/update:
+  displayName: 19.3 修改业务属性
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: business.Business_UpdateRequest
+    responses:
+      200:
+        body:
+          type: business.Business_UpdateResponse
+
+/business/queryList:
+  displayName: 19.4 查询业务属性列表
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: business.Business_QueryListRequest
+    responses:
+      200:
+        body:
+          type: business.Business_QueryListResponse
+
+/business/queryTree:
+  displayName: 19.5 查询业务属性树
+  description: |
+    权限:安全管理员
+  post:
+    body:
+      type: business.Business_QueryTreeRequest
+    responses:
+      200:
+        body:
+          type: business.Business_QueryTreeResponse

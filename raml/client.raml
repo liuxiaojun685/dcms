@@ -1,0 +1,464 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  user: user.raml
+  systemConfig: systemConfig.raml
+  file: file.raml
+types:
+  ClientSimpleInfo:
+    properties:
+      cid:
+        description: 终端ID
+        type: string
+      level:
+        description: 终端密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      ip:
+        description: 终端IP
+        type: string
+      mac:
+        description: 终端MAC
+        type: string
+      online:
+        description: 在线状态 1在线 2离线
+        type: integer
+
+  ClientVersionInfo:
+    properties:
+      osType:
+        description: 终端操作系统 windows linux kylin
+        type: string
+      versionType:
+        description: 终端版本类型 1网络版 2单机版
+        type: integer
+      versionName:
+        description: 终端版本名
+        type: string
+      versionCode:
+        description: 终端版本号
+        type: integer
+
+  ClientInfo:
+    type: [ ClientSimpleInfo , ClientVersionInfo ]
+    properties:
+      pcName:
+        description: 机器名
+        type: string
+      firstLoginUser:
+        description: 首次登陆用户
+        type: user.UserSimpleInfo
+      lastLoginUser:
+        description: 末次登陆用户
+        type: user.UserSimpleInfo
+      firstLoginTime:
+        description: 首次登陆时间
+        type: number
+        format: long
+      lastLoginTime:
+        description: 末次登陆时间
+        type: number
+        format: long
+      description:
+        description: 描述
+        type: string
+      state:
+        description: 终端状态 1已删除 4已锁定
+        type: integer
+
+  PatchInfo:
+    type: ClientVersionInfo
+    properties:
+      patchId:
+        description: 补丁ID
+        type: integer
+      description:
+        description: 描述
+        type: string
+      name:
+        description: 补丁名
+        type: string
+      createTime:
+        description: 创建时间
+        type: number
+        format: long
+      location:
+        description: 补丁存储路径
+        type: string
+      size:
+        description: 补丁大小，单位字节
+        type: number
+        format: long
+      md5:
+        description: 文件MD5
+        type: string
+
+  UninstallPasswdInfo:
+    properties:
+      passwdId:
+        description: 卸载密码ID
+        type: integer
+      passwd:
+        description: 卸载密码
+        type: string
+      createTime:
+        description: 创建时间
+        type: number
+        format: long
+      description:
+        description: 描述
+        type: string
+      syncNum:
+        description: 已被同步的客户端数
+        type: integer
+      unsyncNum:
+        description: 未被同步的客户端数
+        type: integer
+
+  MarkKeyInfo:
+    properties:
+      pubKey:
+        description: 公钥
+        type: string
+      priKey:
+        description: 私钥
+        type: string
+      markVersion:
+        description: 标志版本
+        type: integer
+
+############################################################
+# /client/queryList
+############################################################
+  Client_QueryListRequest:
+    type: common.PageRequest
+    properties:
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+      level:
+        description: 终端密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      ip:
+        description: 终端IP
+        required: false
+        type: string
+      mac:
+        description: 终端MAC
+        required: false
+        type: string
+      osType:
+        description: 终端操作系统 windows linux kylin
+        required: false
+        type: string
+      versionType:
+        description: 终端版本类型 1网络版 2单机版
+        required: false
+        type: integer
+      versionName:
+        description: 终端版本名
+        required: false
+        type: string
+      versionCode:
+        description: 终端版本号
+        required: false
+        type: integer
+      online:
+        description: 在线状态 1在线 2离线
+        required: false
+        type: integer
+      lastLoginTimeStart:
+        description: 末次登陆起始时间
+        required: false
+        type: number
+        format: long
+      lastLoginTimeEnd:
+        description: 末次登陆截止时间
+        required: false
+        type: number
+        format: long
+
+  Client_QueryListResponse:
+    type: common.PageResponse
+    properties:
+      clientList:
+        type: ClientInfo[]
+
+############################################################
+# /client/queryNewestVersion
+############################################################
+  Client_QueryNewestVersionRequest:
+    type: common.CommonRequest
+    properties:
+      osType:
+        description: 终端操作系统 windows linux kylin
+        type: string
+      versionType:
+        description: 终端版本类型 1网络版 2单机版
+        type: integer
+
+  Client_QueryNewestVersionResponse:
+    type: common.CommonResponse
+    properties:
+      patchInfo: PatchInfo
+
+############################################################
+# /client/loadPolicy
+############################################################
+  Client_LoadPolicyRequest:
+    type: common.CommonRequest
+    properties:
+      policyType:
+        description: 策略类型 0全部 1可信应用策略 2可访问文件策略 3密标密钥 4可标密的文件拓展名策略 5文件密级访问策略 6其他策略 7标密白名单
+        required: false
+        type: integer
+      policyId:
+        description: 策略ID 预留
+        required: false
+        type: integer
+
+  Client_LoadPolicyResponse:
+    type: common.CommonResponse
+    properties:
+      systemTopLevel:
+        description: 系统最高支持密级
+        required: false
+        type: integer
+      uninstallPasswd:
+        description: 卸载密码
+        required: false
+        type: string
+      preclassifiedForce:
+        description: 是否强制预定密 1是 0否
+        required: false
+        type: integer
+      trustAppList:
+        description: 可信应用策略
+        required: false
+        type: systemConfig.TrustedAppInfo[]
+      accessFileList:
+        description: 可访问文件策略
+        required: false
+        type: string[]
+      markKeyList:
+        description: 标志密钥
+        required: false
+        type: MarkKeyInfo[]
+      currentMarkKey:
+        description: 当前使用的标志密钥
+        required: false
+        type: MarkKeyInfo
+      classExtension:
+        description: 可标密的文件拓展名策略 |分割
+        required: false
+        type: string
+      fileLevelAccessPolicy:
+        description: 文件密级访问策略，用户可访问的文件密级列表
+        required: false
+        type: integer[]
+      classifiedWhiteList:
+        description: 标密白名单 |分割
+        required: false
+        type: string
+
+############################################################
+# /client/add
+############################################################
+  Client_AddRequest:
+    type: [ common.CommonRequest , ClientVersionInfo ]
+    properties:
+      ip:
+        description: 终端IP
+        required: false
+        type: string
+      mac:
+        description: 终端MAC
+        type: string
+      level:
+        description: 终端密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      pcName:
+        description: 机器名
+        required: false
+        type: string
+
+  Client_AddResponse:
+    type: common.CommonResponse
+    properties:
+      cid:
+        description: 终端ID
+        type: string
+
+############################################################
+# /client/deleteById
+############################################################
+  Client_DeleteByIdRequest:
+    type: common.CommonRequest
+    properties:
+      cid:
+        description: 终端ID
+        type: string
+
+  Client_DeleteByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /client/updateById
+############################################################
+  Client_UpdateByIdRequest:
+    type: common.CommonRequest
+    properties:
+      cid:
+        description: 终端ID
+        type: string
+      description:
+        description: 描述
+        required: false
+        type: string
+
+  Client_UpdateByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /client/queryClientPatchList
+############################################################
+  Client_QueryClientPatchListRequest:
+    type: common.PageRequest
+
+  Client_QueryClientPatchListResponse:
+    type: common.PageResponse
+    properties:
+      patchList:
+        type: PatchInfo[]
+
+############################################################
+# /client/addClientPatch
+############################################################
+  Client_AddClientPatchRequest:
+    type: [ common.CommonRequest , ClientVersionInfo ]
+    properties:
+      name:
+        description: 补丁名(文件名带后缀)
+        type: string
+      description:
+        description: 描述
+        type: string
+
+  Client_AddClientPatchResponse:
+    type: common.CommonResponse
+    properties:
+      patchId:
+        description: 补丁ID
+        type: integer
+
+############################################################
+# /client/deleteClientPatch
+############################################################
+  Client_DeleteClientPatchRequest:
+    type: common.CommonRequest
+    properties:
+      patchId:
+        description: 补丁ID
+        type: integer
+
+  Client_DeleteClientPatchResponse:
+    type: common.CommonResponse
+
+############################################################
+# /client/queryClientUninstallPasswdList
+############################################################
+  Client_QueryClientUninstallPasswdListRequest:
+    type: common.PageRequest
+
+  Client_QueryClientUninstallPasswdListResponse:
+    type: common.PageResponse
+    properties:
+      uninstallPasswdList:
+        type: UninstallPasswdInfo[]
+
+############################################################
+# /client/changeClientUninstallPasswd
+############################################################
+  Client_ChangeClientUninstallPasswdRequest:
+    type: common.CommonRequest
+    properties:
+      passwd:
+        description: 新卸载密码
+        type: string
+      description:
+        description: 描述
+        type: string
+
+  Client_ChangeClientUninstallPasswdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /client/deleteInBatches
+############################################################
+  Client_DeleteInBatchesRequest:
+    type: common.CommonRequest
+    properties:
+      cidList:
+        description: 终端ID数组
+        type: string[]
+
+  Client_DeleteInBatchesResponse:
+    type: common.CommonResponse
+
+############################################################
+# /client/downloadNewestVersion
+############################################################
+  Client_DownloadNewestVersionRequest:
+    type: common.CommonRequest
+    properties:
+      osType:
+        description: 终端操作系统 windows linux kylin
+        type: string
+      versionType:
+        description: 终端版本类型 1网络版 2单机版
+        type: integer
+
+  Client_DownloadNewestVersionResponse:
+    type: common.CommonResponse
+
+############################################################
+# /client/loadWatermarkConfig
+############################################################
+  Client_LoadWatermarkConfigRequest:
+    type: common.CommonRequest
+    properties:
+      type:
+        description: 1 打印， 2屏幕
+        type: integer
+  Client_LoadWatermarkConfigResponse:
+    type: common.CommonResponse
+
+############################################################
+# /client/showWatermarkByLevel
+############################################################
+  Client_ShowWatermarkByLevelRequest:
+    type: common.CommonRequest
+
+  Client_ShowWatermarkByLevelResponse:
+    type: common.CommonResponse
+    properties:
+      prohibitRename:
+        description: 是否禁止改名 1是 0否
+        type: integer
+      prohibitDelete:
+        description: 是否禁止删除 1是 0否
+        type: integer
+      prohibitNetwork:
+        description: 是否禁止网络发送 1是 0否
+        type: integer
+      prohibitMailSend:
+        description: 是否禁止邮件发送 1是 0否
+        type: integer
+      prohibitRightSend:
+        description: 是否禁止右键发送 1是 0否
+        type: integer
+      showWatermarkList:
+        description: 显示水印
+        type: systemConfig.Desensity[]

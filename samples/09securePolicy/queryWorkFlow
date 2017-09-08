@@ -1,0 +1,9 @@
+##刘强
+##9.10 查询工作流策略
+http://localhost:8080/dcms/api/v1/securePolicy/queryWorkFlow
+{
+   token:"c84f7a8f64b5566f344755c4189c4fe3",
+   fileLevel:1,
+   workFlowType:2,
+   step:1
+}

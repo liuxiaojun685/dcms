@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title></title>
+
+    <link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css"  href="css/style.css" >
+    <link rel="stylesheet" type="text/css" href="css/jquery.treeview.css"/>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-multiselect.css"/>
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/treeview/jquery.treeview.js"></script>
+    <script src="js/treeview/jquery.cookie.js"></script>
+    <script src="js/bootstrap-paginator.js"></script>
+    <script src="js/fileuploadFileById.js"></script>
+    <script src="js/bootstrap-multiselect.js"></script>
+    <script src="js/file.js"></script>
+    <script type="text/javascript" src="js/jquery-form.js"></script>
+       <script src="js/layer/layer.js"></script>
+</head>
+
+<div class="container">
+    <nav class="container-fluid navbar navbar-default ">
+        <div class="nav-head ">
+            <a class="navbar-brand index" href="#">预定密</a>
+
+        </div>
+    </nav>
+  <form name="fileForm" method="post" enctype="multipart/form-data" class="fileding" target="nm_iframe">
+    <div class="row">
+
+        <div class="col-sm-4 m-b-xs">
+            <div class="row" >
+
+                <label class="col-sm-12 control-label" style="text-align:center">文件ID:</label><br/><br/><br/>
+                <label class="col-sm-12 control-label" style="text-align:center">文件名称:</label><br/><br/><br/>
+                <label class="col-sm-12 control-label" style="text-align:center">秘密等级:</label><br/><br/><br/>
+                <label class="col-sm-12 control-label" style="text-align:center">保密期限:</label><br/><br/><br/>
+                <label class="col-sm-12 control-label" style="text-align:center">定密单位:</label><br/><br/><br/>
+                <label class="col-sm-12 control-label" style="text-align:center">定密依据:</label><br/><br/><br/>
+                <label class="col-sm-12 control-label" style="text-align:center">文件分发范围:</label><br/><br/><br/>
+            </div>
+
+        </div>
+        <div class="col-sm-8 m-b-xs">
+            <div class="row">
+                <input type="text" style="display: none" name="fid">
+                <input type="text" style="display: none" name="fileName" value="[内部资料-保密]DCMS需求设计V20161212.pdf">
+                <label class="col-sm-4 control-label" style="text-align:center" id="fid">fid-0ff61c3a-de1f-425e-b597-7ae685aed7b6</label><br/><br/><br/>
+                <input type="file" name="file"><br/><br/>
+                <select  style="text-align:center" id="ss" name="fileLevel" onchange="return jump()">
+                    <option value="5" >绝密</option>
+                    <option value="4" >机密</option>
+                    <option value="3" >秘密</option>
+                    <option value="2">内部</option>
+                    <option value="1">公开</option>
+                </select><br/><br/><br/>
+                <!--时间-->
+                <input type="text" style="display: none" name="fileValidPeriod">
+                <input type="text" id="time">
+                <select  style="text-align:center" id="shijian">
+                <option value="1">年</option>
+
+                <option value="2">日</option>
+            </select><br/><br/><br/>
+                <!--主定密单位-->
+                <input type="text" style="display: none" name="fileMajorUnit">
+                <!--辅助定密单位-->
+                <input type="text" style="display: none" name="fileMinorUnit">
+                <label class="col-sm-6 control-label" style="text-align:center">主定密单位：<span id="Major"></span><span style="display: none" id="unitNo"></span></label>
+                <label class="col-sm-3 control-label" style="text-align:center">辅助定密单位：</label>
+                <div class="col-sm-3 control-label" id="Minor">
+                </div><br/><br/><br/>
+                <div class="col-sm-3 control-label" id="basis">
+                </div><br/><br/>
+
+                <div class="col-sm-3 control-label">
+                    <button onclick="fileshow()">选择分发范围</button>
+                </div>
+            </div>
+        </div>
+
+        <!--按钮-->
+        <div class="row">
+            <div class="btn-group"
+                 style="display: table; width: auto;margin-left: auto;
+                               margin-right: auto;">
+                <!--      <button type="button" class="btn btn-default cancel" id="tj"
+                              onclick="tjsj();" style="float:center;">提交</button>-->
+                <input type="button" value="Submit" class="btn btn-default cancel" id="tj"
+                       onclick="tjsj();" >
+            </div>
+        </div>
+
+
+    </div>
+
+   </form>
+
+ <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+
+    <!--tree-->
+    <div class="container filetree" style="display: none">
+        <div class="row">
+            <div class="col-sm-3 my-xs" style="border-radius: 0;overflow-y: auto;height: 300px">
+                <ul id="browser" class="filetree treeview-famfamfam treeview">
+                </ul>
+            </div>
+            <div class="col-xs-9 my-xs" style="border-left: 0;border-radius: 0;overflow-y: auto;height: 300px">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td class="col-xs-1">范围</td>
+                        <td class="col-xs-8">权限</td>
+                    </tr>
+                    </thead>
+                    <tbody class="list">
+
+                    </tbody>
+                </table>
+
+            </div>
+            <nav class="text-right">
+                <div class="col-xs-12" style="margin-top: 10px">
+                    <button type="button" class="btn btn-info" onclick="filetree2()">确定</button>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+</div>
+<body>
+
+</body>
+</html>

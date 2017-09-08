@@ -1,0 +1,6 @@
+##刘强
+##申请新的文件fid
+http://localhost:8080/dcms/api/v1/file/applyNewFid
+{
+  "token":"726137ac72f6fe0040ea63af54583780"
+}

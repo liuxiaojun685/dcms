@@ -1,0 +1,200 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  AdminSimpleInfo:
+    properties:
+      aid:
+        description: 登录名
+        type: string
+      account:
+        description: 登录名
+        type: string
+      name:
+        description: 显示名称
+        type: string
+      adminType:
+        description: 管理员类型。1安全审计员 2系统管理员 3安全保密管理员
+        type: integer
+      description:
+        description: 描述
+        type: string
+
+  AdminInfo:
+    type: AdminSimpleInfo
+    properties:
+      createFrom:
+        description: 来源 1内置 2派生
+        type: integer
+
+  AdminRole:
+    properties:
+      aid:
+        description: 管理员id
+        type: string
+      uid:
+        description: 用户ID
+        type: string
+      account:
+        description: 登录名
+        type: string
+      name:
+        description: 姓名
+        type: string
+      parentAdmin: 
+        description: 派生人
+        type: string
+
+############################################################
+# /admin/login
+############################################################
+  Admin_LoginRequest:
+    properties:
+      account:
+        description: 登录名
+        type: string
+      passwd:
+        description: 密码
+        type: string
+      keyCode:
+        description: 验证码
+        type: string
+
+  Admin_LoginResponse:
+    type: [ common.CommonResponse , AdminInfo ]
+    properties:
+      token:
+        description: 校验码
+        type: string
+############################################################
+# /admin/logout
+############################################################
+  Admin_LogoutRequest:
+    type: common.CommonRequest
+
+  Admin_LogoutResponse:
+    type: common.CommonResponse
+
+############################################################
+# /admin/update
+############################################################
+  Admin_UpdateRequest:
+    type: common.CommonRequest
+    properties:
+      name:
+        description: 管理员名称
+        required: false
+        type: string
+      passwd:
+        description: 登陆密码
+        required: false
+        type: string
+      oldPasswd:
+        description: 旧登陆密码
+        required: false
+        type: string
+
+  Admin_UpdateResponse:
+    type: common.CommonResponse
+
+
+############################################################
+# /admin/addAdmin
+############################################################
+  Admin_AddAdminRequest:
+    type: common.CommonRequest
+    properties:
+      adminType:
+        description: 管理员类型 1安全审计员 2系统管理员 3安全保密管理员
+        type: integer
+      userIdList:
+        description: 用户id
+        type: string[]
+
+  Admin_AddAdminResponse:
+    type: common.CommonResponse
+
+############################################################
+# /admin/queryDefaultAdmin
+############################################################
+  Admin_QueryDefaultAdminRequest:
+    type: common.CommonRequest
+
+  Admin_QueryDefaultAdminResponse:
+    type: common.CommonResponse
+    properties:
+      adminList:
+        description: 默认管理员角色
+        type: AdminInfo[]
+
+############################################################
+# /admin/queryDeriveAdmin
+############################################################
+  Admin_QueryDeriveAdminRequest:
+    type: common.CommonRequest
+    properties:
+      adminType:
+        description: 管理员类型 1安全审计员 2系统管理员 3安全保密管理员
+        type: integer
+
+  Admin_QueryDeriveAdminResponse:
+    type: common.CommonResponse
+    properties:
+      adminList:
+        description: 派生管理员角色
+        type: AdminRole[]
+
+############################################################
+# /admin/queryScopeAdmin
+############################################################
+  Admin_QueryScopeAdminRequest:
+    type: common.CommonRequest
+
+  Admin_QueryScopeAdminResponse:
+    type: common.CommonResponse
+    properties:
+      userList:
+        description: 管理员用户列表
+        type: AdminRole[]
+
+############################################################
+# /admin/deleteAdmin
+############################################################
+  Admin_DeleteAdminRequest:
+    type: common.CommonRequest
+    properties:
+      aid:
+        description: 管理员ID
+        type: string
+
+  Admin_DeleteAdminResponse:
+    type: common.CommonResponse
+
+############################################################
+# /admin/updateAdmin
+############################################################
+  Admin_UpdateAdminRequest:
+    type: common.CommonRequest
+    properties:
+      aid:
+        description: 管理员ID
+        type: string
+      description:
+        description: 描述
+        required: false
+        type: string
+      derive:
+        description: 是否具有任命取消的权限
+        required: false
+        type: integer
+
+  Admin_UpdateAdminResponse:
+    type: common.CommonResponse
+
+############################################################
+# /admin/identifyingCode
+############################################################
+  Admin_IdentifyingCodeRequest:
+
+  Admin_IdentifyingCodeResponse:
+    type: common.CommonResponse

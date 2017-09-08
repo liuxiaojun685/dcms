@@ -1,0 +1,6 @@
+##牛犀
+##删除定密单位
+http://localhost:8080/dcms/api/v1/Unit/DeleteMinor
+{"token":"ed686aca32ea14fa356c2cb5538346c5",
+"unitNo":"10002",
+}

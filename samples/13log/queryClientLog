@@ -1,0 +1,9 @@
+##刘强
+##查询终端操作日志
+http://localhost:8080/dcms/api/v1/Log/queryClientLog
+
+{
+	"token":"9d25960acfbdd9dc4b6b3d7c716276e6",
+	"pageNumber":0,
+	"pageSize":9,
+}

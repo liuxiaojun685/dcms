@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <title></title>
+    <link rel="stylesheet" href="css/fileClassified.css"/>
+    <link rel="stylesheet" href="../css/jquery.treeview.css"/>
+    <link href="tooltips/css/docs.css" rel="stylesheet">
+    <link href="tooltips/js/google-code-prettify/prettify.css" rel="stylesheet">
+    <link href="tooltips/css/tooltips.css" rel="stylesheet" id="skin">
+    <link href="js/textshow/css/all.css" rel="stylesheet" type="text/css"/>
+    <link href="css/select.down.css" rel="stylesheet" type="text/css"/>
+    <link href="css/css/cloud-admin.css" rel="stylesheet">
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="../secadmin/js/jquery.treeview.js" type="text/javascript"></script>
+    <script src="js/treeview/jquery.cookie.js"></script>
+    <script src="js/bootstrap-paginator.js"></script>
+    <script src="js/base64.js"></script>
+    <script src="js/mymap.js"></script>
+    <script src="js/fileClassification.js"></script>
+    <script type="text/javascript" src="js/jquery-form.js"></script>
+    <script src="../layer/layer.js"></script>
+    <script src="js/laydate/laydate.js"></script>
+    <script src="tooltips/js/bootstrap-tooltip.js"></script>
+    <script src="tooltips/js/jquery.pure.tooltips.js"></script>
+    <script src="js/placeholder.js"></script>
+    <style>
+        #id_basisTree input{
+            height:25px;
+            border:0;
+            background: transparent;
+            padding-top: 8px;
+            vertical-align: middle;
+        }
+        #id_businessTree input{
+            height:25px;
+            border:0;
+            background: transparent;
+            padding-top: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div id="text2">
+    <input id="id_uploadType" type="text" style="display: none" value="4">
+    <table class="upload" style="width:750px;margin: 0 auto">
+        <tr>
+            <td colspan="2"><h4 class="index" style="font-weight: bold;font-size:25px;font-family:'微软雅黑';color: #fff;">密级变更</h4></td>
+        </tr>
+        <tr>
+            <td style="width:450px"><span class="textName" style="letter-spacing: 6px;">文件名称：</span><input id="id_filename" class="left" readonly/></td>
+            <td style="width:300px"><span style="font-weight: bold;">文件起草人：</span><input id="id_drafter" style="margin-left:3px;" class="right" readonly/></td>
+        </tr>
+        <tr>
+            <td style="width:450px"><span class="textName" style="letter-spacing: 6px;">定密单位：</span><input id="id_classificationOrganizationMajor" class="left" readonly/></td>
+            <td style="width:300px"><span class="textName">起草日期：</span><input id="id_draftTime" class="right" readonly/></td>
+        </tr>
+        <tr>
+            <td style="width:450px">
+                <span style="font-weight: bold;letter-spacing: 1.5px;margin-left: -3px;">辅定密单位：</span>
+                <textarea id="id_classificationOrganizationMinors" style="margin-left:8px;width:340px;color:#000;margin-top:3px;" class="left" readonly></textarea>
+            </td>
+            <td style="width:300px;display: none;"><span style="font-weight: bold;">定密责任人：</span><input id="id_classificationAuthority" style="margin-left:3px;" class="right" readonly/></td>
+            <td style="width:300px"><span style="font-weight: bold;">文件签发人：</span><input id="id_issuer" style="margin-left:3px;" class="right" readonly/></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class="textName" style="vertical-align: bottom;letter-spacing: 6px;">定密依据：</span>
+                <select id="id_basisType" name="basisType">
+                    <option value="0" selected>确定性定密</option>
+                    <option value="1">不明确事项</option>
+                    <option value="2">无权定密事项</option>
+                    <option value="3">派生定密</option>
+                </select>
+                <textarea id="id_basisDescription" rows="3" cols="128" style="overflow-y: auto;color:#000;margin-left:98px;"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class="textName" style="letter-spacing: 6px;">秘密等级：</span>
+                <select id="id_fileLevel">
+                    <option value="0" selected>公开</option>
+                    <option value="1">内部</option>
+                    <option value="2">秘密</option>
+                    <option value="3">机密</option>
+                    <option value="4">绝密</option>
+                </select>
+                <input class="btn" style="margin-left:30px; display: none;" type="button" value="密点分析"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class="textName" style="letter-spacing: 6px;">保密期限：</span>
+                <select id="id_durationType" name="durationType" class="time1">
+                    <option value="0" selected>不限</option>
+                    <option value="1">长期</option>
+                    <option value="2">期限</option>
+                    <option value="3">解密日期</option>
+                    <option value="4">条件</option>
+                </select>
+                <div id="id_duration" class="times time1" style="width:300px;margin-left:30px;display: inline-block;"></div>
+            </td>
+        </tr>
+        <tr>
+            <td id="id_operationControl"  colspan="2">
+                <span class="textName">分发控制：</span>
+                <span style="font-weight:bold;padding-left:15px;">内容阅读</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="contentRead">
+                <span style="font-weight:bold;">内容打印</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="contentPrint">
+                <span style="font-weight:bold;">打印隐藏水印</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="contentPrintHideWater">
+                <span style="font-weight:bold;">内容修改</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="contentModify">
+                <span style="font-weight:bold;">内容截屏</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="contentScreenShot">
+                <span style="font-weight:bold;">内容拷贝</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="contentCopy">
+                <span style="font-weight:bold;">文件拷贝</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="fileCopy">
+                <span style="font-weight:bold;">文件另存副本</span><input style="border:0;margin:0 3px 0 5px;" type="checkbox" name="fileSaveCopy">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class="textName" style="letter-spacing: 6px;">知悉范围：</span>
+                <ul class="title" style="margin-bottom: 0;margin-left:0">
+                    <li><a href="#" class="cur" onclick="changeTab(0)">列举方式</a></li>
+                    <li><a href="#" onclick="changeTab(1)">描述方式</a></li>
+                </ul>
+                <div class="rangecontent" style="border: 0;margin-left:98px;margin-top:-23px;">
+                    <div class="show">
+                        <textarea id="id_accessScope" rows="3" cols="130" style="resize:none;color:#000;"></textarea>
+                    </div>
+                    <div style="display: none;">
+                        <textarea id="id_accessDescription" rows="3" cols="130"  style="resize:none;color:#000;"></textarea>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span class="textName"  style="letter-spacing: 6px;margin-top:50px;position:absolute;">扩展属性：</span>
+                <input id="id_issueNumber" type="text" style="margin-left: 10px; display: none;"></input>
+                <input id="id_docNumber" type="text" style="margin-left: 10px; display: none;"></input>
+                <input id="id_duplicationAmount" type="text" style="margin-left: 10px; display: none;"></input>
+                <textarea id="id_business" style="margin-top:60px;overflow-y: auto;color:#000;margin-left:95px;" rows="3" cols="129"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <span style="margin-top:5px;position:absolute;letter-spacing: 6px;" class="textName">变更意见：</span>
+                <textarea id="id_comment" style="margin-top:13px;margin-left:95px;overflow-y: auto;color:#000;" rows="3" cols="129"></textarea>
+            </td>
+        </tr>
+    </table>
+    <div style="width:760px;margin:10px auto;">
+        <table>
+            <tr>
+                <td style="width:620px;"></td>
+                <td style="width:130px;">
+                    <input id="id_commit" class="btn" type="button" value="提交">
+                    <input id="id_reset" class="btn" type="button" value="重置">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('input, textarea').placeholder();
+    });
+    $("#id_reset").click(function () {
+        var href = window.location.href;
+        var url = href.split("/");
+        var pageName = url[url.length - 1];
+        window.location.href = pageName;
+    });
+    function changeTab(index) {
+        for (var i = 0; i < list.length; i++) {
+            if (i === index) {
+                list[i].className = 'cur';
+                divs[i].className = 'show';
+            } else {
+                list[i].className = '';
+                divs[i].className = '';
+            }
+        }
+    }
+</script>
+
+</body>
+<div id="id_layerScopeTree" class="my-xs" style="border-radius: 0;display: none">
+    <input id="id_treeKeyword" type="text" style="margin-left: 75px;color:#000;border:1px solid #ddd;height: 20px;margin-top: 5px;padding-top: 0;;padding: 0 5px">
+    <input id="treechoose" type="button" value="搜索" style="margin-left: 10px;color:#000;border:1px solid #ddd;height: 20px;margin-top: 5px;padding-top: 0;padding: 0 5px">
+    <ul id="id_scopeTree" class="filetree treeview"></ul>
+</div>
+
+<div id="id_layerMinors" class="my-xs" style="border-radius: 0;display: none">
+    <table id="id_minors" style="margin-left: 10px;color: #000;"></table>
+</div>
+
+<div id="id_layerBasisTree" class="my-xs" style="border-radius: 0;display: none">
+    <ul id="id_basisTree" class="filetree treeview">
+    </ul>
+</div>
+
+<div id="id_layerBusinessTree" class="my-xs" style="border-radius: 0;display: none">
+    <ul id="id_businessTree" class="filetree treeview">
+    </ul>
+</div>
+
+<div class="my-xs" style="border-radius: 0;display: none">
+    <select id="id_urgency" class="form-control">
+        <option value="0" selected>一般</option>
+        <option value="1">重要</option>
+        <option value="2">加急</option>
+    </select>
+</div>
+
+<!--调用ocx-->
+<OBJECT id="ocx" WIDTH=528 HEIGHT=45 classid="CLSID:FE876719-85A6-43AB-8496-6A4BA4E0E414" style="display: none"/>
+</html>

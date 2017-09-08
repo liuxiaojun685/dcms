@@ -1,0 +1,302 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  BasisInfo:
+    properties:
+      basisLevel:
+        description: 定密依据密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      basisContent:
+        description: 定密依据内容
+        type: string
+
+  BasisItemItem:
+    properties:
+      basisId:
+        description: 定密依据事项ID
+        type: integer
+      basisLevel:
+        description: 定密依据密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      basisItem:
+        description: 定密依据事项
+        type: string
+
+  BasisItem:
+    properties:
+      basisId:
+        description: 定密依据ID
+        type: integer
+      basisName:
+        description: 定密依据依据名称
+        type: string
+
+  BasisClassItem:
+    properties:
+      basisId:
+        description: 定密依据分类ID
+        type: integer
+      basisClass:
+        description: 定密依据分类
+        type: string
+
+  BasisClassNode:
+    properties:
+      basisClass:
+        description: 定密依据分类
+        type: string
+      basisList:
+        description: 定密依据依据列表
+        type: BasisNode[]
+
+  BasisNode:
+    properties:
+      basisName:
+        description: 定密依据依据名称
+        type: string
+      basisItemList:
+        description: 定密依据事项列表
+        type: BasisItemNode[]
+
+  BasisItemNode:
+    properties:
+      basisId:
+        description: 定密依据事项ID
+        type: integer
+      basisLevel:
+        description: 定密依据密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      basisItem:
+        description: 定密依据事项
+        type: string
+
+############################################################
+# /basis/addBasis
+############################################################
+  Basis_AddBasisRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据分类ID
+        type: integer
+      basisName:
+        description: 定密依据依据名称
+        type: string
+
+  Basis_AddBasisResponse:
+    type: common.CommonResponse
+    properties:
+      basisId:
+        description: 定密依据ID
+        type: integer
+
+############################################################
+# /basis/deleteBasis
+############################################################
+  Basis_DeleteBasisRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据ID
+        type: integer
+
+  Basis_DeleteBasisResponse:
+    type: common.CommonResponse
+
+############################################################
+# /basis/queryBasisClassList
+############################################################
+  Basis_QueryBasisClassListRequest:
+    type: common.CommonRequest
+    properties:
+      basisType:
+        description: 定密依据类型 0确定性 1不明确 2无权定密 3派生
+        required: false
+        type: integer
+
+  Basis_QueryBasisClassListResponse:
+    type: common.CommonResponse
+    properties:
+      basisClassList:
+        description: 定密依据分类列表
+        type: BasisClassItem[]
+
+############################################################
+# /basis/updateBasis
+############################################################
+  Basis_UpdateBasisRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据ID
+        type: integer
+      basisName:
+        description: 定密依据依据名称
+        required: false
+        type: string
+
+  Basis_UpdateBasisResponse:
+    type: common.CommonResponse
+
+############################################################
+# /basis/addBasisClass
+############################################################
+  Basis_AddBasisClassRequest:
+    type: common.CommonRequest
+    properties:
+      basisType:
+        description: 定密依据类型 0确定性 1不明确 2无权定密 3派生
+        type: integer
+      basisClass:
+        description: 定密依据分类
+        type: string
+
+  Basis_AddBasisClassResponse:
+    type: common.CommonResponse
+    properties:
+      basisId:
+        description: 定密依据分类ID
+        type: integer
+
+############################################################
+# /basis/addBasisItem
+############################################################
+  Basis_AddBasisItemRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据ID
+        type: integer
+      basisLevel:
+        description: 定密依据密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      basisItem:
+        description: 定密依据事项
+        type: string
+
+  Basis_AddBasisItemResponse:
+    type: common.CommonResponse
+    properties:
+      basisId:
+        description: 定密依据事项ID
+        type: integer
+
+############################################################
+# /basis/deleteBasisClass
+############################################################
+  Basis_DeleteBasisClassRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据分类ID
+        type: integer
+
+  Basis_DeleteBasisClassResponse:
+    type: common.CommonResponse
+
+############################################################
+# /basis/deleteBasisItem
+############################################################
+  Basis_DeleteBasisItemRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据事项ID
+        type: integer
+
+  Basis_DeleteBasisItemResponse:
+    type: common.CommonResponse
+
+############################################################
+# /basis/updateBasisClass
+############################################################
+  Basis_UpdateBasisClassRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据ID
+        type: integer
+      basisClass:
+        description: 定密依据分类
+        required: false
+        type: string
+
+  Basis_UpdateBasisClassResponse:
+    type: common.CommonResponse
+
+############################################################
+# /basis/updateBasisItem
+############################################################
+  Basis_UpdateBasisItemRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据ID
+        type: integer
+      basisLevel:
+        description: 定密依据密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      basisItem:
+        description: 定密依据事项
+        required: false
+        type: string
+
+  Basis_UpdateBasisItemResponse:
+    type: common.CommonResponse
+
+############################################################
+# /basis/queryBasisList
+############################################################
+  Basis_QueryBasisListRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据分类ID
+        type: integer
+
+  Basis_QueryBasisListResponse:
+    type: common.CommonResponse
+    properties:
+      basisList:
+        description: 定密依据列表
+        type: BasisItem[]
+
+############################################################
+# /basis/queryBasisItemList
+############################################################
+  Basis_QueryBasisItemListRequest:
+    type: common.CommonRequest
+    properties:
+      basisId:
+        description: 定密依据分类ID
+        type: integer
+
+  Basis_QueryBasisItemListResponse:
+    type: common.CommonResponse
+    properties:
+      basisItemList:
+        description: 定密依据事项列表
+        type: BasisItemItem[]
+
+############################################################
+# /basis/queryBasisTree
+############################################################
+  Basis_QueryBasisTreeRequest:
+    type: common.CommonRequest
+    properties:
+      basisType:
+        description: 定密依据类型 0确定性 1不明确 2无权定密 3派生
+        type: integer
+      basisLevel:
+        description: 定密依据密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+
+  Basis_QueryBasisTreeResponse:
+    type: common.CommonResponse
+    properties:
+      basisClassList:
+        description: 定密依据分类列表
+        type: BasisClassNode[]

@@ -1,0 +1,8 @@
+#牛犀 
+#获取日志上传存储位置
+http://localhost:8080/dcms/api/v1/systemConfig/queryLogLocation
+
+{
+  "token":"d4cab2c1c6e9b01783b37ed7af716028"
+
+}

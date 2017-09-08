@@ -1,0 +1,10 @@
+##牛犀
+##修改默认保密期限策略
+http://localhost:8080/dcms/api/v1/SecurePolicy/UpdateValidPeriod
+{
+"token":"5410298585895b922f4353e9ca09dfd5",
+"fileLevel":"1",
+"force":"99",
+"validPeriod":"1"
+
+}

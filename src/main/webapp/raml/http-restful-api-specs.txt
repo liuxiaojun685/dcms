@@ -1,0 +1,17 @@
+［接口选型］
+b/s架构的管理后台使用RAML定义接口，RAML（http://raml.org）提供了RESTful API全生命周期（设计、构建、测试、文档、集成）管理，可使用安装了api-workbench插件Atom编辑器（http://apiworkbench.com）编写接口
+RAML提供了代码（java、c++、javascript等）生成工具，可以根据接口定义自动生成框架代码，能省很多低级重复的工作量，也有很多大公司的RAML接口示例可以参考
+RAML目前有v0.8和v1.0两个版本，我们使用v1.0版本
+
+［接口细节规范］
+如无特殊说明，接口用POST提交，否则报HTTP 405 Method Not Allowed错误
+如无特殊说明，接口用JSON作为请求或响应的数据交换传输格式，需要添加HTTP请求头Content-Type:application/json注明数据格式为JSON，否则报HTTP 415 Unsupported Media Type错误
+接口设计原则：请求参数尽量不嵌套；响应的嵌套层级也不宜过深；参数名、字段名使用小驼峰式标准JAVA命名法，并尽可能统一以便复用
+公共请求参数：pageNum页码，从0开始；pageSize页大小
+公共响应字段名：code错误码，非0表示有错误；msg错误提示消息；body响应数据，数字、字符串、对象、或数组
+如无特殊说明，时间字段以datetime的缩写dt开头，是标准JAVA时间戳，数据库中用bigint表示，JAVA代码中用long表示，JSON中用integer或string表示，各语言的表示方法不同但本质内容不变
+API基础路径由协议名、服务器名、端口，项目名，接口版本名组成，加上接口路径就是最终API接口访问地址
+
+［接口测试］
+可使用curl在命令行快速调试接口，命令格式为curl -X POST --data "[[JSON数据]]" [[API接口全路径]] --header "Content-Type:application/json"，注意在命令行中双引号是关键字，因此在命令行中使用时JSON数据需要转义双引号
+curl使用示例（截取自其它项目，供参考）如下，在命令行输入curl -X POST --data "{\"text\":\"0123 abcd 中文汉字\"}" http://localhost:8080/yproject/api/echo --header "Content-Type:application/json"回车后，服务器返回{"code":0,"response":"0123 abcd 中文汉字"}

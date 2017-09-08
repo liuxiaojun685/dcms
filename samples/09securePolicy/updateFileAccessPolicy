@@ -1,0 +1,11 @@
+##牛犀
+##修改文件密级访问控制策略
+http://localhost:8080/dcms/api/v1/SecurePolicy/UpdateFileAccessPolicy
+
+{
+"token":"5410298585895b922f4353e9ca09dfd5",
+"fileLevel":"2",
+
+"userLevel":"1",
+"enable":"1",
+}

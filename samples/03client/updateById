@@ -1,0 +1,8 @@
+##牛犀
+##修改终端信息
+http://localhost:8080/dcms/api/v1/client/updateById
+
+{"token":"c8399b58400a66e2aa7a5ce56d8b13d0",
+ "cid":"aaaaaaaaa",
+ "description":"1"
+ }

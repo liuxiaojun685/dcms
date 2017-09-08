@@ -1,0 +1,5 @@
+##牛犀
+##创建用户组
+http://localhost:8080/dcms/api/v1/group/add
+
+{"token":"ae1e9b172e867245f12ddd83c32db5e8","ugid":"牛犀","name":"牛犀","description":"牛犀","did":"did-81a54d34-2c9d-4212-8cb5-6992e05ddd96"}

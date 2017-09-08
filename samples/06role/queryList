@@ -1,0 +1,10 @@
+##刘强
+##查询角色列表
+http://localhost:8080/dcms/api/v1/role/queryList
+{
+  token:"578d76a7c85ce6a98d919e0776be5a88",
+  pageNumber:"0",
+  pageSize:9,
+  roleType:2,
+  fileLevel:2
+}

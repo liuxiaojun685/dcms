@@ -1,0 +1,10 @@
+##牛犀
+##修改终端密级访问控制策略
+http://localhost:8080/dcms/api/v1/SecurePolicy/UpdateClientAccessPolicy
+
+{
+"token":"e7520eeae780340aa260ea253d9593a6",
+"clientLevel":"3",
+"userLevel":"1",
+"enable":"1",
+}

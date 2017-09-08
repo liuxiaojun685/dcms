@@ -1,0 +1,6 @@
+##刘强
+##查询文件密级访问控制表
+http://localhost:8080/dcms/api/v1/securePolicy/queryFileAccessPolicyList
+{
+  token:"0696fc814153a2ceafa7978697c4b9cd"
+}

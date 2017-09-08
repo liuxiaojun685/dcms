@@ -1,0 +1,9 @@
+##牛犀
+##查询管理员日志
+http://localhost:8080/dcms/api/v1/Log/queryAdminLog
+
+{"token":"affaa349157156ff1a0a1b33db5fe1b5",
+"pageNumber":"0",
+"pageSize":"5",
+
+}

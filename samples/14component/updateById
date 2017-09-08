@@ -1,0 +1,10 @@
+##牛犀
+##修改组件状态
+
+http://localhost:8080/dcms/api/v1/component/updateById
+
+{
+  "token":"dfc607a07b7ca91f59257ee5e74cf783",
+"componentId":"1",
+"enable":"0",
+}

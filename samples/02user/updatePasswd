@@ -1,0 +1,4 @@
+##牛犀
+##用户修改密码
+http://localhost:8080/dcms/api/v1/user/updatePasswd
+{"token":"c3ce2bea482e8cb4f6d6877765d55bc2","passwd":"a*9999","oldPasswd":"459539984"}

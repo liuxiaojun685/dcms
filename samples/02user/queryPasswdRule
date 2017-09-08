@@ -1,0 +1,6 @@
+##刘强
+##获取用户密码规则
+http://localhost:8080/dcms/api/v1/user/queryPasswdRule
+{
+  token:"1a92e09d7f8f7c9007dd9e4b826cb7f1"
+}

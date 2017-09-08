@@ -1,0 +1,246 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  LongPoint:
+    properties:
+      value:
+        description: 数据点
+        type: number
+        format: long
+
+  FileTrendPoint:
+    properties:
+      y:
+        description: 数量
+        type: LongPoint[]
+      z:
+        description: 类型 文件操作
+        type: string
+
+  ResourcePoint:
+    properties:
+      type:
+        description: 类型 1CPU 2内存 3硬盘
+        type: integer
+      resourceName:
+        description: 名称
+        type: string
+      percentage:
+        description: 占有率
+        type: string
+############################################################
+# /statistics/adminUsage
+############################################################
+  Statistics_AdminUsageRequest:
+    type: common.CommonRequest
+    properties:
+      adminType:
+        description: 管理员类型。2系统管理员 3安全保密管理员
+        required: false
+        type: integer
+      threshold:
+        description: 按时间统计 0总 1年 2月 3周 4日
+        type: integer
+
+  Statistics_AdminUsageResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型
+        type: string[]
+      y:
+        description: 数量
+        type: LongPoint[]
+
+############################################################
+# /statistics/userOnline
+############################################################
+  Statistics_UserOnlineRequest:
+    type: common.CommonRequest
+
+  Statistics_UserOnlineResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型
+        type: string[]
+      y:
+        description: 数量
+        type: LongPoint[]
+
+############################################################
+# /statistics/environment
+############################################################
+  Statistics_EnvironmentRequest:
+    type: common.CommonRequest
+
+  Statistics_EnvironmentResponse:
+    type: common.CommonResponse
+    properties:
+      resourceList:
+        description: 系统资源
+        type: ResourcePoint[]
+
+############################################################
+# /statistics/clientOnline
+############################################################
+  Statistics_ClientOnlineRequest:
+    type: common.CommonRequest
+
+  Statistics_ClientOnlineResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型
+        type: string[]
+      y:
+        description: 数量
+        type: LongPoint[]
+
+############################################################
+# /statistics/queryFileList
+############################################################
+  Statistics_QueryFileListRequest:
+    type: common.CommonRequest
+
+  Statistics_QueryFileListResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型
+        type: string[]
+      y:
+        description: 数量
+        type: LongPoint[]
+
+############################################################
+# /statistics/queryWorkFlowList
+############################################################
+  Statistics_QueryWorkFlowListRequest:
+    type: common.CommonRequest
+    properties:
+      startTime:
+        description: 开始时间
+        required: false
+        type: number
+        format: long
+      endTime:
+        description: 截止时间
+        required: false
+        type: number
+        format: long
+      workflowType:
+        description: 流程类型 2正式定密审核 3文件签发审核 4密级变更审核 5文件解密审核
+        required: false
+        type: integer
+
+  Statistics_QueryWorkFlowListResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型
+        type: string[]
+      y:
+        description: 数量
+        type: LongPoint[]
+
+############################################################
+# /statistics/fileTrend
+############################################################
+  Statistics_FileTrendRequest:
+    type: common.CommonRequest
+    properties:
+      by:
+        description: 1按年 2按月 3按天
+        type: integer
+      startTime:
+        description: 开始时间
+        required: false
+        type: number
+        format: long
+      endTime:
+        description: 截止时间
+        required: false
+        type: number
+        format: long
+
+  Statistics_FileTrendResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型 时间点
+        type: string[]
+      points:
+        description: 数据点
+        type: FileTrendPoint[]
+
+############################################################
+# /statistics/fileManyTrend
+############################################################
+  Statistics_FileManyTrendRequest:
+    type: common.CommonRequest
+    properties:
+      by:
+        description: 1按年 2按月 3按天
+        type: integer
+      startTime:
+        description: 开始时间
+        required: false
+        type: number
+        format: long
+      endTime:
+        description: 截止时间
+        required: false
+        type: number
+        format: long
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      scope:
+        description: 统计范围(部门或用户)
+        required: false
+        type: string[]
+
+  Statistics_FileManyTrendResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型 时间点
+        type: string[]
+      points:
+        description: 数据点
+        type: FileTrendPoint[]
+
+############################################################
+# /statistics/fileInLevel
+############################################################
+  Statistics_FileInLevelRequest:
+    type: common.CommonRequest
+
+  Statistics_FileInLevelResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型
+        type: string[]
+      y:
+        description: 数量
+        type: LongPoint[]
+
+############################################################
+# /statistics/fileInState
+############################################################
+  Statistics_FileInStateRequest:
+    type: common.CommonRequest
+
+  Statistics_FileInStateResponse:
+    type: common.CommonResponse
+    properties:
+      x:
+        description: 类型
+        type: string[]
+      y:
+        description: 数量
+        type: LongPoint[]

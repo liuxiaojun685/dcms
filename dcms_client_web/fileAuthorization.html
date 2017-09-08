@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title></title>
+
+    <link rel="stylesheet" type="text/css"  href="css/bootstrap.min.css" >
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" type="text/css"  href="css/style.css" >
+    <link rel="stylesheet" type="text/css" href="css/jquery.treeview.css"/>
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/treeview/jquery.treeview.js"></script>
+    <script src="js/treeview/jquery.cookie.js"></script>
+    <script src="js/file.js"></script>
+
+    <style type="text/css">
+        .table>tbody>tr>td{
+            vertical-align:middle;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 my-xs" style="border-radius: 0;overflow-y: auto;height: 300px">
+            <ul id="browser" class="filetree treeview-famfamfam treeview">
+            </ul>
+        </div>
+        <div class="col-xs-9 my-xs" style="border-left: 0;border-radius: 0;overflow-y: auto;height: 300px">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td class="col-xs-1">范围</td>
+                    <td class="col-xs-8">权限</td>
+                </tr>
+                </thead>
+                <tbody class="list">
+
+                </tbody>
+            </table>
+
+        </div>
+        <nav class="text-right">
+            <div class="col-xs-12" style="margin-top: 10px">
+                <button type="button" class="btn btn-info save-ok">确定</button>
+                <span style="padding:5px;"></span>
+                <button type="button" class="btn btn-default">取消</button>
+            </div>
+        </nav>
+
+
+    </div>
+</div>
+
+</body>
+</html>

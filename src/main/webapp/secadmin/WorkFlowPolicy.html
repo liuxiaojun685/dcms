@@ -1,0 +1,157 @@
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">流程管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box border primary">
+                            <div class="box-title">
+                                <h4><span style="padding:10px;"></span></h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="table header-tabs">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active" onclick="InitTable(0)"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">流程管理</span></a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="box_tab1">
+                                            <div class="row">
+                                                <div class="col-xs-12  potions">
+                                                    <div class="row" style="height: 200px;overflow-y:auto">
+                                                        <table class="table table-bordered table-hover ">
+                                                            <input type="hidden" id="wf">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>编号</th>
+                                                                <th>流程类型</th>
+                                                                <th>文件密级</th>
+                                                                <th>操作</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody id="tab">
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div style="margin-top: 20px"><span style="margin-top: 20px;background-color: #ac2925;color: #ffffff;text-align: center;border-radius:3px;cursor: pointer;" onclick="creatWorkflow()">【点击创建】</span><span style="margin-top: 20px;background-color: #4479C3;color: #ffffff;text-align: center;border-radius:3px;cursor: pointer;" onclick="checkWorkflow()">【配置检测】</span></div>
+                                                    <hr style="height: 10px;background-color: #4479C3">
+                                                    <div class="row" style="background-color: #FFFFFF;height: 200px; text-align: center; overflow: auto;">
+                                                        <div class="col-xs-12 creatwf" style="margin-top: 25px;font-size: 13px;font-weight:bold;">
+                                                        </div>
+
+                                                        <div class="col-xs-12 c-body" style="margin-top: 30px;display: none">
+
+                                                        </div>
+                                                        
+                                                        <div class="col-xs-12 c-check" style="display: none; text-align: left;">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="row potion1" style="display:none;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+<script type="text/javascript" src="js/workFlowPolicy.js"></script>
+<!--<div id="cont" style="display: none;">
+    <div class="row" style="margin-top:10px;">
+        <div class="col-xs-5" style="height: 300px;overflow-y: auto">
+            <table class="table table-bordered table-hover table-condensed" id="tabl" style="background:#fff;text-align:
+            center;">
+                <tbody class="coolist">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-2">
+            <input type="button" value=">>"
+                   style="display:block;margin-bottom: 10px;"
+                   onclick="checkRole()"/>
+            <input type="button" value="<<" style="display:block;"
+                   onclick="checkdelRole()"/>
+        </div>
+        <div class="col-xs-5">
+            <table class="table table-bordered table-hover " id="check" style="background:#fff;">
+                <tbody class="coolist1">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>-->
+<div id="cont" style="display: none;">
+    <div class="row" style="margin-top:10px;">
+        <div class="col-xs-12">
+            <table class="table table-bordered table-hover table-condensed" id="tabl" style="background:#fff;text-align:
+            center;">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th style="display: none">角色ID</th>
+                    <th>姓名</th>
+                    <th>密级</th>
+                    <th>角色类型</th>
+                </tr>
+                </thead>
+                <tbody class="coolist">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="workFlow" style="display:none;">
+    <h5 class="text-center">确定是否删除流程！</h5>
+</div>
+<div id="update-passwd" style="display: none;">
+    <form class="form-horizontal" role="form" style="border-top: 1px solid #ddd;">
+        <div class="form-group form-group-lg" style="margin-top:5px;">
+            <label class="col-sm-3 control-label">旧密码<span class="start-span">*</span></label>
+
+            <div class="col-sm-8">
+                <input class="form-control" type="text" id="old-passwd">
+                <span class="error-span"></span>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">新密码<span class="start-span">*</span></label>
+
+            <div class="col-sm-8">
+                <input class="form-control" type="password" id="new-passwd">
+                <span class="error-span"></span>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-3 control-label">确认密码<span class="start-span">*</span></label>
+
+            <div class="col-sm-8">
+                <input class="form-control" type="password" id="ok-passwd">
+                <span class="error-span"></span>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+    </form>
+</div>

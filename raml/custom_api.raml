@@ -1,0 +1,483 @@
+#%RAML 1.0
+title: dcms backend api
+uses:
+  admin: admin.raml
+  backup: backup.raml
+  basis: basis.raml
+  client: client.raml
+  common: common.raml
+  component: component.raml
+  department: department.raml
+  file: file.raml
+  group: group.raml
+  license: license.raml
+  log: log.raml
+  middleware: middleware.raml
+  role: role.raml
+  securePolicy: securePolicy.raml
+  systemConfig: systemConfig.raml
+  unit: unit.raml
+  user: user.raml
+  workFlow: workFlow.raml
+
+version: v1
+baseUri: http://api.dcms.cn
+mediaType: application/json
+
+/user/login:
+  displayName: 2.1 用户登录（通过终端）
+  description: |
+    权限:终端用户
+    <br>登陆时尽可能的传入详细终端信息，后台需记录数据。
+    <br>登陆失败时判断remainTimes字段，显示剩余尝试次数。
+    <br>判断passwdForceChange是否强制修改密码，如果是，强制弹出修改密码界面。
+  post:
+    body:
+      type: user.User_LoginRequest
+    responses:
+      200:
+        body:
+          type: user.User_LoginResponse
+
+/user/logout:
+  displayName: 2.2 用户注销
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: user.User_LogoutRequest
+    responses:
+      200:
+        body:
+          type: user.User_LogoutResponse
+
+/user/updatePasswd:
+  displayName: 2.3 用户修改密码
+  description: |
+    权限:终端用户
+    <br>新密码不能与旧密码相同。
+  post:
+    body:
+      type: user.User_UpdatePasswdRequest
+    responses:
+      200:
+        body:
+          type: user.User_UpdatePasswdResponse
+
+/user/queryPasswdRule:
+  displayName: 2.13 获取用户密码规则
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: user.User_QueryPasswdRuleRequest
+    responses:
+      200:
+        body:
+          type: user.User_QueryPasswdRuleResponse
+
+/client/queryNewestVersion:
+  displayName: 3.2 获取最新补丁(检查新版本)
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: client.Client_QueryNewestVersionRequest
+    responses:
+      200:
+        body:
+          type: client.Client_QueryNewestVersionResponse
+
+/client/loadPolicy:
+  displayName: 3.3 同步终端策略到本地
+  description: |
+    权限:任意
+  post:
+    body:
+      type: client.Client_LoadPolicyRequest
+    responses:
+      200:
+        body:
+          type: client.Client_LoadPolicyResponse
+
+/department/queryTree:
+  displayName: 5.4 查看部门树
+  description: |
+    权限:任意
+    <br>组织架构树中默认包含部门节点，hasUser/hasGroup表示是否包含用户/组节点。
+    <br>同时包含用户/组节点时，自动包含组内用户节点。
+    <br>fileLevel在包含用户节点的情况下，筛选有访问该密级文件权限的用户，未包含有效用户的组/部门节点被隐藏。
+    <br>关键词检索优先级最低。
+  post:
+    body:
+      type: department.Department_QueryTreeRequest
+    responses:
+      200:
+        body:
+          type: department.Department_QueryTreeResponse
+
+/unit/queryMinorList:
+  displayName: 7.3 查询辅助定密单位列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: unit.Unit_QueryMinorListRequest
+    responses:
+      200:
+        body:
+          type: unit.Unit_QueryMinorListResponse
+
+/unit/queryMajorList:
+  displayName: 7.5 查询主定密单位
+  description: |
+    权限:任意
+  post:
+    body:
+      type: unit.Unit_QueryMajorListRequest
+    responses:
+      200:
+        body:
+          type: unit.Unit_QueryMajorListResponse
+
+/basis/queryList:
+  displayName: 8.3 查询定密依据列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: basis.Basis_QueryListRequest
+    responses:
+      200:
+        body:
+          type: basis.Basis_QueryListResponse
+
+/securePolicy/queryValidPeriod:
+  displayName: 9.11 查询默认保密期限
+  description: |
+    权限:任意
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryValidPeriodRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryValidPeriodResponse
+
+/securePolicy/queryPermissionPolicy:
+  displayName: 9.14 查询文件默认权限策略
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: securePolicy.SecurePolicy_QueryPermissionPolicyRequest
+    responses:
+      200:
+        body:
+          type: securePolicy.SecurePolicy_QueryPermissionPolicyResponse
+
+/file/queryPrivateList:
+  displayName: 10.1 查询个人文件台账
+  description: |
+    权限:终端用户
+    <br>文件收件箱：作为分发使用人的已签发文件和作为定密责任人（有定密历史）的文件,作为签发人的文件
+    <br>文件拟稿箱：作为文件起草人的所有文件
+    <br>待解密：作为定密责任人的即将到或超过解密日期的正式定密/密级变更/文件签发文件
+    <br>已解密：作为定密责任人的已解密的文件
+  post:
+    body:
+      type: file.File_QueryPrivateListRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryPrivateListResponse
+
+/file/authorization:
+  displayName: 10.4 文件授权
+  description: |
+    权限:终端用户
+    <br>有授权权限的用户可以授权。
+  post:
+    body:
+      type: file.File_AuthorizationRequest
+    responses:
+      200:
+        body:
+          type: file.File_AuthorizationResponse
+
+/file/queryDispatchList:
+  displayName: 10.5 查询文件分发范围及对应权限
+  description: |
+    权限:终端用户
+    <br>只有已签发过或授权的文件有分发范围。
+  post:
+    body:
+      type: file.File_QueryDispatchListRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryDispatchListResponse
+
+/file/queryPrivatePermissionById:
+  displayName: 10.6 查询个人文件操作权限（通过fid）
+  description: |
+    权限:终端用户
+    <br>查询个人对指定文件的可操作权限，决定了终端右键菜单可选项和文件操作等权限。
+    <br>如果系统没有记录这个文件(预定密文件)，返回错误，终端应尝试通过文件属性查用户角色的默认权限。
+    <br>如果文件未被签发或授权，接口返回用户所属角色(起草人，定密/签发人)的默认权限。
+    <br>用户对文件的角色可以是多个，默认权限是叠加的。
+  post:
+    body:
+      type: file.File_QueryPrivatePermissionByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryPrivatePermissionByIdResponse
+
+/file/queryPrivatePermissionNoId:
+  displayName: 10.7 查询个人文件操作权限（通过文件属性）
+  description: |
+    权限:终端用户
+    <br>查询个人对指定文件的可操作权限，决定了终端右键菜单可选项和文件操作等权限。
+    <br>用户对文件的角色可以是多个，默认权限是叠加的。
+    <br>fileIsMyCreate表示用户是否是文件起草人，如果是返回结果叠加起草人默认权限。
+    <br>用户可能是定密责任人或签发人，如果是返回结果叠加对应权限。
+  post:
+    body:
+      type: file.File_QueryPrivatePermissionNoIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryPrivatePermissionNoIdResponse
+
+/file/applyNewFid:
+  displayName: 10.8 申请新的文件fid
+  description: |
+    权限:终端用户
+    <br>终端申请一个系统分配的fid，作为文件的唯一识别，并存到文件头里。
+  post:
+    body:
+      type: file.File_ApplyNewFidRequest
+    responses:
+      200:
+        body:
+          type: file.File_ApplyNewFidResponse
+
+/file/uploadFileById:
+  displayName: 10.9 上传文件
+  description: |
+    权限:终端用户
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+    <br>字段属性要与文件头中匹配。fid作为文件的唯一识别。
+  post:
+    body:
+      type: file.File_UploadFileByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_UploadFileByIdResponse
+
+/file/downloadFileById:
+  displayName: 10.10 下载文件GET
+  description: |
+    权限:终端用户
+    <br>GET，以普通HTTP参数形式请求，返回application/octet-stream文件
+    <br>字段属性要与文件头中匹配。fid作为文件的唯一识别。
+  post:
+    body:
+      type: file.File_DownloadFileByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_DownloadFileByIdResponse
+
+/file/queryExistById:
+  displayName: 10.11 查询文件是否存在或是否不同步
+  description: |
+    权限:终端用户
+    <br>如果不同步，用户需要下载新的文件。
+  post:
+    body:
+      type: file.File_QueryExistByIdRequest
+    responses:
+      200:
+        body:
+          type: file.File_QueryExistByIdResponse
+
+/systemConfig/queryWatermarkConfig:
+  displayName: 11.2 获取水印信息
+  description: |
+    权限:任意
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryWatermarkConfigRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryWatermarkConfigResponse
+
+/systemConfig/queryTrustedAppList:
+  displayName: 11.20 查询可信应用程序列表
+  description: |
+    权限:任意
+  post:
+    body:
+      type: systemConfig.SystemConfig_QueryTrustedAppListRequest
+    responses:
+      200:
+        body:
+          type: systemConfig.SystemConfig_QueryTrustedAppListResponse
+
+/log/uploadLog:
+  displayName: 13.4 上传终端日志
+  description: |
+    权限:终端用户
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+  post:
+    body:
+      type: log.Log_UploadLogRequest
+    responses:
+      200:
+        body:
+          type: log.Log_UploadLogResponse
+
+/workFlow/create:
+  displayName: 17.1 流程申请
+  description: |
+    权限:终端用户
+    <br>multipart/form-data for POST 附件参数名file 消息(JSON)参数名body
+    <br>正式定密：文件ID/文件密级/保密期限/定密依据/辅助定密单位/签发范围/申请理由。
+    <br>密级变更：文件ID/文件密级/保密期限/申请理由。
+    <br>文件签发：文件ID/签发范围/申请理由。
+    <br>文件解密：文件ID/申请理由。
+  post:
+    body:
+      type: workFlow.WorkFlow_CreateRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_CreateResponse
+
+/workFlow/approval:
+  displayName: 17.2 流程审批
+  description: |
+    权限:终端用户
+    <br>正式定密：流程ID/审批意见/审批状态。决定文件密级/保密期限/定密依据/辅助定密单位，建议签发范围。
+    <br>密级变更：流程ID/审批意见/审批状态。决定文件密级/保密期限。
+    <br>文件签发：流程ID/审批意见/审批状态。决定签发范围
+    <br>文件解密：仅流程ID/审批意见/审批状态。
+  post:
+    body:
+      type: workFlow.WorkFlow_ApprovalRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_ApprovalResponse
+
+/workFlow/queryUnfinished:
+  displayName: 17.3 查询未办理的审批
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryUnfinishedRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryUnfinishedResponse
+
+/workFlow/addAgent:
+  displayName: 17.4 添加审核代理人
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_AddAgentRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_AddAgentResponse
+
+/workFlow/deleteAgentById:
+  displayName: 17.5 删除审核代理人
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_DeleteAgentByIdRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_DeleteAgentByIdResponse
+
+/workFlow/updateAgentById:
+  displayName: 17.6 更新审核代理人期限
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_UpdateAgentByIdRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_UpdateAgentByIdResponse
+
+/workFlow/queryAgent:
+  displayName: 17.7 查询委托审核人列表
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryAgentRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryAgentResponse
+
+/workFlow/queryFinished:
+  displayName: 17.8 查询已办理的审批
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryFinishedRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryFinishedResponse
+
+/workFlow/queryMyRequest:
+  displayName: 17.9 查询我提交的审批
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryMyRequestRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryMyRequestResponse
+
+/workFlow/queryById:
+  displayName: 17.10 查询流程信息
+  description: |
+    权限:任意
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryByIdRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryByIdResponse
+
+/workFlow/queryApproverSelectList:
+  displayName: 17.12 获取流程审批人待选列表
+  description: |
+    权限:终端用户
+  post:
+    body:
+      type: workFlow.WorkFlow_QueryApproverSelectListRequest
+    responses:
+      200:
+        body:
+          type: workFlow.WorkFlow_QueryApproverSelectListResponse

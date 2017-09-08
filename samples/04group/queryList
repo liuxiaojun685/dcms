@@ -1,0 +1,9 @@
+##牛犀
+##查询组列表
+http://localhost:8080/dcms/api/v1/group/queryList
+
+{"token":"09089b34fbe0b61a6f412b10c562459b",
+"pageNumber":"1",
+"pageSize":"5",
+"keyword":"牛犀"
+}

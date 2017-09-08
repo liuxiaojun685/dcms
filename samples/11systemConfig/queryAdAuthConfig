@@ -1,0 +1,6 @@
+##刘强
+##获取AD认证配置
+http://localhost:8080/dcms/api/v1/systemConfig/QueryAdAuthConfig
+{
+  token:"e918cb363cb11aa1f29484be38f7a865"
+}

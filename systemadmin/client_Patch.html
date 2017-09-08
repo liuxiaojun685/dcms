@@ -1,0 +1,263 @@
+﻿
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">终端管理</a></li>
+                        <li><a href="javascript:void(0)">终端维护</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div  class="col-lg-12">
+
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><span style="padding:10px;"></span></h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="table header-tabs">
+                                <ul class="nav nav-tabs">
+                                    <li onclick="InitPwdTable()"><a href="#box_tab2" data-toggle="tab"><i class="fa fa-times-circle"></i> <span class="hidden-inline-mobile">终端卸载密码</span></a></li>
+                                    <li class="active" onclick="InitTable(0)"><a href="#box_tab1" data-toggle="tab"><i class="fa fa-cog"></i> <span class="hidden-inline-mobile">补丁管理</span></a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="box_tab1">
+                                        <div class="potions">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <table class="table table-bordered table-hover table-condensed list" style="table-layout:fixed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th style="width:3%"></th>
+                                                            <th style="width:5%">编号</th>
+                                                            <th style="display:none">补丁ID</th>
+                                                            <th style="width:28%">补丁名</th>
+                                                            <th style="width:10%">补丁存储路径</th>
+                                                            <th style="width:8%">补丁大小</th>
+                                                            <th style="width:8%">操作系统</th>
+                                                            <th style="width:8%">版本类别</th>
+                                                            <th style="width:7%">版本号</th>
+                                                            <th style="width:5%">版本名</th>
+                                                            <th style="width:13%">创建时间</th>
+                                                            <th style="width:5%">详情</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody id="tab">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-top:10px;">
+                                                <div class="col-xs-2">
+                                                    <a href="javascript:void(0)" style="padding-right:10px;text-decoration: none;" class="add-patch">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0)" style="padding-right:10px;text-decoration: none;" class="delPatch">
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-xs-10" style="margin-top:-5px;">
+                                                    <div class="M-box3"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 potions1" style="display:none;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="box_tab2">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <table class="table table-bordered table-hover table-condensed" style="table-layout:fixed">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>编号</th>
+                                                        <th style="display:none">卸载密码ID</th>
+                                                        <th>卸载密码</th>
+                                                        <th>同步数</th>
+                                                        <th>未同步数</th>
+                                                        <th>描述</th>
+                                                        <th>创建时间</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="plist">
+
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-2">
+                                                <a href="javascript:void(0)" style="padding-right:10px;text-decoration: none;" class="add-patch">
+                                                    <i class="fa fa-plus"><span style="padding:0 10px;color:#555;font-weight:bold;">添加卸载密码</span></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-10" style="margin-top:-5px;">
+                                                <div class="M-box3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<script src="js/dcms_clientPatch.js"></script>
+<script type="text/javascript" src="../js/jquery-form.js"></script>
+<div id="up-clientpatch" style="display:none;">
+    <div class="form-horizontal" style="border-top: 1px solid #ddd;">
+        <div class="form-group form-group-lg" style="margin-top:5px;">
+            <label class="col-xs-3 control-label text-right">终端操作系统：</label>
+            <div class="col-xs-8">
+                <label class="radio-inline">
+                    <input type="radio" name="osType" value="windows" checked>windows
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="osType" value="linux"> linux
+                </label>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span1"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">版本类型：</label>
+
+            <div class="col-xs-8">
+                <label class="radio-inline">
+                    <input type="radio" name="versionType" value="1" checked>网络版
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="versionType" value="2"> 单机版
+                </label>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span1"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">版本号：<span class="start-span">*</span></label>
+
+            <div class="col-xs-8">
+                <input class="form-control" type="text" name="versionCode">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span versionCode"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">版本名：<span class="start-span">*</span></label>
+
+            <div class="col-xs-8">
+                <input class="form-control" type="text" name="versionName">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span versionName"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">补丁：</label>
+
+            <div class="col-xs-8">
+                <form class="clientPatch" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="body"/>
+                    <input type="file" name="file" onchange="fileUploadChange()" id="fileupload">
+                </form>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span fileupload"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">补丁名：<span class="start-span">*</span></label>
+
+            <div class="col-xs-8">
+                <input class="form-control" type="text" name="name">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span name"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">描述：</label>
+
+            <div class="col-xs-8">
+                <input class="form-control" type="text" name="description">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span description"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+    </div>
+</div>
+<div id="add-patch" style="display:none;">
+    <form class="form-horizontal" role="form" style="border-top: 1px solid #ddd;">
+        <div class="form-group form-group-lg" style="margin-top:5px;">
+            <label class="col-xs-3 control-label text-right" for="passwd">新卸载密码：<span
+                    class="start-span">*</span></label>
+            <div class="col-xs-8">
+                <input class="form-control" type="text" id="passwd">
+                <span class="error-span passwd"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">描述：<span
+                    class="start-span">*</span></label>
+
+            <div class="col-xs-8">
+                <input class="form-control" type="text" id="pwdescription">
+                <span class="error-span pwdescription"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,718 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  securePolicy: securePolicy.raml
+  unit: unit.raml
+  basis: basis.raml
+  user: user.raml
+types:
+  ClassificationInfo:
+    type: FileSimpleInfo
+    properties:
+      fileValidPeriod:
+        description: 保密期限，格式yymmdd
+        required: false
+        type: string
+      durationType:
+        description: 保密期限 类型 0不限 1长期 2期限 3解密日期 4条件
+        required: false
+        type: integer
+      durationDescription:
+        description: 保密期限 描述
+        required: false
+        type: string
+      fileDecryptTime:
+        description: 文件解密日期
+        required: false
+        type: number
+        format: long
+      fileScope:
+        description: 分发范围
+        required: false
+        type: FileScopeItem[]
+      fileScopeDesc:
+        description: 分发范围描述
+        required: false
+      basis:
+        description: 申请的定密依据
+        required: false
+        type: basis.BasisInfo[]
+      basisType:
+        description: 定密依据类型 0确定性定密 1不明确事项 2无权定密事项 3派生定密
+        required: false
+        type: integer
+      basisDesc:
+        description: 定密依据描述
+        required: false
+        type: string
+      issueNumber:
+        description: 文号
+        required: false
+        type: string
+      docNumber:
+        description: 份号
+        required: false
+        type: integer
+      duplicationAmount:
+        description: 签发份数
+        required: false
+        type: integer
+      fileMajorUnit:
+        description: 主定密单位
+        required: false
+        type: unit.UnitInfo
+      fileMinorUnit:
+        description: 辅助定密单位
+        required: false
+        type: unit.UnitInfo[]
+      permission:
+        description: 权限详情
+        required: false
+        type: securePolicy.PermissionBaseInfo
+      markVersion:
+        description: 密标版本
+        required: false
+        type: integer
+      description:
+        description: 原因/意见描述
+        required: false
+        type: string
+      business:
+        description: 业务属性
+        required: false
+        type: string
+
+  FileSimpleInfo:
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+      fileName:
+        description: 文件名称
+        type: string
+      urgency:
+        description: 文件重要紧急程度 0一般 1重要 2加急
+        required: false
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+
+  FileInfo:
+    type: FileSimpleInfo
+    properties:
+      fileValidPeriod:
+        description: 保密期限(期限形式)，格式yymmdd
+        required: false
+        type: string
+      durationType:
+        description: 保密期限类型 0不限 1长期 2期限 3解密日期 4条件
+        required: false
+        type: integer
+      durationDescription:
+        description: 保密期限(描述形式)
+        required: false
+        type: string
+      fileState:
+        description: 文件状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+      fileLocation:
+        description: 文件存储位置
+        type: string
+      fileSize:
+        description: 文件大小，字节
+        type: number
+        format: long
+      fileMd5:
+        description: 文件MD5
+        type: string
+      fileLevelDecideTime:
+        description: 正式定密日期，时间戳毫秒
+        required: false
+        type: number
+        format: long
+      fileDecryptTime:
+        description: 保密期限(日期形式)，文件解密日期，时间戳毫秒
+        required: false
+        type: number
+        format: long
+      basis:
+        description: 定密依据
+        required: false
+        type: basis.BasisInfo[]
+      basisType:
+        description: 定密依据类型 0确定性定密 1不明确事项 2无权定密事项 3派生定密
+        required: false
+        type: integer
+      basisDesc:
+        description: 定密依据描述
+        required: false
+        type: string
+      issueNumber:
+        description: 文号
+        required: false
+        type: string
+      docNumber:
+        description: 份号
+        required: false
+        type: integer
+      duplicationAmount:
+        description: 份数
+        required: false
+        type: integer
+      fileScope:
+        description: 知悉范围
+        required: false
+        type: FileScopeInfo[]
+      fileScopeDesc:
+        description: 知悉范围描述
+        required: false
+        type: string
+      fileCreateUserName:
+        description: 文件起草人
+        required: false
+        type: string
+      fileLevelDecideRoleName:
+        description: 定密责任人(末次)
+        required: false
+        type: string
+      fileDispatchRoleName:
+        description: 文件签发人
+        required: false
+        type: string
+      fileCreateTime:
+        description: 文件起草日期，时间戳毫秒
+        required: false
+        type: number
+        format: long
+      fileDispatchTime:
+        description: 文件签发日期，时间戳毫秒
+        required: false
+        type: number
+        format: long
+      fileLevelChangeTime:
+        description: 文件密级变更日期(末次)，时间戳毫秒
+        required: false
+        type: number
+        format: long
+      description:
+        description: 文件属性详情
+        required: false
+        type: string
+      fileMajorUnit:
+        description: 主定密单位
+        required: false
+        type: unit.UnitInfo
+      fileMinorUnit:
+        description: 辅助定密单位
+        required: false
+        type: unit.UnitInfo[]
+      permission:
+        description: 权限管控
+        required: false
+        type: securePolicy.PermissionBaseInfo
+      markVersion:
+        description: 密级标志版本
+        required: false
+        type: integer
+      historyList:
+        description: 定密历史
+        required: false
+        type: HistoryInfo[]
+      business:
+        description: 业务属性
+        required: false
+        type: string
+
+  HistoryInfo:
+    properties:
+      creatTime:
+        description: 操作日期
+        required: false
+        type: number
+        format: long
+      user:
+        description: 责任人
+        required: false
+        type: user.UserSimpleInfo
+      description:
+        description:
+        required: false
+        type: string
+
+  DRMInfo:
+    type: securePolicy.PermissionBaseInfo
+    properties:
+      varIdType:
+        description: varId类型，1uid 2gid 3did
+        type: integer
+      varId:
+        description: 用户/组/部门ID
+        type: string
+
+  FileScopeItem:
+    properties:
+      unitNo:
+        description: 定密单位编号
+        type: string
+      uid:
+        description: 用户ID
+        required: false
+        type: string
+
+  FileScopeInfo:
+    type: user.UserSimpleInfo
+    properties:
+      unitNo:
+        description: 定密单位编号
+        type: string
+
+  FileTrackNode:
+    properties:
+      name:
+        description: 节点连线依据
+        type: string
+      label:
+        description: 图形上的文本标签(文本名称)
+        type: string
+      symbol:
+        description: 图标的路径
+        type: string
+      x:
+        description: 节点x坐标
+        type: integer
+      y:
+        description: 节点y坐标
+        type: integer
+
+  FileTrackLink:
+    properties:
+      source:
+        description: 连线起点
+        type: string
+      target:
+        description: 连线终点
+        type: string
+      label:
+        description: 连线标签
+        type: string
+
+  KeywordResultItem:
+    properties:
+      keyword:
+        description: 关键词
+        type: string
+      level:
+        description: 密级
+        type: string
+      hitCount:
+        description: 命中次数
+        type: string
+      content:
+        description: 内容
+        type: string[]
+
+############################################################
+# /file/queryPrivateList
+############################################################
+  File_QueryPrivateListRequest:
+    type: common.PageRequest
+    properties:
+      filter:
+        description: 1文件收件箱 2拟稿箱 3待解密(定密责任人专用) 4已解密(定密责任人专用) 5负责范围的文件(定密责任人专用)
+        type: integer
+      fileState:
+        description: 文件状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        required: false
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+
+  File_QueryPrivateListResponse:
+    type: common.PageResponse
+    properties:
+      fileList:
+        description: 文件列表
+        type: FileInfo[]
+
+############################################################
+# /file/queryList
+############################################################
+  File_QueryListRequest:
+    type: common.PageRequest
+    properties:
+      keyword:
+        description: 关键词
+        required: false
+        type: string
+
+  File_QueryListResponse:
+    type: common.PageResponse
+    properties:
+      fileList:
+        description: 文件列表
+        type: FileInfo[]
+
+############################################################
+# /file/queryById
+############################################################
+  File_QueryByIdRequest:
+    type: common.CommonRequest
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+
+  File_QueryByIdResponse:
+    type: [ common.CommonResponse , FileInfo ]
+
+############################################################
+# /file/authorization
+############################################################
+  File_AuthorizationRequest:
+    type: common.CommonRequest
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+      drmList:
+        description: 授权表
+        type: DRMInfo[]
+
+  File_AuthorizationResponse:
+    type: common.CommonResponse
+
+############################################################
+# /file/queryDispatchList
+############################################################
+  File_QueryDispatchListRequest:
+    type: common.CommonRequest
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+
+  File_QueryDispatchListResponse:
+    type: common.CommonResponse
+    properties:
+      drmList:
+        description: 授权表
+        type: DRMInfo[]
+
+############################################################
+# /file/queryPrivatePermissionById
+############################################################
+  File_QueryPrivatePermissionByIdRequest:
+    type: common.CommonRequest
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+
+  File_QueryPrivatePermissionByIdResponse:
+    type: common.CommonResponse
+    properties:
+      permission:
+        description: 授权表
+        type: securePolicy.PermissionInfo
+
+############################################################
+# /file/queryPrivatePermissionNoId
+############################################################
+  File_QueryPrivatePermissionNoIdRequest:
+    type: common.CommonRequest
+    properties:
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      fileIsMyCreate:
+        description: 是否是自己创建的文件 1是 0否
+        type: integer
+
+  File_QueryPrivatePermissionNoIdResponse:
+    type: common.CommonResponse
+    properties:
+      permission:
+        description: 授权表
+        type: securePolicy.PermissionInfo
+
+############################################################
+# /file/applyNewFid
+############################################################
+  File_ApplyNewFidRequest:
+    type: common.CommonRequest
+
+  File_ApplyNewFidResponse:
+    type: common.CommonResponse
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+
+############################################################
+# /file/uploadFileById
+############################################################
+  File_UploadFileByIdRequest:
+    type: common.CommonRequest
+    properties:
+      uploadType:
+        description: 上传类型 2正式定密 3文件签发 4密级变更 5文件解密 6更新
+        type: integer
+      fid:
+        description: 文件ID
+        type: string
+      fileName:
+        description: 文件名称
+        required: false
+        type: string
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      urgency:
+        description: 文件重要紧急程度
+        required: false
+        type: integer
+      fileValidPeriod:
+        description: 保密期限，格式yymmdd
+        required: false
+        type: string
+      durationType:
+        description: 保密期限 类型 0不限 1长期 2期限 3解密日期 4条件
+        required: false
+        type: integer
+      durationDescription:
+        description: 保密期限 描述
+        required: false
+        type: string
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+      fileCreateUid:
+        description: 文件起草人
+        required: false
+        type: string
+      fileLevelDecideRoleUid:
+        description: 定密责任人(末次)
+        required: false
+        type: string
+      fileDispatchRoleUid:
+        description: 文件签发人
+        required: false
+        type: string
+      fileCreateTime:
+        description: 文件起草日期
+        required: false
+        type: number
+        format: long
+      fileLevelDecideTime:
+        description: 正式定密日期
+        required: false
+        type: number
+        format: long
+      fileDispatchTime:
+        description: 文件签发日期
+        required: false
+        type: number
+        format: long
+      fileLevelChangeTime:
+        description: 文件密级变更日期(末次)
+        required: false
+        type: number
+        format: long
+      fileDecryptTime:
+        description: 文件解密日期
+        required: false
+        type: number
+        format: long
+      fileMajorUnit:
+        description: 主定密单位ID
+        required: false
+        type: unit.UnitInfo
+      fileMinorUnit:
+        description: 辅助定密单位ID
+        required: false
+        type: unit.UnitInfo[]
+      basis:
+        description: 申请的定密依据
+        required: false
+        type: basis.BasisInfo[]
+      basisType:
+        description: 定密依据类型 0确定性定密 1不明确事项 2无权定密事项 3派生定密
+        required: false
+        type: integer
+      basisDesc:
+        description: 定密依据描述
+        required: false
+        type: string
+      issueNumber:
+        description: 文号
+        required: false
+        type: string
+      docNumber:
+        description: 份号
+        required: false
+        type: integer
+      duplicationAmount:
+        description: 签发份数
+        required: false
+        type: integer
+      fileScope:
+        description: 分发范围
+        required: false
+        type: FileScopeItem[]
+      fileScopeDesc:
+        description: 分发范围描述
+        required: false
+        type: string
+      permission:
+        description: 权限详情
+        required: false
+        type: securePolicy.PermissionBaseInfo
+      markVersion:
+        description: 密标版本
+        required: false
+        type: integer
+      description:
+        description: 原因/意见描述
+        required: false
+        type: string
+      business:
+        description: 业务属性
+        required: false
+        type: string
+
+  File_UploadFileByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /file/downloadFileById
+############################################################
+  File_DownloadFileByIdRequest:
+    type: common.CommonRequest
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+
+  File_DownloadFileByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /file/queryExistById
+############################################################
+  File_QueryExistByIdRequest:
+    type: common.CommonRequest
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+      fileMd5:
+        description: 文件MD5
+        required: false
+        type: string
+
+  File_QueryExistByIdResponse:
+    type: common.CommonResponse
+    properties:
+      exist:
+        description: 是否存在 1是 0否
+        type: integer
+      outSync:
+        description: 是否不同步 1是 0否
+        type: integer
+
+############################################################
+# /file/canUpload
+############################################################
+  File_CanUploadRequest:
+    type: common.CommonRequest
+    properties:
+      uploadType:
+        description: 上传类型 2正式定密 3文件签发 4密级变更 5文件解密 6更新
+        type: integer
+      fid:
+        description: 文件ID
+        type: string
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      fileState:
+        description: 定密状态 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+
+  File_CanUploadResponse:
+    type: common.CommonResponse
+
+############################################################
+# /file/fileTrack
+############################################################
+  File_FileTrackRequest:
+    type: common.CommonRequest
+    properties:
+      fid:
+        description: 文件ID
+        type: string
+      name:
+        description: 文件名
+        required: false
+        type: string
+
+  File_FileTrackResponse:
+    type: common.CommonResponse
+    properties:
+      nodes:
+        description: 数据节点
+        type: FileTrackNode[]
+      links:
+        description: 节点关系
+        type: FileTrackLink[]
+
+############################################################
+# /file/commitAnalysis
+############################################################
+  File_CommitAnalysisRequest:
+    type: common.CommonRequest
+    properties:
+      analysisId:
+        description: 分析ID
+        type: string
+      fid:
+        description: 文件ID
+        type: string
+
+  File_CommitAnalysisResponse:
+    type: common.CommonResponse
+
+############################################################
+# /file/queryAnalysis
+############################################################
+  File_QueryAnalysisRequest:
+    type: common.CommonRequest
+    properties:
+      analysisId:
+        description: 分析ID
+        type: string
+
+  File_QueryAnalysisResponse:
+    type: common.CommonResponse
+    properties:
+      keywordResultList:
+        description:
+        required: false
+        type: KeywordResultItem[]
+      description:
+        description: 描述建议
+        type: string
+      execState:
+        description: 执行状态 0未执行 1正在执行 2已完成 3执行失败
+        type: integer
+

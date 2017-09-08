@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>电子文档密级标志生成与管理系统统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" type="image/x-icon" href=" ../img/login-in.ico" media="screen"/>
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/cloud-admin.css">
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/pagination.css">
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/themes/default.css" id="skin-switcher">
+    <link rel="stylesheet" type="text/css" media="screen"  href="../css/responsive.css">
+    <link href="../font-awesome/css/font-awesome.min.css" media="screen"  rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css"/>
+    <link rel="stylesheet" type="text/css" media="screen"  href="css/style.css">
+    <link rel="stylesheet" media="screen"  href="../css/jquery.treeview.css"/>
+    <link rel="stylesheet" media="screen"  type="text/css" href="css/bootstrap-multiselect.css"/>
+    <link href="tooltips/css/bootstrap-responsive.css" media="screen"  rel="stylesheet">
+    <link href="tooltips/css/docs.css" media="screen"  rel="stylesheet">
+    <link href="tooltips/js/google-code-prettify/prettify.css" media="screen"  rel="stylesheet">
+    <link href="tooltips/css/tooltips.css" media="screen"  rel="stylesheet" id="skin">
+    <link href="css/jquery.pagination.css" media="screen"  rel="stylesheet">
+    <link href="js/textshow/css/all.css" media="screen"  rel="stylesheet" type="text/css"/>
+    <link href="css/select.down.css" media="screen" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .action {
+            background: #4777c8;
+        }
+
+        .navContent {
+            display: none;
+        }
+
+        .navContent li a {
+            display: block;
+        }
+
+        body {
+            white-space: nowrap;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .all {
+            background: #efefef;
+        }
+
+        .table_style tr td {
+            text-align: center;
+            vertical-align: middle !important;
+            font-size: 12px
+        }
+
+        .navbar {
+            background: #4f71b9;
+        }
+
+        table tr {
+            line-height: 40px;;
+        }
+
+        select {
+            height: 23px;
+        }
+
+        .control div {
+            float: left;
+            margin-left: 20px;
+        }
+
+        .titleBox {
+            cursor: pointer
+        }
+
+        .bigBox {
+            display: none;
+            height: 95px;
+            overflow-y: auto;
+        }
+
+        .rowname {
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .rownames {
+            font-weight: bold;
+            /*letter-spacing: 3px;*/
+        }
+
+        .unfinished table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .finished table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .applyed table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .createfileInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .inboxInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .decryptInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .declassifiedInfoAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+
+        .ledgermanagementAll table input, select, textarea {
+            border-radius: 2px;
+            border: 1px solid #ddd;
+            height: 25px;
+            vertical-align: middle;
+            line-height: 25px;
+        }
+        
+        .totalCount {
+        	position: relative; 
+        	top: -10px; 
+        	padding-left: 5px; 
+        	font-size: 14px; 
+        	color: #5e87b0;
+        }
+
+        .permission input {
+            vertical-align: middle;
+        }
+
+        #createComment, #approveComment, #major {
+            width: 560px;
+        }
+        @media screen and  (min-width: 768px) {
+            #body {
+                min-height:650px;
+            }
+        }
+        @media screen and  (min-width: 992px) {
+            #body {
+                min-height:730px;
+            }
+        }
+        @media screen and  (min-width: 1200px) {
+            #body {
+                min-height:900px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="width: 100%;background:#4f71b9;height:70px;">
+        <div class="navbar-brand">
+            <a href="javascript:void(0)">
+                <img src="../img/logo.png" alt=""/>
+            </a>
+        </div>
+    </div>
+    <div id="body">
+        <div id="sidebar" class="sidebar" style="height:100%;">
+            <div class="sidebar-menu nav-collapse menu-left">
+            </div>
+        </div>
+        <div id="main-content" style="margin-left:190px;">
+<div class="page-header" style="margin: 5px 0 10px;">
+    <ul class="breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="javascript:void(0)">首页</a>
+        </li>
+        <li><a href="javascript:void(0)">个人台账</a></li>
+    </ul>
+</div>
+<div class="container">
+    <div class="box border primary" style="border: 0;">
+        <div class="box-title">
+            <h4><span style="padding:10px;"></span></h4>
+        </div>
+        <div class="box-body">
+
+            <div class="tabbable header-tabs">
+                <ul id="myTab" class="nav nav-tabs">
+                    <!-- <li onclick="getPrivateList(0,4)" class="dropdown"><a href="#declassified"
+                                                                          data-toggle="tab">已解密</a>
+                    </li>
+                    <li onclick="getPrivateList(0,3)" class="dropdown"><a href="#decrypt"
+                                                                          data-toggle="tab">待解密</a> -->
+                    </li>
+                    <li onclick="getPrivateList(0,2)" class="dropdown"><a href="#createfile"
+                                                                          data-toggle="tab">文件拟稿箱</a>
+                    </li>
+                    <li onclick="getPrivateList(0,1)" class="dropdown active"><a href="#inbox"
+                                                                                 data-toggle="tab"
+                                                                                 id="fileInbox">文件收件箱</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="inbox">
+                        <div class="inboxAll">
+	                        <div class="col-xs-12">
+	                            <table style="background: #efefef;">
+	                                <tr style="line-height: 15px;">
+	                                	<td>
+	                                        <span>密级：</span>
+	                                        <select id="queryByLevelInInbox">
+	                                        	<option value="">全部</option>
+	                                        	<option value="0">公开</option>
+	                                        	<option value="1">内部</option>
+	                                        	<option value="2">秘密</option>
+	                                        	<option value="3">机密</option>
+	                                        	<option value="4">绝密</option>
+	                                        </select>
+	                                    </td>
+	                                    <td>
+	                                        <span>定密状态：</span>
+	                                        <select id="queryByStateInInbox">
+	                                        	<option value="">全部</option>
+	                                        	<option value="1">预定密</option>
+	                                        	<option value="2">正式定密</option>
+	                                        	<option value="3">文件签发</option>
+	                                        	<option value="4">密级变更</option>
+	                                        	<option value="5">文件解密</option>
+	                                        </select>
+	                                    </td>
+	                                    <td>
+	                                        <span>关键字：</span>
+	                                        <input id="keywordInbox" type="text"/>
+	                                    </td>
+	                                    <td>
+	                                        <button class="btn btn-primary" id="queryby" onclick="queryby(1)">查询</button>
+	                                    </td>
+	                                </tr>
+	                            </table>
+	                        </div>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>起草人</th>
+                                    <th>密级</th>
+                                    <th>定密状态</th>
+                                    <th>紧急程度</th>
+                                    <th>文件大小</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="inboxList">
+
+                                </tbody>
+                            </table>
+                            <div style="text-align:right; height:31px;">
+                                <ul id="inboxpage" style="margin:0;"></ul><span id="inboxpageTotal" class="totalCount">共0条</span>
+                            </div>
+                        </div>
+                        <div class="all inboxInfoAll" style="display:none;">
+
+                        </div>
+                        <div class="all col-sm-12 inboxtrack" style="display:none;">
+	                        <div id="inboxTrack" style="width:100%; height: 500px;"></div>
+	                        <nav class="text-right">
+								<div class="btn-group" style="margin-top: 5px;margin-right: 45px;">
+								<button type="button" class="btn btn-primary inboxback">返回</button>
+								</div>
+							</nav>
+
+                        </div>
+                        <div class="all inboxHistory" style="display:none;">
+	                        <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>操作人</th>
+                                    <th>操作时间</th>
+                                    <th>操作详情</th>
+                                </tr>
+                                </thead>
+                                <tbody class="inboxHistoryList">
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="createfile">
+                        <div class="createfileAll">
+                        	<div class="col-xs-12">
+	                            <table style="background: #efefef;">
+	                                <tr style="line-height: 15px;">
+	                                	<td>
+	                                        <span>密级：</span>
+	                                        <select id="queryByLevelIncreate">
+	                                        	<option value="">全部</option>
+	                                        	<option value="0">公开</option>
+	                                        	<option value="1">内部</option>
+	                                        	<option value="2">秘密</option>
+	                                        	<option value="3">机密</option>
+	                                        	<option value="4">绝密</option>
+	                                        </select>
+	                                    </td>
+	                                    <td>
+	                                        <span>定密状态：</span>
+	                                        <select id="queryByStateIncreate">
+	                                        	<option value="">全部</option>
+	                                        	<option value="1">预定密</option>
+	                                        	<option value="2">正式定密</option>
+	                                        	<option value="3">文件签发</option>
+	                                        	<option value="4">密级变更</option>
+	                                        	<option value="5">文件解密</option>
+	                                        </select>
+	                                    </td>
+	                                    <td>
+	                                        <span>关键字：</span>
+	                                        <input id="keywordIncreate" type="text"/>
+	                                    </td>
+	                                    <td>
+	                                        <button class="btn btn-primary" id="queryby" onclick="queryby(2)">查询</button>
+	                                    </td>
+	                                </tr>
+	                            </table>
+	                        </div>
+                        
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>起草人</th>
+                                    <th>密级</th>
+                                    <th>定密状态</th>
+                                    <th>紧急程度</th>
+                                    <th>文件大小</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="createfileList">
+
+                                </tbody>
+                            </table>
+                            
+                            <div style="text-align:right; height:31px;">
+                                <ul id="createfilepage" style="margin:0;"></ul><span id="createfilepageTotal" class="totalCount">共0条</span>
+                            </div>
+                            
+                        </div>
+                        <div class="all createfileInfoAll" style="min-height:500px;display:none;">
+
+                        </div>
+                        
+                        <div class="all col-sm-12 createfiletrack" style="min-height:500px;display:none;">
+	                        <div id="createfileTrack" style="width:100%; height: 450px;"></div>
+							<nav class="text-right">
+								<div class="btn-group" style="margin-top: 5px;margin-right: 45px;">
+								<button type="button" class="btn btn-primary createfileback">返回</button>
+								</div>
+							</nav>	
+                        </div>
+                        
+                        <div class="all createfileHistory" style="display:none;">
+	                        <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>操作人</th>
+                                    <th>操作时间</th>
+                                    <th>操作详情</th>
+                                </tr>
+                                </thead>
+                                <tbody class="createfileHistoryList">
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                        
+                    </div>
+
+
+                    <div class="tab-pane fade" id="decrypt">
+                        <div class="decryptAll">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>起草人</th>
+                                    <th>密级</th>
+                                    <th>定密状态</th>
+                                    <th>紧急程度</th>
+                                    <th>文件大小</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="decryptList">
+
+                                </tbody>
+                            </table>
+                            <div style="text-align:right;">
+                                <ul id="decryptpage"></ul>
+                            </div>
+                        </div>
+                        <div class="all decryptInfoAll" style="min-height:500px;display:none;">
+
+                        </div>
+                        
+                        <div class="all col-sm-12 decrypttrack" style="display:none;">
+                        <div id="decryptTrack" style="width:100%; height: 500px;"></div>
+
+                        </div>
+                        
+                        <div class="all decryptHistory" style="display:none;">
+	                        <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>操作人</th>
+                                    <th>操作时间</th>
+                                    <th>操作详情</th>
+                                </tr>
+                                </thead>
+                                <tbody class="decryptHistoryList">
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="declassified">
+                        <div class="declassifiedAll">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>起草人</th>
+                                    <th>密级</th>
+                                    <th>定密状态</th>
+                                    <th>紧急程度</th>
+                                    <th>文件大小</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody class="declassifiedList">
+
+                                </tbody>
+                            </table>
+                            <div style="text-align:right;">
+                                <ul id="declassifiedpage"></ul>
+                            </div>
+                        </div>
+                        <div class="all declassifiedInfoAll" style="min-height:500px;display:none;">
+
+                        </div>
+                        
+                        <div class="all declassifiedHistory" style="display:none;">
+	                        <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>操作人</th>
+                                    <th>操作时间</th>
+                                    <th>操作详情</th>
+                                </tr>
+                                </thead>
+                                <tbody class="declassifiedHistoryList">
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+    <!--<div class="footer" style="width: 100%;background:#4f71b9;height:40px;">-->
+    <!--<p class="text-center" style="color:#fff;font-size:14px;margin-top: -10px;">© 中国航天科技集团公司  本系统使用最佳分辨率1280*720</p>-->
+    <!--</div>-->
+</div>
+<script src="js/jquery-1.11.1.min.js"></script>
+<!--<script src="../js/jquery/jquery-2.0.3.min.js"></script>-->
+<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+<script src="../js/jquery.pagination.js"></script>
+<script src="../js/laydate/laydate.js"></script>
+<script src="../layer/layer.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/getUrlParam.js"></script>
+<script src="js/bootstrap-multiselect.js"></script>
+<script src="js/common.js"></script>
+<script src="js/personalConsole/privateList.js"></script>
+<script src="js/jquery.PrintArea.js"></script>
+<script src="tooltips/js/bootstrap-tooltip.js"></script>
+<script src="tooltips/js/jquery.pure.tooltips.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/treeview/jquery.treeview.js" type="text/javascript"></script>
+<script src="js/treeview/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/echarts.min.js"></script>
+<script language="javascript" src="js/textshow/js/biankuai.js"></script>
+<script language="javascript" src="js/textshow/js/ui.base.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.droppable.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.draggable.min.js"></script>
+<script language="javascript" src="js/textshow/js/ui.sortable.min.js"></script>
+<script language="javascript" src="js/textshow/js/drag.js"></script>
+
+<script language="javascript" src="js/textshow/js/submit.js"></script>
+<div id="dtree" class="col-sm-12 my-xs" style="border-radius: 0;display: none">
+    <!--<ul id="browser" class="filetree treeview-famfamfam treeview">
+    </ul>-->
+</div>
+<div id="MinorUnits" class="col-sm-12 my-xs" style="border-radius: 0;display: none">
+    <table id="applyMinorUnits" style="margin-left: 10px"></table>
+</div>
+
+<!-- <div id="basisContents" class="col-sm-12 my-xs" style="border-radius: 0;display: none">
+    <table id="basisContentNo" style="margin-left: 10px"></table>
+</div> -->
+<div id="id_layerBasisTree" class="my-xs" style="border-radius: 0;display: none">
+    <ul id="id_basisTree" class="filetree treeview">
+    </ul>
+</div>
+
+<div id="id_layerBusinessTree" class="my-xs" style="border-radius: 0;display: none">
+    <ul id="id_businessTree" class="filetree treeview">
+    </ul>
+</div>
+</body>
+</html>
+
+
+

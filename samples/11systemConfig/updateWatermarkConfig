@@ -1,0 +1,17 @@
+##刘强
+##修改 水印配置
+http://localhost:8080/dcms/api/v1/systemConfig/updateWatermarkConfig
+{
+  token:"5a571b869b50871a056764a16480c9a2",
+  watermarkContent:"密",
+  watermarkDispUser:0,
+  watermarkDispDepartment:1,
+  watermarkDispIp:1,
+  watermarkDispPcName:0,
+  watermarkDispPrintTime:1,
+  watermarkDispAngle:1,
+  watermarkDispAlpha:1,
+  watermarkDispAlign:0,
+  watermarkDispTextSize:1,
+  watermarkDispTextColor:"#FF0000FF"
+}

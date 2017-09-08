@@ -1,0 +1,6 @@
+##刘强
+##查询备份配置
+http://localhost:8080/dcms/api/v1/backup/queryConfig
+{
+	token:"1cd3ea7121bc86e66a15e07cfa69f252"
+}

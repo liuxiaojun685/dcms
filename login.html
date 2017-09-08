@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>电子文档密级标志生成与管理系统</title>
+    <link rel="shortcut icon" type="image/x-icon" href="img/login-in.ico" media="screen" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" cont ent="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="stylesheet" href="bootstrap-dist/css/bootstrap.min.css"/>
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/animatecss/animate.min.css"/>
+    <style type="text/css">
+        .form-horizontal .form-group {
+            margin: 0 0 20px 0;
+            position: relative;
+        }
+
+        .form-horizontal .form-control {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: none;
+        }
+
+        .input-group {
+            display: block;
+        }
+
+        .form-horizontal .form-control:focus {
+            background: #FFF;
+            outline: 0 none;
+            transition: all 0.3s ease 0s;
+        }
+
+        .form-horizontal .form-group i {
+            position: absolute;
+            top: 9px;
+            left: 10px;
+            font-size: 17px;
+            color: #4777c8;
+            transition: all 0.5s ease 0s;
+        }
+
+        .form-horizontal .form-group .login-name, .login-password {
+            padding: 5px 30px;
+        }
+
+        .form-horizontal .form-control:focus + i {
+            color: #00b4ef;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 100px;
+            margin-bottom: -120px;
+            font-size: 40px;
+        }
+
+        h3 {
+            margin-bottom: 20px;
+        }
+
+        .form-group > .col-sm-7 {
+            padding-left: 10px;
+            padding-right: 0;
+        }
+
+        #testnumber {
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background: #1452a5;
+        }
+
+        .content {
+            padding: 10px;
+            font-weight: bold;
+            color: red;
+        }
+
+        #sys:active {
+            border: none;
+        }
+
+        .phcolor {
+            color: #999;
+        }
+    </style>
+</head>
+<body onkeydown="onKeyDown();">
+<h1 class="text-center">电子文档密级标志生成与管理系统</h1>
+
+<div class="cation">
+    <div class="top">
+        <div class="cont">
+            <h3 class="text-center">管理员登录</h3>
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">账&nbsp;&nbsp;&nbsp;&nbsp;号 :</label>
+
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <i class="fa fa-user"></i>
+                            <input class="form-control login-name" id="txt" type="text" name="account"
+                                   placeholder="请输入账号">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">密&nbsp;&nbsp;&nbsp;&nbsp;码 :</label>
+
+                    <div class="col-sm-7">
+                        <div class="input-group">
+                            <i class="fa fa-lock"></i>
+                            <input class="form-control login-password" id="pwd" type="password" onchange="getValue()" placeholder="请输入密码">
+                            <input type="hidden" id="pwdSpan">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">验证码 :</label>
+
+                    <div class="col-sm-7 test-number">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <input class="form-control login-password" id="keycode" type="text" placeholder="验证码">
+                            </div>
+                            <div class="col-xs-3" id="code" style="margin-top:4px;">
+                            </div>
+                            <div class="col-xs-3" style="margin-top:4px;"><a href="javascript:change();" style="font-size:12px;margin-left:-10px;">换一张?</a></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="row" style="margin-top:-10px;">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10 text-center">
+                    <span class="content" style=""></span>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10" style="padding-left: 30px;padding-right:32px;">
+                    <button class="btn btn-primary form-control" id="sys">登录</button>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10 text-center">
+                    <span style="text-decoration:underline;cursor: pointer" onclick="downLoadclient_windows_x86()"><h5>
+                        Windows客户端下载</h5></span><a href="" id="excelhref" class="hide"><span id="excel"></span></a>
+                </div>
+                <div class="col-sm-1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery/jquery-1.11.1.min.js"></script>
+<script src="js/jquery/placeholder.js"></script>
+<script src="js/jquery/respond.min.js"></script>
+<script src="bootstrap-dist/js/bootstrap.min.js"></script>
+<script src="layer/layer.js"></script>
+<script src="js/host.js"></script>
+<script src="js/login.js"></script>
+<script>
+    function getValue() {
+        a = $("#pwd").val();
+    }
+    function change(){
+    	var imgObj = document.getElementById("img");
+    	imgObj.src=imgObj.src+"?"+new Date().getTime();
+    }
+</script>
+</body>
+</html>

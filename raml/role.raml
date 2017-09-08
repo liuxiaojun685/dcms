@@ -1,0 +1,228 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  user: user.raml
+types:
+  RoleTypeInfo:
+    properties:
+      roleType:
+        description: 角色类型 2定密责任人 3文件签发人 7签入人(特权) 8签出人(特权)
+        type: integer
+      fileLevelList:
+        description: 按可操作的文件密级分组
+        type: FileLevelInfo[]
+
+  FileLevelInfo:
+    properties:
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      userList:
+        description: 用户简要信息列表
+        type: RoleSimpleInfo[]
+
+  RoleSimpleInfo:
+    type: user.UserSimpleInfo
+    properties:
+      roleId:
+        description: 角色ID
+        type: integer
+      roleType:
+        description: 角色类型 2定密责任人 3文件签发人 7签入人(特权) 8签出人(特权)
+        type: integer
+
+  RoleLevelInfo:
+    properties:
+      roleLevel:
+        description: 文件密级
+        type: integer
+      enable:
+        description: 是否负责该文件密级
+        type: integer
+      care:
+        description: 是否可以负责此密级
+        type: integer
+
+  RoleInfo:
+    type: RoleSimpleInfo
+    properties:
+      roleLevelList:
+        description: 可负责的文件密级及状态
+        type: RoleLevelInfo[]
+      roleDispScope:
+        description: 负责范围简述
+        type: string
+
+  ScopeSimpleInfo:
+    properties:
+      varId:
+        description: 负责的组织ID
+        required: false
+        type: string
+      varType:
+        description: varId类型 1用户ID 2组ID 3部门ID
+        required: false
+        type: integer
+
+  ScopeInfo:
+    type: ScopeSimpleInfo
+    properties:
+      varName:
+        description: 负责的组织名称
+        required: false
+        type: string
+
+############################################################
+# /role/add
+############################################################
+  Role_AddRequest:
+    type: common.CommonRequest
+    properties:
+      roleType:
+        description: 角色类型 2定密责任人 3文件签发人 7签入人(特权) 8签出人(特权))
+        type: integer
+      uid:
+        description: 用户ID
+        type: string
+
+  Role_AddResponse:
+    type: [ common.CommonResponse , RoleInfo ]
+
+############################################################
+# /role/deleteById
+############################################################
+  Role_DeleteByIdRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 角色ID
+        type: integer
+
+  Role_DeleteByIdResponse:
+    type: common.CommonResponse
+    properties:
+      roleId:
+        description: 角色ID，删除失败时返回。
+        required: false
+        type: integer
+
+############################################################
+# /role/queryTree
+############################################################
+  Role_QueryTreeRequest:
+    type: common.CommonRequest
+
+  Role_QueryTreeResponse:
+    type: common.CommonResponse
+    properties:
+      roleTypeList:
+        description: 按角色类型分组
+        type: RoleTypeInfo[]
+
+############################################################
+# /role/queryList
+############################################################
+  Role_QueryListRequest:
+    type: common.CommonRequest
+    properties:
+      roleLevel:
+        description: 可负责的文件密级 0公开 1内部 2秘密 3机密 4绝密
+        required: false
+        type: integer
+      roleType:
+        description: 角色类型 2定密责任人 3文件签发人 7签入人(特权) 8签出人(特权)
+        required: false
+        type: integer
+
+  Role_QueryListResponse:
+    type: common.CommonResponse
+    properties:
+      roleList:
+        description: 用户信息列表
+        type: RoleInfo[]
+
+############################################################
+# /role/deleteByIdForce
+############################################################
+  Role_DeleteByIdForceRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 角色ID
+        type: integer
+
+  Role_DeleteByIdForceResponse:
+    type: common.CommonResponse
+
+############################################################
+# /role/updateScope
+############################################################
+  Role_UpdateScopeRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 角色ID
+        type: integer
+      scopeList:
+        description: 负责的组织ID数组
+        type: ScopeSimpleInfo[]
+
+  Role_UpdateScopeResponse:
+    type: common.CommonResponse
+    properties:
+      roleDispScope:
+        description: 负责范围简述
+        type: string
+
+############################################################
+# /role/queryScope
+############################################################
+  Role_QueryScopeRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 角色ID
+        type: integer
+
+  Role_QueryScopeResponse:
+    type: common.CommonResponse
+    properties:
+      scopeList:
+        description: 负责的范围
+        type: ScopeInfo[]
+
+############################################################
+# /role/updateLevel
+############################################################
+  Role_UpdateLevelRequest:
+    type: common.CommonRequest
+    properties:
+      roleId:
+        description: 角色ID
+        type: integer
+      roleLevel:
+        description: 文件密级
+        type: integer
+      enable:
+        description: 是否负责该文件密级
+        type: integer
+
+  Role_UpdateLevelResponse:
+    type: common.CommonResponse
+
+############################################################
+# /role/checkRoleScope
+############################################################
+  Role_CheckRoleScopeRequest:
+    type: common.CommonRequest
+    properties:
+      roleType:
+        description: 角色类型 2定密责任人 3文件签发人 7签入人(特权) 8签出人(特权)
+        type: integer
+
+  Role_CheckRoleScopeResponse:
+    type: common.CommonResponse
+    properties:
+      checkList:
+        description: 检测出缺少责任人的组织部门
+        type: ScopeInfo[]

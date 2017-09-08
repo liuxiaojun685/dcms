@@ -1,0 +1,24 @@
+##牛犀
+##查询用户列表
+http://localhost:8080/dcms/api/v1/user/queryList
+
+{"token":"c8399b58400a66e2aa7a5ce56d8b13d0",
+ "pageNumber":"1",
+ "pageSize":"5",
+ "keyword":"1",
+ "level":"1",
+ "state":"1",
+ "passwdState":"1",
+ "createFrom":"1",
+ "did":"1",
+ "gid":"1",
+ }
+
+### hy
+http://localhost:8080/dcms/api/v1/user/queryList
+{"token":"705619807a8c627cb092984caa2a8b8d",
+ "pageNumber":"0",
+ "pageSize":"10",
+ "gid":"gid-abce847d-b83e-4493-a6ee-c11da8357282",
+ "did":"did-57912b84-93b0-41a6-a660-1b202f033bdb"
+ }

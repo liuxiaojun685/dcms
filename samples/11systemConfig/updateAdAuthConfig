@@ -1,0 +1,22 @@
+##牛犀
+##修改AD认证配置
+http://localhost:8080/dcms/api/v1/systemConfig/updateAdAuthConfig
+
+{
+  "token":"10385782386a935eef9ea3bdead21d89",
+  "adAuthEnable":"1",
+  "adAuthLocation":{
+      "domainName":"2",
+      "ip":"1",
+      "port":"1",
+      "path":"9",
+      "protocol":"1",
+      "account":"1",
+      "passwd":"1"
+  },
+"adAuthDn":"1",
+"adAuthAutoSync":"1",
+"adAuthSyncRoot":"1"
+
+}
+

@@ -1,0 +1,25 @@
+##牛犀
+##修改邮件告警配置
+http://localhost:8080/dcms/api/v1/systemConfig/updateMailConfig
+
+{
+  "token":"e7805052178cc87678f4936d017e103b",
+  "mailSenderAccount":"3",
+  "mailSenderPasswd":"3",
+  "mailSenderSmtpAddr":"3",
+  "mailSenderSmtpPort":"3",
+  "mailRecvResourceAccount":"3",
+  "mailRecvResourceThreshold":{
+      "cpuFree":[1,2,3],
+      "memFree":[2,8,9],
+      "hdFree":[2,8,9]
+  },
+  "mailRecvLogStorageAddr":"3",
+  "mailRecvLogStorageThreshold":{
+"free":[1,2,3]
+},
+  "mailRecvFileStorageAddr":"3",
+  "mailRecvFileStorageThreshold":{
+"free":[1,2,3]
+}
+}

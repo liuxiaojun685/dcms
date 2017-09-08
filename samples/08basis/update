@@ -1,0 +1,8 @@
+##刘强
+###修改定密依据
+http://localhost:8080/dcms/api/v1/basis/update
+{
+  token:"174ee17a360b4737b00ee8387e771492",
+  basisId:3,
+  basis:"修改绝密定密依据"
+}  

@@ -1,0 +1,36 @@
+##刘强
+##http://localhost:8080/dcms/api/v1/workFlow/create
+{
+   token:"78353cf94e90221b03951e4d686530b3",
+   workFlowType:2,
+   srcFid:"1",
+   applyFileLevel:1,
+   applyValidPeriod:"1484100761000",
+   applyDispatchList[
+      {
+         contentRead:1,
+         contentReadWatermark:1,
+         contentPrint:1,
+         contentPrintWatermark:1,
+         contentModify:0,
+         contentScreenShot:0,
+         contentCopy:1,
+         contentFullControl:1,
+         fileCopy:1,
+         fileDelete:1,
+         fileSaveCopy:1,
+         fileOpenOffline:1,
+         fileAuthorization:1,
+         fileLevelDecide:1,
+         fileLevelChange:1,
+         fileDispatch:1,
+         fileDecrypt:1,
+         fileUnbunding:1,
+         varIdType:1,
+         varId:"uid-15732953-eb41-4a0e-913f-53546cbb99bf"
+      }
+   ],
+   applyBasis:"申请的定密依据",
+   applyMinorUnit:["辅助1","辅助2"],
+   createComment:"申请理由描述"
+}

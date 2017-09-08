@@ -1,0 +1,78 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+types:
+  UnitInfo:
+    properties:
+      unitNo:
+        description: 定密单位编号
+        type: string
+      name:
+        description: 定密单位名称
+        required: false
+        type: string
+
+  UnitItem:
+    type: UnitInfo
+    properties:
+      description:
+        description: 定密单位描述
+        required: false
+        type: string
+
+############################################################
+# /unit/addMinor
+############################################################
+  Unit_AddMinorRequest:
+    type: [ common.CommonRequest , UnitItem ]
+
+  Unit_AddMinorResponse:
+    type: common.CommonResponse
+    properties:
+      unitNo:
+        description: 定密单位编号
+        type: string
+
+############################################################
+# /unit/deleteMinor
+############################################################
+  Unit_DeleteMinorRequest:
+    type: common.CommonRequest
+    properties:
+      unitNo:
+        description: 定密单位编号
+        type: string
+
+  Unit_DeleteMinorResponse:
+    type: common.CommonResponse
+
+############################################################
+# /unit/queryMinorList
+############################################################
+  Unit_QueryMinorListRequest:
+    type: common.CommonRequest
+
+  Unit_QueryMinorListResponse:
+    type: common.CommonResponse
+    properties:
+      unitList:
+        description: 辅助定密单位列表
+        type: UnitItem[]
+
+############################################################
+# /unit/updateMajor
+############################################################
+  Unit_UpdateMajorRequest:
+    type: [ common.CommonRequest , UnitItem ]
+
+  Unit_UpdateMajorResponse:
+    type: common.CommonResponse
+
+############################################################
+# /unit/queryMajor
+############################################################
+  Unit_QueryMajorListRequest:
+    type: common.CommonRequest
+
+  Unit_QueryMajorListResponse:
+    type: [ common.CommonResponse , UnitItem ]

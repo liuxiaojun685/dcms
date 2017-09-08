@@ -1,0 +1,8 @@
+##牛犀
+##查询可信应用程序列表
+http://localhost:8080/dcms/api/v1/systemConfig/queryTrustedAppList
+{
+ "token":"d669a7519490b0fb7275d3ae43bd2113",
+"pageNumber":"0",
+"pageSize":"3",
+}

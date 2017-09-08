@@ -1,0 +1,6 @@
+cidToUnicode	Adobe-GB1	C:\Users\besthyhy\lib_and_extra_tool\dlp\engine\lef\pdf\\simplified\Adobe-GB1.cidToUnicode
+unicodeMap	ISO-2022-CN	C:\Users\besthyhy\lib_and_extra_tool\dlp\engine\lef\pdf\\simplified\ISO-2022-CN.unicodeMap
+unicodeMap	EUC-CN		C:\Users\besthyhy\lib_and_extra_tool\dlp\engine\lef\pdf\\simplified\EUC-CN.unicodeMap
+unicodeMap	GBK			C:\Users\besthyhy\lib_and_extra_tool\dlp\engine\lef\pdf\\simplified\GBK.unicodeMap
+cMapDir		Adobe-GB1	C:\Users\besthyhy\lib_and_extra_tool\dlp\engine\lef\pdf\\simplified\CMap
+toUnicodeDir				C:\Users\besthyhy\lib_and_extra_tool\dlp\engine\lef\pdf\\simplified\CMap

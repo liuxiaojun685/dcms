@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>电子文档密级标志生成与管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href=" ../img/login-in.ico" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../css/cloud-admin.css">
+    <link rel="stylesheet" type="text/css" href="../css/pagination.css">
+    <link rel="stylesheet" type="text/css" href="../css/themes/default.css" id="skin-switcher">
+    <link rel="stylesheet" type="text/css" href="../css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="../css/dcms.css">
+    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../js/jquery-ui-1.10.3.custom/css/custom-theme/jquery-ui-1.10.3.custom.min.css"/>
+    <style>
+        .action {
+            background: #4777c8;
+        }
+
+        .subNav {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            color: #fff;
+            padding-left: 5px;
+            background: url(../img/jiantou.png) no-repeat;
+            background-position: 90% 50%
+        }
+
+        .currentDt {
+            background-image: url(../img/jiantou1.png);
+        }
+
+        .navContent {
+            display: none;
+        }
+
+        .navContent li a {
+            display: block;
+        }
+		.pull-right li{
+            float:left;
+        }
+		.show>div{
+		   float:left;
+		}
+		.pull-right li{
+            float:left;
+			font-size:12px;
+			padding:0 10px;
+        }
+		.pull-right>li span:hover{
+		    color:red;
+		}
+		.pull-right li span{
+		   color:#fff;
+		}
+		.pan div{
+		   float:left;
+		}
+		.form-group label{
+		  float:left;
+		  margin-left:10px;
+		}
+		.form-group div{
+		  float:left;
+		}
+		#header{
+		  background-color:#4f71b9;
+		  height:60px;
+		}
+    </style>
+</head>
+<body>
+<div id="header">
+    <div class="container">              
+        <img src="../img/logo.png" alt="" style="margin-top:5px;"/>
+        <ul class="pull-right" style="margin-right:10px;margin-top:20px;">
+            <li>
+                <a href="javascript:void(0)">
+                    <span style="color:#fff;font-size:13px;padding-left:10px;" id="displaylevel"></span>
+                </a>
+            </li>
+            <li id="header-notification">
+                <a href="javascript:void(0)">
+                    <i class="fa fa-user" style="vertical-align: middle;color:#fff;"></i>
+                    <span style="padding-left:5px;" id="account"></span>
+                </a>
+            </li>
+            <li id="header-message">
+                <a href="javascript:void(0)" id="resh">
+                    <i class="fa fa-unlock-alt" style="vertical-align: middle;color:#fff;"></i>
+                    <span style="padding-left:5px;">修改密码</span>
+                </a>
+            </li>
+            <li id="header-tasks">
+                <a href="javascript:void(0)" id="quit">
+                    <i class="fa fa-sign-out" style="vertical-align: middle;color:#fff;"></i>
+                    <span style="padding-left:5px;">退出</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="page">
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-menu nav-collapse">
+            <ul>
+                <li class="has-sub action">
+                    <a href="index.html">
+                        <i class="fa fa-tachometer fa-fw"></i> <span class="menu-text">首页</span>
+                        <span class="selected"></span>
+                    </a>
+                </li>
+                <li class="has-sub">
+                    <a href="#logadmin" class="logadmin">
+                        <i class="fa fa-bookmark-o fa-fw"></i> <span class="menu-text">管理员日志审计</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="main-content" style="margin-top:5px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><i class="fa fa-bars"></i>系统管理员操作统计</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align: center;">
+                                    <span>统计单位：</span>
+                                    <select id="sysadminThreshold" class="state" style="width: 60px;" onchange="sysadmimOp();">
+                                        <option value="0">总</option>
+                                        <option value="1">年</option>
+                                        <option value="2">月</option>
+                                        <option value="3">周</option>
+                                        <option value="4" selected>日</option>
+                                    </select>
+                                    <div id="sysadmin" style="height:200px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top:5px;">
+                <div class="col-md-12">
+                    <div class="box border primary">
+                        <div class="box-title">
+                            <h4><i class="fa fa-bars"></i>安全保密管理员操作统计</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align: center;">
+                                    <span>统计单位：</span>
+                                    <select id="secadminThreshold" class="state" style="width: 60px;" onchange="secadminOp();">
+                                        <option value="0">总</option>
+                                        <option value="1">年</option>
+                                        <option value="2">月</option>
+                                        <option value="3">周</option>
+                                        <option value="4" selected>日</option>
+                                    </select>
+                                    <div id="secadmin" style="height:200px;"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer" style="background:#4f71b9;height:45px;position:absolute;"> 
+    <p class="text-center" style="color:#fff;font-size:14px;line-height:40px;">© 中国航天科技集团公司  本系统使用最佳分辨率1280*720</p> 
+</div>
+<script src="../js/jquery/jquery-1.11.1.min.js"></script>
+<script src="../js/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="../bootstrap-dist/js/bootstrap.min.js"></script>
+<script src="../js/jquery.pagination.js"></script>
+<script src="../js/laydate/laydate.js"></script>
+<script src="../layer/layer.js"></script>
+<script src="../js/host.js"></script>
+<script type="text/javascript" src="../js/echarts.min.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+<div id="resh-save" style="display:none;">
+    <form class="form-horizontal" role="form" style="border-top: 1px solid #ddd;">
+        <div class="form-group form-group-lg" style="margin-top:5px;">
+            <label class="col-xs-3 control-label text-right" for="oldpasswd">原始密码：</label>
+            <div class="col-xs-8">
+                <input class="form-control login-name" type="password" id="oldpasswd">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-lg">
+            <label class="col-xs-3 control-label text-right" for="newpasswd">新的密码：</label>
+            <div class="col-xs-8">
+                <input class="form-control add-name" type="password" id="newpasswd">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">确认密码：</label>
+            <div class="col-xs-8">
+                <input class="form-control phone" type="password" id="okpasswd"><span class="test-content text-dangertext-center"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span style="color:red;" id="infoText"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+    </form>
+</div>
+</html>
+

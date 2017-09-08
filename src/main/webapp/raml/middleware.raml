@@ -1,0 +1,363 @@
+#%RAML 1.0 Library
+uses:
+  common: common.raml
+  file: file.raml
+  securePolicy: securePolicy.raml
+  unit: unit.raml
+  basis: basis.raml
+  user: user.raml
+types:
+  MiddlewareInfo:
+    properties:
+      middlewareId:
+        description: 中间件ID
+        type: integer
+      name:
+        description: 中间件名称
+        type: string
+      description:
+        description: 中间件描述
+        type: string
+      enable:
+        description: 中间件是否启用(被动显示) 1是 0否
+        type: integer
+      middlewareUserList:
+        description: 中间件应用列表
+        type: MiddlewareACLInfo[]
+
+  MiddlewareACLInfo:
+    properties:
+      middlewareACLId:
+        description: 接口访问控制策略ID
+        type: integer
+      ip:
+        description: 中间件应用IP
+        required: false
+        type: string
+      enable:
+        description: 中间件应用是否允许接入
+        required: false
+        type: integer
+      passwdEnable:
+        description: 中间件应用是否启用授权口令
+        required: false
+        type: integer
+      passwd:
+        description: 中间件应用授权口令
+        required: false
+        type: string
+
+  MiddlewareFileAttr:
+    properties:
+      uid:
+        description: 责任人用户ID
+        required: false
+        type: string
+      fileLevel:
+        description: 文件密级 0公开 1内部 2秘密 3机密 4绝密
+        type: integer
+      urgency:
+        description: 文件重要紧急程度 0一般 1重要 2加急
+        required: false
+        type: integer
+      fileValidPeriod:
+        description: 保密期限(期限形式)，格式yymmdd
+        required: false
+        type: string
+      durationType:
+        description: 保密期限类型 0不限 1长期 2期限 3解密日期 4条件
+        required: false
+        type: integer
+      durationDescription:
+        description: 保密期限(描述形式)
+        required: false
+        type: string
+      fileLevelDecideTime:
+        description: 正式定密日期，时间戳毫秒
+        required: false
+        type: number
+        format: long
+      fileDecryptTime:
+        description: 保密期限(日期形式)，文件解密日期，时间戳毫秒
+        required: false
+        type: number
+        format: long
+      fileMajorUnit:
+        description: 主定密单位
+        required: false
+        type: unit.UnitInfo
+      fileMinorUnit:
+        description: 辅助定密单位
+        required: false
+        type: unit.UnitInfo[]
+      basis:
+        description: 申请的定密依据
+        required: false
+        type: basis.BasisInfo[]
+      basisType:
+        description: 定密依据类型 0确定性定密 1不明确事项 2无权定密事项 3派生定密
+        required: false
+        type: integer
+      basisDesc:
+        description: 定密依据描述
+        required: false
+        type: string
+      issueNumber:
+        description: 文号
+        required: false
+        type: string
+      docNumber:
+        description: 份号
+        required: false
+        type: integer
+      duplicationAmount:
+        description: 份数
+        required: false
+        type: integer
+      fileScope:
+        description: 知悉范围
+        required: false
+        type: file.FileScopeItem[]
+      fileScopeDesc:
+        description: 知悉范围描述
+        required: false
+        type: string
+      permission:
+        description: 权限管控
+        required: false
+        type: securePolicy.PermissionBaseInfo
+      markVersion:
+        description: 密级标志版本
+        required: false
+        type: integer
+      description:
+        description: 原因/意见描述
+        required: false
+        type: string
+      business:
+        description: 业务属性
+        required: false
+        type: string
+
+############################################################
+# /middleware/queryList
+############################################################
+  Middleware_QueryListRequest:
+    type: common.CommonRequest
+
+  Middleware_QueryListResponse:
+    type: common.CommonResponse
+    properties:
+      middlewareList:
+        description: 中间件列表
+        type: MiddlewareInfo[]
+
+############################################################
+# /middleware/addACL
+############################################################
+  Middleware_AddACLRequest:
+    type: common.CommonRequest
+    properties:
+      middlewareId:
+        description: 中间件ID
+        type: integer
+      ip:
+        description: 中间件应用IP
+        type: string
+      enable:
+        description: 中间件应用是否允许接入
+        type: integer
+      passwdEnable:
+        description: 中间件应用是否启用授权口令
+        type: integer
+      passwd:
+        description: 中间件应用授权口令
+        type: string
+
+  Middleware_AddACLResponse:
+    type: common.CommonResponse
+    properties:
+      middlewareACLId:
+        description: 接口访问控制策略ID
+        type: integer
+
+############################################################
+# /middleware/deleteACLById
+############################################################
+  Middleware_DeleteACLByIdRequest:
+    type: common.CommonRequest
+    properties:
+      middlewareACLId:
+        description: 接口访问控制策略ID
+        type: integer
+
+  Middleware_DeleteACLByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /middleware/updateACLById
+############################################################
+  Middleware_UpdateACLByIdRequest:
+    type: [ common.CommonRequest , MiddlewareACLInfo ]
+
+  Middleware_UpdateACLByIdResponse:
+    type: common.CommonResponse
+
+############################################################
+# /middleware/queryFileHeader
+############################################################
+  Middleware_QueryFileHeaderRequest:
+    type: common.MiddlewareRequest
+    properties:
+      fileTransType:
+        description: 文件传输类型 默认0 0通过fid免传输文件 1通过http上传文件 2通过共享目录方式上传文件 3URL下载
+        required: false
+        type: integer
+      fid:
+        description: 文件ID
+        required: false
+        type: string
+      shareAddr:
+        description: 共享目录地址
+        required: false
+        type: string
+      shareAccount:
+        description: 共享目录访问账号
+        required: false
+        type: string
+      sharePasswd:
+        description: 共享目录访问密码
+        required: false
+        type: string
+      sharePath:
+        description: 文件路径，共享目录根的相对路径，文件名带后缀
+        required: false
+        type: string
+      url:
+        description: URL下载路径
+        required: false
+        type: string
+
+  Middleware_QueryFileHeaderResponse:
+    type: common.CommonResponse
+    properties:
+      fileInfo:
+        description: 文件密标属性信息
+        type: file.FileInfo
+
+############################################################
+# /middleware/classifyFile
+############################################################
+  Middleware_ClassifyFileRequest:
+    type: common.MiddlewareRequest
+    properties:
+      opType:
+        description: 操作类型 0去除密标 1预定密 2正式定密 3文件签发 4密级变更 5文件解密
+        type: integer
+      fileTransType:
+        description: 文件传输类型 默认0 0通过fid免传输文件 1通过http上传文件 2通过共享目录方式上传文件 3URL下载
+        required: false
+        type: integer
+      fileReturnType:
+        description: 目标文件返回方式 默认0 0不返回 1提供目标文件的http下载地址 2目标文件保存到客户提供的共享目录
+        required: false
+        type: integer
+      fid:
+        description: 文件ID
+        required: false
+        type: string
+      shareAddr:
+        description: 共享目录地址
+        required: false
+        type: string
+      shareAccount:
+        description: 共享目录访问账号
+        required: false
+        type: string
+      sharePasswd:
+        description: 共享目录访问密码
+        required: false
+        type: string
+      sharePath:
+        description: 文件路径，共享目录根的相对路径，文件名带后缀,例如/share/1.txt
+        required: false
+        type: string
+      url:
+        description: URL下载路径
+        required: false
+        type: string
+      fileAttr:
+        description: 文件属性
+        required: false
+        type: MiddlewareFileAttr
+
+  Middleware_ClassifyFileResponse:
+    type: common.CommonResponse
+    properties:
+      returnUrl:
+        required: false
+        description: 返回的文件地址，当文件返回类型为0时该字段为http下载地址，客户需要拼接上http://{host}:{port}/，当文件返回类型为1时，该字段为共享目录根的相对路径。<br>目标文件随机命名，客户在下载或拷贝时需自行重命名。
+      fileName:
+        required: false
+        description: 文件名
+
+############################################################
+# /middleware/uploadCirculationLog
+############################################################
+  Middleware_UploadCirculationLogRequest:
+    type: common.MiddlewareRequest
+
+  Middleware_UploadCirculationLogResponse:
+    type: common.CommonResponse
+
+############################################################
+# /middleware/userRegister
+############################################################
+  Middleware_UserRegisterRequest:
+    type: common.MiddlewareRequest
+    properties:
+      account:
+        description: 登录名
+        type: string
+      name:
+        description: 姓名
+        type: string
+      passwd:
+        description: 密码
+        required: false
+        type: string
+      gender:
+        description: 性别 1男 2女
+        required: false
+        type: integer
+      phone:
+        description: 电话
+        required: false
+        type: string
+      mail:
+        description: 邮箱
+        required: false
+        type: string
+      position:
+        description: 职位
+        required: false
+        type: string
+      level:
+        description: 密级 1一般 2重要 3核心
+        required: false
+        type: integer
+      did:
+        description: 部门ID
+        required: false
+        type: string
+      uid:
+        description: 用户ID
+        required: false
+        type: string
+
+  Middleware_UserRegisterResponse:
+    type: common.CommonResponse
+    properties:
+      uid:
+        description: 用户ID
+        type: string

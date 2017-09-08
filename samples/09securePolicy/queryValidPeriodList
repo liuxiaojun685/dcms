@@ -1,0 +1,5 @@
+##牛犀
+##查询默认保密期限列表
+http://localhost:8080/dcms/api/v1/SecurePolicy/QueryValidPeriodList
+{"token":"e7520eeae780340aa260ea253d9593a6"
+}

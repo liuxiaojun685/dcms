@@ -1,0 +1,9 @@
+##刘强
+##10.7 查询个人文件操作权限（通过文件属性）
+http://localhost:8080/dcms/api/v1/file/queryPrivatePermissionNoId
+{
+  "token":"726137ac72f6fe0040ea63af54583780",
+  "fileState":1,
+  "fileLevel":1,
+  "fileIsMyCreate":1
+}

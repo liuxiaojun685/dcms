@@ -1,0 +1,245 @@
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="fa fa-home"></i>
+                            <a href="index.html">首页</a>
+                        </li>
+                        <li><a href="javascript:void(0)">组织管理</a></li>
+                        <li><a href="javascript:void(0)">组织机构管理</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div  class="col-lg-12">
+                    <div class="row frameworks">
+                        <div class="col-xs-3">
+                            <div class="opation" style="display:none;">
+                                <div class="text">操作</div>
+                                <div class="btns">
+                                    <div class="btns1" style="margin-top:15px">
+                                        <table class="table table-responsive" style="margin-bottom: 0;background:transparent;">
+                                            <tr>
+                                                <td  style="border: 0;padding: 0;">
+                                                    <div class="row">
+                                                        <div class="col-xs-12"><input type="text" class="bmname"  ><button class="add-sea" style="padding:0 10px;">查询</button></div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: 0;padding: 0;">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <button class="add">新建</button>
+                                                            <button class="resh">修改</button>
+                                                            <button class="delt">删除</button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="btns2" style="margin-top:10px;display:none;">
+                                        <form class="form-horizontal" role="form">
+                                            <div><span>部门名称：</span><input type="hidden" id="type"><input class="nam" type="text" style="margin-left:5%;">
+                                                <div class="error-span" style="margin-left: 73px"></div>
+                                            </div>
+                                            <div><span>部门描述：</span><input class="de" type="text" style="margin-left:5%;">
+                                                <div class="error-span" style="margin-left: 73px"></div>
+                                            </div>
+                                        </form>
+                                        <div class="add-btn">
+                                            <button class="add-p" onclick="saveDepartment()">确定</button>
+                                            <button class="cancle-p">取消</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul id="browser" class="filetree treeview-famfamfam treeview" style="cursor: pointer;">
+                            </ul>
+                        </div>
+                        <div class="col-xs-9 potions" style="background:#efefef;min-height:400px;max-height:430px;">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table style="background: #efefef;margin:10px 0;">
+                                        <tr>
+                                            <td>
+                                                <span>密级：</span>
+                                                <select class="level">
+                                                    <option value="">全部</option>
+                                                    <option value="1">一般</option>
+                                                    <option value="2">重要</option>
+                                                    <option value="3">核心</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left: 15px;">用户状态：</span>
+                                                <select class="state">
+                                                    <option value="">全部</option>
+                                                    <option value="4">已锁定</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <span style="padding-left: 15px;">在线状态：</span>
+                                                <select class="passwdState">
+                                                    <option value="">全部</option>
+                                                    <option value="1">在线</option>
+                                                    <option value="2">离线</option>
+                                                </select>
+                                            </td>
+                                            <td style="text-align: left;">
+                                                <span style="padding-left: 15px;">关键字：</span>
+                                                <input type="text">
+                                                <button class="btn btn-primary" onclick="seachUser()">查询</button>
+                                            </td>
+                                        </tr>
+                                        <input type="hidden" id="eqid">
+                                    </table>
+                                    <table class="table table-bordered table-hover table-condensed" style="table-layout:fixed" id="tab">
+                                        <thead>
+                                        <tr>
+                                            <th style="width: 3%;"><input id="allCkb" type="checkbox"></th>
+                                            <th style="width: 8%;">编号</th>
+                                            <th style="width: 17%;">登录名</th>
+                                            <th style="width: 10%;">用户姓名</th>
+                                            <th style="width: 7%;">密级</th>
+                                            <th style="width: 25%;">所属部门</th>
+                                            <th style="width: 10%;">用户状态</th>
+                                            <th style="width: 10%;">在线状态</th>
+                                            <th style="width: 10%;">用户详情</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-9 potions1" style="display:none;">
+                        </div>
+                        <div class="row potions">
+                            <div class="col-xs-3"></div>
+                            <div class="col-xs-9">
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-xs-2">
+                                        <a href="javascript:void(0)" style="padding-right:10px;text-decoration: none;" class="add-users" onclick="adduser()">
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a href="javascript:void(0)" style="padding-right:10px;text-decoration: none;" class="del">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <div class="M-box3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+<script src="js/dcms.js"></script>
+<script src="../secadmin/js/jquery.treeview.js" type="text/javascript"></script>
+<div id="add-formorkuser" style="display:none;">
+    <form class="form-horizontal" role="form" style="border-top: 1px solid #ddd;">
+        <div class="form-group form-group-lg" style="margin-top:5px;">
+            <label class="col-xs-3 control-label text-right" for="formGroupInputLarge1">登录名：<span class="start-span">*</span></label>
+            <div class="col-xs-8">
+                <input class="form-control login-name" type="text" id="formGroupInputLarge1">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span account"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-lg">
+            <label class="col-xs-3 control-label text-right" for="formGroupInputLarge">用户姓名：<span class="start-span">*</span></label>
+            <div class="col-xs-8">
+                <input class="form-control add-name" type="text" id="formGroupInputLarge">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span name"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">性别：</label>
+            <div class="col-xs-8">
+                <label class="radio-inline">
+                    <input type="radio" name="sex" value="1" checked> 男
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" value="2" name="sex"> 女
+                </label>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span1"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">电话：</label>
+            <div class="col-xs-8">
+                <input class="form-control phone" type="text" id="formGroupInputSmall1">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span1"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">邮箱：</label>
+            <div class="col-xs-8">
+                <input class="form-control email" type="text" id="formGroupInputSmall2">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span1"></span>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group form-group-sm">
+            <label class="col-xs-3 control-label text-right">职务：</label>
+            <div class="col-xs-8">
+                <input class="form-control position" type="text" id="formGroupInputSmall3">
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3"></div>
+            <div class="col-xs-8">
+                <span class="error-span1"></span>
+            </div>
+            <div class="col-xs-1"></div>
+        </div>
+    </form>
+</div>
+<div id="deparment" style="display:none;">
+    <ul id="browser1" class="filetree treeview-famfamfam treeview">
+    </ul>
+</div>
